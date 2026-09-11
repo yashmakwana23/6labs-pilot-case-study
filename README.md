@@ -52,7 +52,7 @@ identifier attached.
 index.html              case study home — how the pilot worked, five worked examples
 chat-moderation.html    report 01
 retention-churn.html    report 02
-monetization-ux.html    report 03
+technical-issues-ux.html    report 03
 recon.css               the screen-reconstruction component library
 recon.js                click a reconstruction to open it enlarged in a carousel
 zh/ ja/ ko/             the same four pages, translated

@@ -78,8 +78,11 @@ th:last-child,td:last-child{padding-right:0}
 tbody tr:last-child td{border-bottom:0}
 
 /* -- evidence figures ------------------------------- */
-.evgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px;
-  margin:28px 0 0}
+.evgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;
+  margin:24px 0 0}
+/* thumbnails: click one to open it enlarged in the carousel */
+figure.ev .shots .rs{max-width:184px}
+figure.ev figcaption{padding:8px 12px 12px;font-size:12px;line-height:1.45}
 figure.ev{margin:0;background:var(--white);border:1px solid var(--line);border-radius:8px;
   overflow:hidden;display:flex;flex-direction:column}
 figure.ev.pair{grid-column:1/-1}
@@ -102,7 +105,7 @@ footer b{color:var(--navy);font-weight:600}
   .brandbar,.hero,main,footer{padding-left:22px;padding-right:22px}
   .sheet{margin:0;border-left:0;border-right:0}
   section{padding:40px 0}
-  .evgrid{grid-template-columns:1fr}
+  .evgrid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
   figure.ev.pair .shots{flex-wrap:wrap}
   figure.ev.pair .shots img{width:100%}
   .sechd{grid-template-columns:1fr;gap:10px}
@@ -230,7 +233,7 @@ body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto
 <div class="navbar">
     <img class="logo" src="../6labs-logo.png" alt="6labs.ai">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">试点报告</a><span class="sep">/</span><span class="here">技术问题与体验阻力</span></nav>
-    <nav class="langs" aria-label="Language"><a href="../monetization-ux.html" hreflang="en">EN</a><span class="on">中文</span><a href="../ja/monetization-ux.html" hreflang="ja">日本語</a><a href="../ko/monetization-ux.html" hreflang="ko">한국어</a></nav>
+    <nav class="langs" aria-label="Language"><a href="../technical-issues-ux.html" hreflang="en">EN</a><span class="on">中文</span><a href="../ja/technical-issues-ux.html" hreflang="ja">日本語</a><a href="../ko/technical-issues-ux.html" hreflang="ko">한국어</a></nav>
   </div>
 
   <div class="hero">
