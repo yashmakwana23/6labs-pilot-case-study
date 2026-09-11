@@ -220,3 +220,44 @@ figure.ev .shots .rs{max-width:225px}
 .rs-row .tx span{font-size:9px; line-height:1.3}
 .rs-row .pill{padding:4px 7px; font-size:9px}
 .rs-panel .hd{padding:8px 10px; font-size:10px}
+
+/* ── lightbox / carousel ────────────────────────────────────── */
+.rs-clickable{cursor:zoom-in; transition:box-shadow .14s, transform .14s}
+.rs-clickable:hover{box-shadow:0 6px 22px rgba(11,27,58,.28); transform:translateY(-2px)}
+.rs-clickable:focus-visible{outline:3px solid #1a6dff; outline-offset:3px}
+
+body.rlb-open{overflow:hidden}
+
+.rlb[hidden]{display:none !important}   /* author display:flex would beat the UA [hidden] rule */
+.rlb{position:fixed; inset:0; z-index:9999; background:rgba(8,13,26,.93);
+  display:flex; align-items:center; justify-content:center; padding:26px}
+.rlb-inner{display:flex; flex-direction:column; align-items:center; gap:16px;
+  max-height:100%; max-width:min(900px,100%)}
+.rlb-stage{display:flex; align-items:center; justify-content:center}
+.rlb-box{position:relative; flex:0 0 auto}
+.rlb-box > .rs{position:absolute; top:0; left:0}
+
+.rlb-meta{max-width:620px; text-align:center; color:#cfd8e8}
+.rlb-count{font:600 11px/1 Inter,sans-serif; letter-spacing:.12em; text-transform:uppercase;
+  color:rgba(255,255,255,.5); margin-bottom:7px}
+.rlb-cap{font-size:13px; line-height:1.6}
+.rlb-cap b{color:#fff; font-weight:600}
+.rlb-cap .evtext{color:rgba(255,255,255,.62); display:block; margin-top:5px}
+.rlb-cap a{color:#7fb0ff}
+
+.rlb button{position:absolute; background:rgba(255,255,255,.1); color:#fff;
+  border:1px solid rgba(255,255,255,.22); border-radius:9px; cursor:pointer;
+  font:400 26px/1 Inter,sans-serif; width:42px; height:42px; display:grid; place-items:center}
+.rlb button:hover:not(:disabled){background:rgba(255,255,255,.2)}
+.rlb button:disabled{opacity:.25; cursor:default}
+.rlb button:focus-visible{outline:2px solid #7fb0ff; outline-offset:2px}
+.rlb-x{top:18px; right:18px; font-size:24px !important}
+.rlb-prev{left:18px; top:50%; margin-top:-21px}
+.rlb-next{right:18px; top:50%; margin-top:-21px}
+
+@media (max-width:620px){
+  .rlb{padding:14px}
+  .rlb-prev{left:6px} .rlb-next{right:6px}
+  .rlb-x{top:8px; right:8px}
+  .rlb-meta{font-size:12px}
+}
