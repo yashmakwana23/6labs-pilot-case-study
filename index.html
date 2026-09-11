@@ -69,10 +69,6 @@ h2+.rule{width:44px;height:3px;background:var(--blue);border-radius:2px;margin-b
 .step .src{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.06em;
   text-transform:uppercase;margin-bottom:5px}
 
-.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:26px}
-.col{border-top:2px solid var(--blue);padding-top:14px}
-.col h3{font-size:17px;font-weight:600;margin-bottom:7px}
-.col p{font-size:14.5px;margin:0;max-width:none}
 .notes{list-style:none;margin:30px 0 0;padding:20px 0 0;border-top:1px solid var(--hair)}
 .notes li{position:relative;padding-left:20px;margin:9px 0;font-size:14.5px;}
 .notes li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;
@@ -144,7 +140,7 @@ footer{padding:26px 46px 40px;color:var(--muted);font-size:13px;border-top:1px s
 
 @media(max-width:760px){
   .brandbar,.hero,.tiles,main,footer{padding-left:22px;padding-right:22px}
-  .cards,.cols,.evrow{grid-template-columns:1fr}
+  .cards,.evrow{grid-template-columns:1fr}
   .caps{grid-template-columns:1fr 1fr}
   .vsa{grid-template-columns:1fr}
   .vsa .vsx{border-left:0;border-top:1px solid var(--line);padding-left:0;padding-top:12px}
@@ -201,28 +197,6 @@ footer{padding:26px 46px 40px;color:var(--muted);font-size:13px;border-top:1px s
   </div>
 
   <main>
-    <section>
-      <div class="kick">Executive summary</div>
-      <h2>In two weeks, Oracle went from &ldquo;analysis of a sample&rdquo; to &ldquo;counting everyone, and seeing why&rdquo;</h2><div class="rule"></div>
-      <div class="cols">
-        <div class="col">
-          <h3>It counts everyone</h3>
-          <p>8,119 first payers, 38.3M purchase attempts, 104K churned players. Answers computed on
-          the client&rsquo;s actual populations.</p>
-        </div>
-        <div class="col">
-          <h3>It sees the why</h3>
-          <p>The actual screens behind the numbers. The popup right before a first payment, the boss
-          fight before a churn, the error dialog behind a failed purchase.</p>
-        </div>
-        <div class="col">
-          <h3>It checks the data too</h3>
-          <p>Telemetry and schema issues discovered during analysis, packaged so the data team can
-          verify and act on them directly.</p>
-        </div>
-      </div>
-    </section>
-
     <section>
       <div class="kick">How it works</div>
       <h2>Every answer starts from the client&rsquo;s data and ends on an actual screen</h2><div class="rule"></div>
