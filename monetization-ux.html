@@ -246,7 +246,7 @@ reaches a timed chapter boss, plays the fight well, and loses to the
 <strong>timer</strong> with the boss at 1–5% HP ("TIME OVER" — a damage
 gap, not dying). They retry. And retry. Between some retries they
 upgrade (summons, gear-enhancement materials, gems); between others they change nothing.
-The screen says nothing about how to close the gap: <strong>no combat power target, no damage figure, no suggestion of what to raise</strong>. The game knows exactly how far short the player fell and never tells them, so they retry the same fight unchanged and fail the same way. Nor is there a bridging mechanic &mdash; no building buff, no mercy damage bonus, no "you were close" assist. After 6–14 straight
+The screen says nothing about how to close the gap: <strong>no combat power target, no damage figure, no suggestion of what to raise</strong>. The player can see how close they came &mdash; the health bar says so &mdash; but nothing turns that into a number to beat, so they retry the same fight unchanged and fail the same way. Nor is there a bridging mechanic &mdash; no building buff, no mercy damage bonus, no "you were close" assist. After 6–14 straight
 near-misses the run ends one of three ways: an upgrade-then-retry loop,
 a pivot to low-stakes content, or a spend escalation into premium shop
 packs.</p>
@@ -308,9 +308,11 @@ recordings point to a store-side failure as one of the causes.</p>
 <ol type="1">
 <li>One player fired the same event hot-deal purchase <strong>3×
 in one session</strong> — same <code>9-100302</code> error each time.</li>
-<li>Another hit the error on a Deluxe Membership, then tried Special
-Membership — blocked on both.</li>
-<li>A related vendor error (<code>9-100204</code> "Vendor not
+<li>A second citation &mdash; the same error on a Deluxe Membership, then on
+Special Membership — <strong>did not survive verification</strong>: the popup
+appears nowhere in the cited clip. It is listed as a citation that failed,
+not as evidence.</li>
+<li>A related vendor error (<code>9-100204</code> "Vendor is not
 initialized") appears in BOTH converting and abandoning sessions —
 successful buyers retry through it, window-shoppers stop; the error is
 the same, the need-state differs.</li>
@@ -365,12 +367,12 @@ during checkout in churned players' final sessions.</li>
 <h2 id="34-issue-4--ad-errors-that-lie">Ad errors that lie</h2>
 <div class="rule"></div>
 <p><strong>What happens on screen:</strong> a player watches a rewarded
-ad <strong>to the end</strong> — and the game fires <strong>"The ad has
-not loaded."</strong> In the sharpest clip the error overlay persists
+ad <strong>to the end</strong> — and the game fires <strong>"The ad did
+not load."</strong> In the sharpest clip the error overlay persists
 <em>behind</em> a successful "Items Obtained" popup: the game
 simultaneously claims the ad failed and pays the reward. In another, one
 attempt produces a <strong>double error</strong> — "you skipped the ad"
-(red) plus "ad has not loaded" (yellow) — for a single watch. Skipping
+(red) plus "the ad did not load" (yellow) — for a single watch. Skipping
 is separately punished with reward denial.</p>
 <p><strong>Why it matters:</strong> rewarded ads are the primary
 resource pipeline for non-spenders (issue 7). Errors that misreport what
@@ -382,8 +384,8 @@ progressing — and they cluster at the churn-adjacent moments
 <li>Ad completes visibly → "The ad did not load" fires anyway.</li>
 <li>Contradictory double state: error overlay persisting behind a
 successful "Items Obtained" popup.</li>
-<li>Double error on one attempt: "you skipped the ad" + "ad has not
-loaded" together; the monetization lens also caught a "you skipped the
+<li>Double error on one attempt: "you skipped the ad" + "the ad did not
+load" together; the monetization lens also caught a "you skipped the
 ad" reward denial mid-flow — players retried rather than abandoning.</li>
 </ol>
 <div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Purchase info</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Purchase Information</div>
@@ -403,7 +405,7 @@ ad" reward denial mid-flow — players retried rather than abandoning.</li>
 <div class="kick">3.5</div>
 <h2 id="35-issue-5--server-wait-stacking">Server-wait stacking</h2>
 <div class="rule"></div>
-<p><strong>What happens on screen:</strong> "Waiting for server
+<p><strong>What happens on screen:</strong> "Awaiting server
 response" modals appear at predictable chokepoints — login, combat
 menus, party matching, friend list, guild screens, guild conquest, bulk
 summons, arena transitions. The modal <strong>blocks input while the
@@ -430,7 +432,7 @@ wall friction and server friction compounding in the same minutes.</li>
 
 <section>
 <div class="kick">3.6</div>
-<h2 id="36-issue-6--session-expired-crash-right-after-boss-failures">"Session timed out" crash right after boss failures</h2>
+<h2 id="36-issue-6--session-expired-crash-right-after-boss-failures">The "your session has expired" crash right after boss failures</h2>
 <div class="rule"></div>
 <p><strong>What happens on screen:</strong> the player fails a chapter
 boss twice in a row, and then — at their most frustrated moment —
@@ -501,7 +503,7 @@ zero-commitment monetization touchpoint for payment-cohort players.</li>
 <div class="rule"></div>
 <p><strong>What happens on screen:</strong> a player opens Arena — a
 <strong>prerequisite for main-quest advancement</strong> — and
-matchmaking never loads: the game <strong>"cannot generate
+matchmaking never loads: the game <strong>"could not generate
 recommendations."</strong> There is no workaround on screen. The player
 is hard-blocked on the main quest, <strong>files an in-game support
 ticket mid-session</strong>, and eventually logs out. Baseline expectation: Arena should load for every player who has unlocked it.</p>
@@ -516,7 +518,7 @@ players are blocked, on which servers, for how long.</p>
 <li>Arena recommendation list fails to generate → main quest blocked →
 support ticket filed in-session → logout.</li>
 <li>Same verified harvest, adjacent payment moments show the friction
-texture around it: a Monthly Gem Gift Pack taken to the payment modal then cancelled; a Companion Dummy attempt blocked by insufficient diamonds.</li>
+texture around it: a Monthly Coin Gift Pack taken to the payment modal then cancelled; a Companion Dummy attempt blocked by insufficient diamonds.</li>
 <li>Several Segment 469 sessions <strong>end with a payment
 confirmation popup still on screen</strong> — the session dissolves
 mid-checkout.</li>

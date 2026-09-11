@@ -193,7 +193,7 @@ footer{padding:26px 46px 40px;color:var(--muted);font-size:13px;border-top:1px s
     <div class="tile"><div class="n">25</div><div class="l">sessions</div></div>
     <div class="tile"><div class="n">89</div><div class="l">questions asked</div></div>
     <div class="tile"><div class="n">44</div><div class="l">about the game itself</div></div>
-    <div class="tile"><div class="n">29<small>%</small></div><div class="l">used warehouse and recordings together</div></div>
+    <div class="tile"><div class="n">65<small>%</small></div><div class="l">used warehouse and recordings together</div></div>
   </div>
 
   <main>
@@ -257,8 +257,8 @@ footer{padding:26px 46px 40px;color:var(--muted);font-size:13px;border-top:1px s
           </figure>
           <ul class="evpts">
             <li><b>The first friction point is the sign-in screen.</b> Four new players met a failure there on install day: a wrong password, a cancelled sign-in, a publisher account in protection mode.</li>
-            <li>The failures start at the account layer, not in the game. What the game controls is the recovery, and it offers none. The player gets a bare number &mdash; <b>2001</b>, <b>0006</b>, <b>10006</b> &mdash; with no reset, no explanation, no way forward.</li>
-            <li>One was sent to open <b>the publisher&rsquo;s website on a PC</b>, confirm their identity and reset a password before playing. On install day, before a single minute of gameplay.</li>
+            <li><b>The message names the cause, then leaves the player stuck.</b> &ldquo;ID or password is incorrect&rdquo; and a code &mdash; <b>2001</b>, <b>0006</b>, <b>10006</b> &mdash; above a single <b>OK</b>. Knowing what went wrong is not the problem. There is no password reset, no account recovery, no next step of any kind. The only action the screen offers is to dismiss it and try the same thing again.</li>
+            <li><b>The recovery exists, just not inside the game.</b> One player had to open the publisher&rsquo;s website on a PC, confirm their identity and reset a password before they could get in. On install day, before a single minute of gameplay.</li>
             <li>None of this exists in any table. A churn dashboard counts the player who left. Only the recording shows the screen that met them first.</li>
           </ul>
         </div>
@@ -294,7 +294,7 @@ footer{padding:26px 46px 40px;color:var(--muted);font-size:13px;border-top:1px s
       <div class="vs">
         <div class="vscat"><span class="vsnum">3</span>UX friction</div>
         <div class="vsq">Why do players stop trying?</div>
-        <p class="vslead">A failure screen is where the game either teaches or loses someone. These ones state the outcome and withhold everything a player would need to fix it.</p>
+        <p class="vslead">A failure screen is where the game either teaches or loses someone. This one states the outcome and stops there. Nothing on it turns the loss into a next step.</p>
         <div class="evrow">
           <figure class="evfig">
             <div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Lv 29</span><span class="rs-chip grow"></span><span class="rs-chip w2"></span></div>
@@ -306,14 +306,14 @@ footer{padding:26px 46px 40px;color:var(--muted);font-size:13px;border-top:1px s
               </div><div class="rs-tag">Reconstruction</div></div>
             <figcaption>Chapter 3 boss, level 29. The timer is spent and the boss health bar still reads 42 per cent.</figcaption>
           </figure>
-          <ul class="evpts"><li>The timer reads <b>00:00</b> and the boss still holds <b>42%</b> of its health. The game knows precisely how far short the player fell and never says it.</li><li><b>No combat power target. No damage figure. No suggestion of what to raise.</b> The screen offers Retry or Leave, so players retry the same fight unchanged and fail the same way.</li><li>A new player has no way to work any of this out on their own. Nothing on screen connects the failure to the system that would fix it.</li></ul>
+          <ul class="evpts"><li>The timer reads <b>00:00</b> and the boss still holds <b>42%</b> of its health. The player can see they fell short. What the screen never does is turn that into a number they can act on.</li><li><b>No combat power target. No damage figure. No suggestion of what to raise.</b> The screen offers Retry or Leave, so players retry the same fight unchanged and fail the same way.</li><li>A new player has no way to work any of this out on their own. Nothing on screen connects the failure to the system that would fix it.</li></ul>
         </div>
       </div>
 
       <div class="vs">
         <div class="vscat"><span class="vsnum">4</span>Progression locks</div>
         <div class="vsq">What is the game refusing, and why?</div>
-        <p class="vslead">Players meet refusals the game never explains. This one blocks a first-day action behind a prerequisite it declines to name.</p>
+        <p class="vslead">Players meet refusals that name a rule without naming what triggered it. This one blocks a first-day action behind a prerequisite it declines to identify.</p>
         <div class="evrow">
           <figure class="evfig">
             <div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Guide Quest 25</span><span class="rs-chip grow"></span></div>
@@ -333,9 +333,9 @@ footer{padding:26px 46px 40px;color:var(--muted);font-size:13px;border-top:1px s
       </div>
 
       <div class="vs">
-        <div class="vscat"><span class="vsnum">5</span>Unexplained limits</div>
-        <div class="vsq">When does this unlock, and what do I do about it?</div>
-        <p class="vslead">The button is live, the price is on it, and the ceiling is invisible. Nothing says a cap has been reached, what lifts it, or when. The player finds out by tapping.</p>
+        <div class="vscat"><span class="vsnum">5</span>Limits enforced too late</div>
+        <div class="vsq">Why is the button still lit?</div>
+        <p class="vslead">The row already reads its maximum, and the button beside it is still lit and priced. The screen offers an upgrade it is going to refuse, and only says so after the player has tapped it.</p>
         <div class="evrow">
           <figure class="evfig">
             <div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Gold 214,700</span><span class="rs-chip grow"></span></div>
@@ -343,13 +343,13 @@ footer{padding:26px 46px 40px;color:var(--muted);font-size:13px;border-top:1px s
                 <div class="rs-row"><div class="ic"></div><div class="tx"><b>HP recovery</b><span>stage 9 of 9</span></div><span class="pill gold">Enhance &middot; 98,600</span></div>
                 <div class="rs-row"><div class="ic"></div><div class="tx"><b>MP recovery</b><span>stage 9 of 9</span></div><span class="pill gold">Enhance &middot; 97,500</span></div>
               </div><div class="rs-tag">Reconstruction</div></div>
-            <figcaption>Potion enhancement at stage 9 of 9. Both Enhance buttons are fully lit and priced; nothing on the panel says the ceiling has been reached.</figcaption>
+            <figcaption>Potion enhancement at stage 9 of 9. Both rows are already maxed, yet both Enhance buttons remain lit and priced as if the upgrade were still available.</figcaption>
           </figure>
           <ul class="evpts">
-            <li>Both <b>Enhance</b> buttons are fully lit and priced &mdash; <b>98,600</b> and <b>97,500</b> gold. Nothing on the panel says a ceiling has been reached.</li>
-            <li>The refusal only arrives after the tap: <b>&ldquo;Recovery cannot be enhanced above Max HP or MP.&rdquo;</b> The rule exists, and the screen keeps it hidden until the player commits.</li>
+            <li>Both rows read <b>stage 9 of 9</b> &mdash; and both <b>Enhance</b> buttons are still fully lit and priced, at <b>98,600</b> and <b>97,500</b> gold. A maxed-out control that still looks purchasable.</li>
+            <li>The refusal only arrives after the tap: <b>&ldquo;Recovery cannot be enhanced above Max HP or MP.&rdquo;</b> The button never greys out and never disables. The state is on the screen; the control ignores it.</li>
             <li>That message appears in <b>613 recordings</b> across the observed population. This is not one confused player, it is a control that invites an action it will refuse.</li>
-            <li>The missing piece is the same one as the nickname lock above: <b>what raises this, and when</b>. A greyed button with the cap named turns a wasted tap into a goal.</li>
+            <li>The missing piece is the same one as the nickname lock above: <b>what raises this, and when</b>. A greyed button naming the cap turns a wasted tap into a goal.</li>
           </ul>
         </div>
       </div>
