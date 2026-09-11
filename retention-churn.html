@@ -1,0 +1,379 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Game A &mdash; Retention &amp; Churn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="recon.css">
+<style>
+:root{
+  --navy:#0b1b3a; --ink:#101828; --body:#475467; --muted:#8593a8;
+  --blue:#1a6dff; --blue-dk:#1450c8; --blue-tint:#eef3fe; --blue-tint2:#f6f9ff;
+  --line:#e4e9f2; --hair:#eef1f6; --white:#fff; --page:#f7f9fc;
+  --good:#0a7d4a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--body);
+  font:16px/1.65 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.sheet{max-width:1060px;margin:26px auto;background:var(--white);border:1px solid var(--line)}
+h1,h2,h3{font-family:Poppins,Inter,sans-serif;color:var(--navy);margin:0;
+  letter-spacing:-.015em}
+p{margin:13px 0}
+strong,b{color:var(--navy);font-weight:600}
+em{font-style:italic}
+a{color:var(--blue-dk);text-decoration:none;font-weight:600}
+a:hover{text-decoration:underline}
+a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+/* ── brand bar ─────────────────────────────────────── */
+.brandbar{display:flex;justify-content:space-between;align-items:center;
+  gap:20px;padding:34px 46px 0}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--blue)}
+.hero .eyebrow{margin-bottom:10px}
+.brandright{display:flex;align-items:center;gap:20px;flex-shrink:0}
+
+
+.logo{display:block;height:30px;width:auto;flex-shrink:0}
+
+/* ── hero ──────────────────────────────────────────── */
+.hero{padding:20px 46px 34px}
+.hero h1{font-size:clamp(32px,4.4vw,44px);font-weight:700;line-height:1.08}
+.hero .lede{margin:16px 0 0;font-size:17px;color:var(--body)}
+
+/* ── page shell / sections ─────────────────────────── */
+main{padding:0 46px}
+.p3sec{padding:56px 0;border-top:1px solid var(--line)}
+.p3sec:first-of-type{border-top:0;padding-top:30px}
+.p3sec .wrap{max-width:none;margin:0;padding:0}
+
+h2{font-size:23px;font-weight:600;margin:0 0 6px;line-height:1.28}
+h3{font-size:17px;font-weight:600;margin:32px 0 0;line-height:1.35}
+h3+p,h3+.tw,h3+ul,h3+ol{margin-top:9px}
+.rule{width:44px;height:3px;background:var(--blue);border-radius:2px;margin:0 0 18px}
+.kick{font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--blue);margin:0 0 8px}
+.p3sec>.wrap>.kick{margin-top:0;padding-top:52px;border-top:1px solid var(--line)}
+.p3sec>.wrap>.kick:first-child{padding-top:0;border-top:0}
+hr{border:0;border-top:1px solid var(--hair);margin:36px 0 0}
+
+/* ── section banner (intro block) ──────────────────── */
+.banner{margin:0 0 6px}
+.banner h1{font-size:27px;font-weight:600;line-height:1.25;margin:0 0 8px}
+.banner .sub{font-size:16.5px;color:var(--body)}
+.banner p{font-size:16.5px;color:var(--body);margin:0}
+.banner .meta{margin-top:20px;padding-top:15px;border-top:1px solid var(--line);
+  font-size:13.5px;color:var(--muted);display:flex;gap:14px 30px;flex-wrap:wrap}
+.banner .meta b{color:var(--navy);font-weight:600}
+.banner .read{margin-top:22px;background:var(--blue-tint);border-radius:8px;
+  padding:18px 22px;font-size:14.5px;color:var(--body)}
+.banner .read b{color:var(--navy);font-weight:600}
+.banner .read ul{margin:10px 0 0;padding-left:20px}
+.banner .read li{margin:6px 0;font-size:14.5px}
+
+/* ── lists ─────────────────────────────────────────── */
+ol,ul{margin:14px 0;padding-left:22px}
+li{margin:9px 0}
+li::marker{color:var(--muted)}
+
+/* ── tables ────────────────────────────────────────── */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:20px 0 0}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:600px}
+th{text-align:left;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);padding:0 16px 11px 0;border-bottom:1.5px solid var(--line)}
+td{padding:13px 16px 13px 0;border-bottom:1px solid var(--hair);vertical-align:top}
+tr>th:last-child,tr>td:last-child{padding-right:0}
+td[style*="right"]{font-variant-numeric:tabular-nums;white-space:normal}
+tbody tr:last-child td{border-bottom:0}
+.tw+p{font-size:13.5px;color:var(--muted);margin-top:14px}
+
+/* ── on-screen evidence ────────────────────────────── */
+.evwrap{margin:26px 0 0}
+.evlabel{font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--blue);margin:0 0 16px}
+.evgrid{margin:24px 0 0}
+figure.ev{margin:0 0 22px;background:var(--white);border:1px solid var(--line);
+  border-radius:10px;overflow:hidden}
+figure.ev:last-child{margin-bottom:0}
+figure.ev .shots{display:flex;gap:3px;background:#000;justify-content:center;
+  align-items:flex-start}
+figure.ev .shots img{display:block;width:100%;height:auto;object-fit:contain;max-width:660px}
+figure.ev.pair .shots img{width:50%;max-width:462px}
+.vidid{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--muted);
+  letter-spacing:.02em;padding:10px 16px 0;word-break:break-all}
+.vidid b{color:var(--navy);font-weight:600}
+figure.ev figcaption{padding:8px 16px 16px;font-size:13px;line-height:1.55}
+figure.ev figcaption br{display:none}
+.moment{display:block;font-family:Poppins,Inter,sans-serif;font-weight:600;font-size:14.5px;
+  color:var(--navy);line-height:1.4;margin-bottom:8px}
+.evtext,.onscreen{display:block;font-size:13px;color:var(--body);background:var(--blue-tint2);
+  border-left:3px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 13px;
+  margin:8px 0 0;line-height:1.55}
+.onscreen b,.evtext b{color:var(--navy);font-weight:600}
+.badge{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;padding:3px 9px;border-radius:20px;vertical-align:middle;
+  line-height:1.35;margin:0 0 4px}
+.badge.weak{background:var(--blue-tint);color:var(--blue-dk)}
+
+/* ── footer ────────────────────────────────────────── */
+.p3foot{padding:26px 46px 40px;color:var(--muted);font-size:13px;
+  border-top:1px solid var(--line)}
+
+@media(max-width:760px){
+  .brandbar,.hero,main,.p3foot{padding-left:22px;padding-right:22px}
+  .brandbar{flex-wrap:wrap;gap:12px}
+  figure.ev.pair .shots{flex-wrap:wrap}
+  figure.ev.pair .shots img{width:100%;max-width:660px}
+  .banner .meta{gap:8px 20px}
+  .sheet{margin:0;border-left:0;border-right:0}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{body{background:#fff}.sheet{border:0;margin:0}figure.ev{break-inside:avoid}}
+
+
+/* navbar */
+.navbar{display:flex;align-items:center;gap:16px;padding:14px 46px;border-bottom:1px solid var(--line);background:var(--white)}
+.navbar .crumbs{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--muted);min-width:0;flex:1}
+.navbar .crumbs a{color:var(--body);font-weight:600;text-decoration:none}
+.navbar .crumbs a:hover{color:var(--blue-dk);text-decoration:underline}
+.navbar .crumbs .sep{color:var(--line)}
+.navbar .crumbs .here{color:var(--navy);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--body);
+  text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:7px 13px;background:var(--white);
+  flex-shrink:0;transition:border-color .14s,color .14s,background .14s}
+.backlink:hover{border-color:var(--blue);color:var(--blue-dk);background:var(--blue-tint);text-decoration:none}
+.navbar .logo{height:26px;width:auto;flex-shrink:0;margin-right:2px}
+@media(max-width:760px){.navbar{padding-left:22px;padding-right:22px;gap:11px}.navbar .crumbs{display:none}}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:34px 46px 44px;background:var(--white)}
+.fgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:start}
+.flab{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.fgrid p{margin:0;font-size:14px;color:var(--body)}
+.fmeta{margin-top:10px!important;font-size:13px!important;color:var(--muted)!important}
+.flinks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.flinks a{font-size:14.5px;color:var(--body);text-decoration:none;font-weight:600;display:inline-flex;gap:8px}
+.flinks a:hover{color:var(--blue-dk);text-decoration:underline}
+.flinks .arrow{color:var(--blue)}
+.fbot{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:30px;padding-top:20px;border-top:1px solid var(--hair);font-size:12.5px;color:var(--muted)}
+.fbot img{height:22px;width:auto}
+@media(max-width:760px){footer{padding-left:22px;padding-right:22px}.fgrid{grid-template-columns:1fr;gap:26px}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ── language switch ───────────────────────────────── */
+
+/* ── evidence strip ────────────────────────────────── */
+.evbox{margin-top:26px}
+.evlab{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.evhint{font-weight:400;letter-spacing:0;text-transform:none;font-size:12.5px;color:var(--muted)}
+.evstrip{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px}
+.evtile{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;
+  cursor:zoom-in;background:#000;aspect-ratio:16/9;
+  transition:border-color .14s,transform .14s,box-shadow .14s}
+.evtile:hover,.evtile:focus-visible{border-color:var(--blue);transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(26,109,255,.18);outline:none}
+.evtile img{width:100%;height:100%;object-fit:cover;display:block}
+.evtile .num{position:absolute;top:6px;left:6px;background:rgba(11,27,58,.86);color:#fff;
+  font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:4px;letter-spacing:.02em}
+figure.lb-src{display:none}
+
+/* ── lightbox ──────────────────────────────────────── */
+.lb{position:fixed;inset:0;z-index:9999;background:rgba(8,14,24,.94);display:none;
+  align-items:center;justify-content:center;flex-direction:column;padding:28px 64px 20px}
+.lb.open{display:flex}
+.lb>img{max-width:100%;max-height:calc(100vh - 160px);object-fit:contain;border-radius:6px;
+  background:#000;box-shadow:0 18px 60px rgba(0,0,0,.5)}
+.lb-cap{color:#e6ebf2;font-size:14px;line-height:1.55;max-width:900px;text-align:center;
+  margin-top:16px}
+.lb-cap a{color:#7ab9ff}
+.lb-cap b:first-child,.lb-cap strong:first-child{display:block;margin-bottom:6px;color:#fff;font-size:15px}
+.lb-count{position:absolute;top:20px;left:26px;color:#9fb0c4;font-size:12.5px;letter-spacing:.06em}
+.lb-x,.lb-prev,.lb-next{position:absolute;background:rgba(255,255,255,.1);border:0;color:#fff;
+  cursor:pointer;border-radius:8px;display:grid;place-items:center;transition:background .14s}
+.lb-x:hover,.lb-prev:hover,.lb-next:hover{background:rgba(255,255,255,.22)}
+.lb-x{top:16px;right:20px;width:38px;height:38px;font-size:20px;line-height:1}
+.lb-prev,.lb-next{top:50%;transform:translateY(-50%);width:44px;height:64px;font-size:24px}
+.lb-prev{left:12px} .lb-next{right:12px}
+@media(max-width:760px){.lb{padding:16px 12px}.lb-prev,.lb-next{width:36px;height:52px}}
+@media print{.lb{display:none!important}.evbox{display:none}figure.lb-src{display:block}}
+</style></head><body>
+<div class="sheet">
+
+<div class="navbar">
+    <img class="logo" src="6labs-logo.png" alt="6labs.ai">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Pilot report</a><span class="sep">/</span><span class="here">Retention and churn</span></nav>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">Case study &middot; Game A &times; Oracle</div>
+    <h1>Retention &amp; Churn</h1>
+    <p class="lede">Where new players drop off, how they behave before they quit &mdash; each proven on real recordings.</p>
+    <div class="recon-note"><b>About the evidence.</b> Every claim below was read off a recorded
+    gameplay session and rests on the footage behind it. The clips themselves are withheld here to
+    preserve anonymity &mdash; in your pilot, findings ship with the real clips attached.</div>
+  </div>
+
+  <main>
+  <section class="p3s1 p3sec"><div class="wrap">
+<div class="banner"><div class="kick">Section 1</div>
+<h1>Where new players stop, and what holds them up</h1>
+<div class="rule"></div>
+</div>
+
+<h2 id="what-this-is">What this is</h2>
+<div class="rule"></div>
+<p>361 people were recorded from the moment they first installed Game A. Every session was followed quest by quest through their first hundred guide quests.</p>
+<p>That cap is the comparison window. It puts every player on the same stretch of the game, so time spent on a step, where someone got stuck, and how they went about it can be compared person to person.</p>
+<p>A player counts as <strong>churned</strong> when the recordings stop and never resume: 281 players. A player counts as <strong>active</strong> when they were still being recorded when the capture window closed: 41 players. A further 39 installed too close to the end of the window to judge either way, and they are left out of comparisons.</p>
+<p>Every number says what it is out of. Every claim rests on a specific second of footage.</p>
+<div class="kick">1.1</div>
+<h2 id="where-new-players-stop-first">Where new players stop first</h2>
+<div class="rule"></div>
+<p><strong>Player loss spreads across the early experience, but the gap between churned and active users opens sharply across the first ten quests and widens again between quests 51 and 100.</strong></p>
+<p>This view counts only positions with credible short recordings, covering 253 churned players and 34 active players.</p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:34%"><col style="width:33%"><col style="width:33%"></colgroup><thead><tr><th>Quest Band</th><th>Churned Players</th><th>Active Players</th></tr></thead><tbody><tr><td>No quest identifiable</td><td>29 of 253 (11%)</td><td>0 of 34 (0%)</td></tr><tr><td>Quest 1 to 10</td><td>56 of 253 (22%)</td><td>0 of 34 (0%)</td></tr><tr><td>Quest 11 to 25</td><td>18 of 253 (7%)</td><td>2 of 34 (6%)</td></tr><tr><td>Quest 26 to 50</td><td>44 of 253 (17%)</td><td>7 of 34 (21%)</td></tr><tr><td>Quest 51 to 100</td><td>100 of 253 (40%)</td><td>19 of 34 (56%)</td></tr><tr><td>Past quest 100</td><td>6 of 253 (2%)</td><td>6 of 34 (18%)</td></tr></tbody></table></div>
+<ul><li>Active players stayed filmed longer, which mechanically gives them higher quest completion bands.</li><li>No single early quest causes immediate mass attrition.</li><li>A combined 85 of 253 churned players stop before reaching quest 11, whereas 0 of 34 active players drop out in that span.</li><li>The pre-quest phase sees 48 of 267 churned players stop, and quest 1 sees 33 of 165 churned players leave.</li><li>Losses gather heavily again from quest 51 to 100, accounting for 100 of 253 churned players alongside 19 of 34 active players.</li><li>Late bottlenecks emerge at boss milestones, such as quest 95 where 14 of 31 churned players stopped during a median run of 1680 seconds.</li></ul>
+<p>The studio could soften early combat timers and reduce boss HP barriers between quests 51 and 100 to smooth progression walls.</p>
+<div class="kick">1.2</div>
+<h2 id="which-steps-players-struggle-with-most">Which steps players struggle with most</h2>
+<div class="rule"></div>
+<p><strong>Most tutorial steps are clean, but Breakthrough Zone B - 10: 0/1 and Breakthrough Zone B - 9: 0/1 cause severe grinds.</strong></p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"></colgroup><thead><tr><th>Objective text</th><th>Players on step</th><th>Long grind</th><th>Never passed</th><th>Churned players who stopped here</th></tr></thead><tbody><tr><td>Breakthrough Zone B - 10: 0/1</td><td>49 of 361 recorded players</td><td>17 of 49 players</td><td>3 of 49 players</td><td>14 of 281 churned players</td></tr><tr><td>Breakthrough Zone B - 9: 0/1</td><td>35 of 361 recorded players</td><td>14 of 35 players</td><td>0 of 35 players</td><td>4 of 281 churned players</td></tr><tr><td>Defeat the Chapter 2 boss: 0/1</td><td>45 of 361 recorded players</td><td>5 of 45 players</td><td>0 of 45 players</td><td>2 of 281 churned players</td></tr><tr><td>Breakthrough Zone A - 6</td><td>43 of 361 recorded players</td><td>4 of 43 players</td><td>1 of 43 players</td><td>3 of 281 churned players</td></tr><tr><td>Breakthrough Zone B - 4</td><td>30 of 361 recorded players</td><td>6 of 30 players</td><td>0 of 30 players</td><td>1 of 281 churned players</td></tr></tbody></table></div>
+<ul><li>Across 361 recorded players, 281 of 361 players churned and 41 of 361 players remained active. Most early steps are clean, such as Defeat enemies: 0/3 where 188 of 212 players went straight through.</li><li>Breakthrough Zone B - 10: 0/1 created the worst bottleneck, forcing a long grind on 17 of 49 players. On that same step, 14 of 281 churned players stopped playing permanently.</li><li>Breakthrough Zone B - 9: 0/1 forced a long grind on 14 of 35 players facing Boss A. That boss fight ended repeatedly when combat timers expired.</li><li>Defeat the Chapter 2 boss: 0/1 blocked players as battle timers ran out. This boss fight turned into a long grind for 5 of 45 players.</li><li>Breakthrough Zone A - 6 produced immediate combat defeats before players upgraded gear to clear it. That step was a long grind for 4 of 43 players.</li></ul>
+<p>The studio could reduce boss health and extend battle timers on Breakthrough Zone B - 9 and Breakthrough Zone B - 10.</p>
+<div class="kick">1.3</div>
+<h2 id="how-long-each-step-takes">How long each step takes</h2>
+<div class="rule"></div>
+<p><strong>Early steps take 15 median seconds, but Quest 95 requires 1680 median seconds across 49 of 361 players.</strong></p>
+<p>The base counts 361 total recorded players. This includes 281 churned players out of 361, 41 active players out of 361, and 39 unlabelled players out of 361.</p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:20%"><col style="width:16%"><col style="width:16%"><col style="width:16%"><col style="width:16%"><col style="width:16%"></colgroup><thead><tr><th>Quest</th><th>Objective</th><th>Players</th><th>Median seconds</th><th>Median idle seconds</th><th>Churned stopped here</th></tr></thead><tbody><tr><td>2</td><td>Enhance stats: 0/1</td><td>119 of 361 players</td><td>15</td><td>0 of 15 seconds</td><td>10 of 281 churned players</td></tr><tr><td>3</td><td>Summon an Elite Monster: 0/1</td><td>125 of 361 players</td><td>15</td><td>0 of 15 seconds</td><td>6 of 281 churned players</td></tr><tr><td>1</td><td>Defeat enemies: 0/3</td><td>212 of 361 players</td><td>34</td><td>0 of 34 seconds</td><td>33 of 281 churned players</td></tr><tr><td>0</td><td>(pre-quest)</td><td>347 of 361 players</td><td>353</td><td>190 of 353 seconds</td><td>48 of 281 churned players</td></tr><tr><td>71</td><td>Breakthrough Zone B - 4</td><td>30 of 361 players</td><td>373</td><td>0 of 373 seconds</td><td>1 of 281 churned players</td></tr><tr><td>75</td><td>Breakthrough Zone B - 5</td><td>27 of 361 players</td><td>507</td><td>0 of 507 seconds</td><td>0 of 281 churned players</td></tr><tr><td>91</td><td>Breakthrough Zone B - 9: 0/1</td><td>35 of 361 players</td><td>1196</td><td>0 of 1196 seconds</td><td>4 of 281 churned players</td></tr><tr><td>95</td><td>Breakthrough Zone B - 10: 0/1</td><td>49 of 361 players</td><td>1680</td><td>81 of 1680 seconds</td><td>14 of 281 churned players</td></tr></tbody></table></div>
+<ul><li>Early tutorial steps finish quickly. Quest 2 and Quest 3 each take 15 median seconds across 119 of 361 players and 125 of 361 players. Quest 1 takes 34 median seconds for 212 of 361 players.</li><li>Idle time appears almost entirely during the opening setup. Quest 0 records 190 median idle seconds out of 353 median seconds for 347 of 361 players. Players sit idle while downloading initial game packages, from 7 seconds in to 190 seconds in. In contrast, Quest 91 records 0 median idle seconds out of 1196 median seconds for 35 of 361 players.</li><li>The slowest steps are all Chapter 3 Breakthrough Zone B boss battles. Quests 67, 71, 75, 79, 83, 87, 91, and 95 all demand breakthrough stage clears. Players spend their time in active combat, failing repeatedly against boss timers.</li><li>Clearing these steps forces players into extended grinding. On Quest 91, 14 of 35 players enter a long grind. Players run out of currency while upgrading gear to pass. On Quest 95, 17 of 49 players face a long grind, and 3 of 49 players never pass.</li><li>These slow combat walls drive permanent churn. Quest 95 stops 14 of 281 churned players. Quest 0 stops 48 of 281 churned players before numbered quests start. By contrast, Quest 75 stops 0 of 281 churned players.</li></ul>
+<p>The studio could lower boss health pools or extend combat timers across Chapter 3 Zone B breakthrough stages.</p>
+</div></section>
+
+<section class="p3s2 p3sec"><div class="wrap">
+<div class="banner">
+<div class="kick">Section 2</div>
+<h1>How players actually play, and how they leave</h1>
+<div class="rule"></div>
+
+</div>
+<div class="kick">2.1</div>
+<h2 id="how-the-two-groups-play">How the two groups play</h2>
+<div class="rule"></div>
+<p><strong>Across 281 churned players and 41 active players out of 361 recorded players, both groups perform identically at every shared quest.</strong></p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:10%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"></colgroup><thead><tr><th>Quest</th><th>Churned Players</th><th>Active Players</th><th>Churned Level</th><th>Active Level</th><th>Churned Power</th><th>Active Power</th><th>Churned Minutes</th><th>Active Minutes</th><th>Churned Losses</th><th>Active Losses</th></tr></thead><tbody><tr><td>1</td><td>176 of 281</td><td>28 of 41</td><td>1</td><td>1</td><td>167</td><td>167</td><td>4</td><td>3</td><td>0</td><td>0</td></tr><tr><td>5</td><td>84 of 281</td><td>15 of 41</td><td>3</td><td>3</td><td>209</td><td>202</td><td>5</td><td>4</td><td>0</td><td>0</td></tr><tr><td>10</td><td>31 of 281</td><td>6 of 41</td><td>6</td><td>6</td><td>329</td><td>315</td><td>10</td><td>9</td><td>0</td><td>0</td></tr><tr><td>20</td><td>50 of 281</td><td>13 of 41</td><td>9</td><td>10</td><td>727</td><td>675</td><td>18</td><td>15</td><td>0</td><td>0</td></tr><tr><td>35</td><td>65 of 281</td><td>19 of 41</td><td>14</td><td>14</td><td>1845</td><td>1780</td><td>25</td><td>23</td><td>0</td><td>1</td></tr><tr><td>50</td><td>38 of 281</td><td>9 of 41</td><td>19</td><td>19</td><td>6091</td><td>5789</td><td>46</td><td>44</td><td>3</td><td>4</td></tr><tr><td>75</td><td>32 of 281</td><td>9 of 41</td><td>24</td><td>24</td><td>23412</td><td>19451</td><td>85</td><td>68</td><td>6</td><td>5</td></tr><tr><td>100</td><td>11 of 281</td><td>8 of 41</td><td>30</td><td>30</td><td>131277</td><td>161761</td><td>141</td><td>116</td><td>10</td><td>11</td></tr></tbody></table></div>
+<ul><li>Both groups start quest steps by letting auto-combat progress directly through stage waves and boss fights. Active player A pushed stages automatically. Churned player B used auto-combat through stage waves.</li><li>When combat fails, players in both groups usually retry immediately rather than reading menus. Active player A retried Chapter 3 Stage 07 immediately after defeat. Churned player C retried Chapter 2 Stage 04 immediately after failing.</li><li>When retries fail, players in both groups open menus to upgrade gear, weapons, and stats. Active player A summoned weapons and upgraded bow levels after defeat on Stage 2-06. Churned player B upgraded weapons, learned skills, and enhanced attributes after failing Stage 2-4.</li><li>When facing stubborn boss walls, both groups pivot to running resource dungeons or buying store packages. Active player D bought a weapon offer and entered dungeons after failing a boss fight. Churned player E bought an epic weapon pack after timing out on Stage 2-8.</li><li>Feature engagement is nearly identical across both groups. Stat upgrades were used by 253 of 281 churned players and 37 of 41 active players. Gear management was used by 235 of 281 churned players and 39 of 41 active players. Boss fights were used by 219 of 281 churned players and 40 of 41 active players.</li></ul>
+<p>The studio should not change early quest flow or combat systems, because churned players play identically to active players.</p>
+<div class="kick">2.2</div>
+<h2 id="what-the-last-recorded-minutes-look-like">What the last recorded minutes look like</h2>
+<div class="rule"></div>
+<p><strong>Most recordings end mid-progress when capture stops, but idle drop-offs and intentional exits mark real churn.</strong></p>
+<p>The base is 281 churned players and 41 active players.</p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:34%"><col style="width:33%"><col style="width:33%"></colgroup><thead><tr><th>Final state</th><th>Churned players</th><th>Active players</th></tr></thead><tbody><tr><td>Still moving forward</td><td>196 of 281 churned (70%)</td><td>39 of 41 active (95%)</td></tr><tr><td>Idle or in sleep mode</td><td>34 of 281 churned (12%)</td><td>2 of 41 active (5%)</td></tr><tr><td>Too short to show a journey</td><td>23 of 281 churned (8%)</td><td>0 of 41 active (0%)</td></tr><tr><td>Closed the game through logout or exit</td><td>17 of 281 churned (6%)</td><td>0 of 41 active (0%)</td></tr><tr><td>Stuck at something on screen</td><td>7 of 281 churned (2%)</td><td>0 of 41 active (0%)</td></tr><tr><td>Playing but not advancing</td><td>4 of 281 churned (1%)</td><td>0 of 41 active (0%)</td></tr></tbody></table></div>
+<ul><li>Footage ends during active play for 196 of 281 churned players and 39 of 41 active players. The capture tool stops clips automatically every fifteen minutes. Active players were filmed for longer, which explains their higher share.</li><li>Leaving the device running marks a real split. This idle state appears in 34 of 281 churned players and 2 of 41 active players. These players let the app drift into sleep mode and never return.</li><li>Early bounce claims 23 of 281 churned players and 0 of 41 active players. Their sessions were too short to record any gameplay journey.</li><li>Deliberate exits happen only among churned players. This exit behavior covers 17 of 281 churned players and 0 of 41 active players. For example, one player opened settings to confirm logout after repeated battle losses.</li><li>Screen blocks and dead ends affect only the churned group. There were 7 of 281 churned players stuck on screen and 4 of 281 churned players playing without advancing. Neither pattern appeared in the active group, with 0 of 41 active players for both.</li></ul>
+<p>The studio could add an alert before sleep mode triggers and streamline early onboarding to retain players who leave immediately.</p>
+<div class="kick">2.3</div>
+<h2 id="what-players-do-after-the-game-does-something">What players do after the game does something</h2>
+<div class="rule"></div>
+<p><strong>Players drop out most when combat stops them or when store popups ask for cash.</strong></p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:16%"><col style="width:12%"><col style="width:12%"><col style="width:12%"><col style="width:12%"><col style="width:12%"><col style="width:12%"><col style="width:12%"></colgroup><thead><tr><th>Designed loop</th><th>Closed</th><th>Did not close</th><th>Share closed</th><th>Churned hit</th><th>Active hit</th><th>Churned breaks</th><th>Active breaks</th></tr></thead><tbody><tr><td>Lost a fight, then beat that content</td><td>966</td><td>314</td><td>75%</td><td>171 of 281</td><td>36 of 41</td><td>106 of 281</td><td>21 of 41</td></tr><tr><td>Saw a price, then completed the purchase</td><td>391</td><td>68</td><td>85%</td><td>166 of 281</td><td>33 of 41</td><td>32 of 281</td><td>7 of 41</td></tr><tr><td>Hit an error, then recovered</td><td>156</td><td>26</td><td>86%</td><td>89 of 281</td><td>23 of 41</td><td>15 of 281</td><td>3 of 41</td></tr><tr><td>Ran short of something, then got past it</td><td>80</td><td>13</td><td>86%</td><td>57 of 281</td><td>13 of 41</td><td>5 of 281</td><td>4 of 41</td></tr><tr><td>Game suggested something, then did it</td><td>123</td><td>6</td><td>95%</td><td>60 of 281</td><td>14 of 41</td><td>5 of 281</td><td>1 of 41</td></tr><tr><td>Unlocked a feature, then used it</td><td>1649</td><td>15</td><td>99%</td><td>236 of 281</td><td>36 of 41</td><td>12 of 281</td><td>1 of 41</td></tr><tr><td>Summoned something, then equipped it</td><td>581</td><td>6</td><td>99%</td><td>190 of 281</td><td>34 of 41</td><td>4 of 281</td><td>0 of 41</td></tr><tr><td>Gained a level or currency, then spent it</td><td>1696</td><td>2</td><td>100%</td><td>220 of 281</td><td>34 of 41</td><td>1 of 281</td><td>0 of 41</td></tr></tbody></table></div>
+<ul><li>Active players were recorded for longer, so they had more chances to encounter each event.</li><li>Failing a fight is the leakiest loop, leaving 314 of 1280 encounters unresolved.</li><li>Boss encounters break combat recovery when players run out of time and walk away, as seen against Boss A and Boss B.</li><li>Players also exit defeated battles without returning, abandoning Weapon Dungeon Phase 6 and Chapter 3 Stage 05.</li><li>Price prompts fail to close 68 of 459 times, causing players to dismiss paid deals or abandon purchase flows.</li><li>Technical errors leak players when crashes freeze the screen entirely or block account linking.</li></ul>
+<p>The studio can smooth the sharpest difficulty spikes in early chapter bosses and replace hard purchase popups with non-intrusive store prompts.</p>
+</div></section>
+
+<section class="p3s3 p3sec"><div class="wrap">
+<div class="banner"><div class="kick">Section 3</div>
+<h1>Problems for the development team</h1>
+<div class="rule"></div>
+</div>
+<div class="kick">3.1</div>
+<h2 id="problems-worth-fixing">Problems worth fixing</h2>
+<div class="rule"></div>
+<p><strong>Store errors block real money payments, session drops kick players out of combat, and early feature locks frustrate routine actions.</strong></p>
+<p>The base counts 281 churned players out of 361 recorded players, and 41 active players out of 361 recorded players.</p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"></colgroup><thead><tr><th>Category</th><th>Problem</th><th>Churned players</th><th>Active players</th><th>Evidence</th></tr></thead><tbody><tr><td>Purchase paths that fail</td><td>In-app purchase checkout errors</td><td>3 of 281 churned players</td><td>1 of 41 active players</td><td>recorded session</td></tr><tr><td>Purchase paths that fail</td><td>Vendor initialization errors</td><td>2 of 281 churned players</td><td>0 of 41 active players</td><td>recorded session</td></tr><tr><td>Purchase paths that fail</td><td>Rewarded video ad loading failures</td><td>4 of 281 churned players</td><td>1 of 41 active players</td><td>recorded session</td></tr><tr><td>Things that break a session</td><td>Session expiration disconnects</td><td>9 of 281 churned players</td><td>1 of 41 active players</td><td>recorded session</td></tr><tr><td>Things that break a session</td><td>Battle verification desync kicks</td><td>2 of 281 churned players</td><td>0 of 41 active players</td><td>recorded session</td></tr><tr><td>Things that break a session</td><td>Indefinite screen freezes</td><td>2 of 281 churned players</td><td>0 of 41 active players</td><td>recorded session</td></tr><tr><td>Behaviour worth knowing</td><td>Nickname change locked by quest</td><td>7 of 281 churned players</td><td>2 of 41 active players</td><td>recorded session</td></tr><tr><td>Behaviour worth knowing</td><td>Potion upgrade blocked by health cap</td><td>1 of 281 churned players</td><td>1 of 41 active players</td><td>recorded session</td></tr><tr><td>Behaviour worth knowing</td><td>Full inventory stops auto combat</td><td>1 of 281 churned players</td><td>0 of 41 active players</td><td>recorded session</td></tr></tbody></table></div>
+<ul><li>Store errors directly stopped players from completing real cash transactions. Payment checkout errors blocked purchases for 3 of 281 churned players and 1 of 41 active players. Vendor initialization errors stopped checkout for 2 of 281 churned players. Failed ad loads blocked free rewards for 4 of 281 churned players and 1 of 41 active players.</li><li>Sudden session expiration popups kicked players out during live combat. This disconnect struck 9 of 281 churned players and 1 of 41 active players. Battle verification mismatches forced 2 of 281 churned players out of active play. Indefinite screen hangs froze the client for 2 of 281 churned players.</li><li>Active players were recorded longer, so they had more time to hit errors.</li><li>Players tried to set custom names before the tutorial allowed it. Guide quest locks blocked name changes for 7 of 281 churned players and 2 of 41 active players. Name collisions forced 1 of 281 churned players to test many rejected choices.</li><li>Automated play halted when background limits were reached. Full equipment bags stopped auto combat for 1 of 281 churned players. Maximum health caps blocked potion upgrades for 1 of 281 churned players and 1 of 41 active players.</li></ul>
+<p>The studio should fix payment gateway timeouts, auto-dismantle overflow items during idle combat, and unlock name changes from the start.</p>
+</div></section>
+
+
+
+
+  </main>
+
+  <footer>
+  <div class="fgrid">
+    <div>
+      <div class="flab">This report</div>
+      <p><b>Retention and churn</b> &mdash; one of three category reports from the Game A pilot.</p>
+      <p class="fmeta">Findings read from recorded player sessions. Clip links are withheld in this anonymised copy.</p>
+    </div>
+    <div>
+      <div class="flab">Other reports</div>
+      <ul class="flinks"><li><a href="index.html"><span class="arrow">&rarr;</span>Main report</a></li><li><a href="chat-moderation.html"><span class="arrow">&rarr;</span>Chat moderation</a></li><li><a href="monetization-ux.html"><span class="arrow">&rarr;</span>Technical issues and UX friction</a></li></ul>
+    </div>
+  </div>
+  <div class="fbot"><span>Game A pilot &middot; Aug 31 &ndash; Sep 8, 2026 &middot; anonymised case study</span><img src="6labs-logo.png" alt="6labs.ai"></div>
+</footer>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>

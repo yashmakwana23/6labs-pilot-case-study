@@ -1,0 +1,222 @@
+/* ──────────────────────────────────────────────────────────────
+   recon.css — stylized screen reconstructions
+   Every .rs block is a drawn approximation of a moment observed in a
+   recorded session. No client footage, art or UI is reproduced.
+   ────────────────────────────────────────────────────────────── */
+
+.rs{
+  --rs-ink:#0b1220; --rs-line:rgba(255,255,255,.14); --rs-paper:#fff;
+  --rs-navy:#0b1b3a; --rs-body:#475467; --rs-muted:#8593a8;
+  position:relative; width:100%; max-width:290px; margin:0 auto;
+  aspect-ratio:9/16; border-radius:12px; overflow:hidden;
+  border:1px solid #cdd6e6; isolation:isolate;
+  background:
+    radial-gradient(120% 60% at 22% 12%, rgba(72,110,200,.55), transparent 60%),
+    radial-gradient(90% 55% at 82% 30%, rgba(138,92,196,.42), transparent 62%),
+    linear-gradient(178deg,#15213d 0%,#101a31 52%,#0a1224 100%);
+  font:12px/1.45 Inter,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color:#e8edf7;
+}
+.rs.wide{aspect-ratio:16/10; max-width:100%}
+.rs.tall{max-width:250px}
+
+/* abstract ground + scenery, no game art */
+.rs::before{
+  content:""; position:absolute; inset:auto 0 0 0; height:34%;
+  background:
+    radial-gradient(60% 100% at 30% 100%, rgba(120,160,255,.20), transparent 70%),
+    linear-gradient(0deg, rgba(255,255,255,.09), transparent);
+  border-top:1px solid rgba(255,255,255,.07);
+}
+/* three flat silhouettes: player + two enemies */
+.rs::after{
+  content:""; position:absolute; left:0; right:0; bottom:20%; height:20%;
+  background:
+    radial-gradient(closest-side, rgba(255,255,255,.16) 92%, transparent) 22% 100%/24px 42px no-repeat,
+    radial-gradient(closest-side, rgba(255,255,255,.09) 92%, transparent) 58% 100%/20px 32px no-repeat,
+    radial-gradient(closest-side, rgba(255,255,255,.09) 92%, transparent) 76% 100%/20px 32px no-repeat;
+}
+
+/* corner provenance tag — always visible, never removed */
+.rs-tag{
+  position:absolute; z-index:9; right:7px; bottom:7px;
+  font:600 8.5px/1 Inter,sans-serif; letter-spacing:.08em; text-transform:uppercase;
+  color:rgba(255,255,255,.62); background:rgba(8,14,28,.66);
+  border:1px solid rgba(255,255,255,.18); border-radius:4px; padding:4px 6px;
+}
+
+/* ── HUD ────────────────────────────────────────────────────── */
+.rs-hud{position:absolute; z-index:3; top:9px; left:9px; right:9px;
+  display:flex; gap:5px; align-items:center}
+.rs-chip{height:15px; border-radius:8px; background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.14); flex:0 0 auto}
+.rs-chip.w1{width:30px}.rs-chip.w2{width:44px}.rs-chip.w3{width:58px}
+.rs-chip.grow{flex:1 1 auto}
+.rs-chip.lbl{display:flex; align-items:center; justify-content:center;
+  padding:0 7px; width:auto; font:600 8.5px/1 Inter,sans-serif;
+  color:rgba(255,255,255,.85); letter-spacing:.02em}
+
+/* boss health + timer strip */
+.rs-boss{position:absolute; z-index:3; top:30px; left:9px; right:9px}
+.rs-boss .nm{font:600 9px/1 Inter,sans-serif; color:rgba(255,255,255,.8);
+  letter-spacing:.05em; text-transform:uppercase; margin-bottom:4px}
+.rs-bar{height:7px; border-radius:4px; background:rgba(255,255,255,.16); overflow:hidden}
+.rs-bar i{display:block; height:100%; background:linear-gradient(90deg,#ff6b6b,#e23c3c)}
+.rs-timer{margin-top:5px; text-align:center; font:700 13px/1 "SFMono-Regular",Menlo,monospace;
+  color:#ffd166; text-shadow:0 1px 3px rgba(0,0,0,.55)}
+.rs-timer.out{color:#ff7b7b}
+
+/* ── dim + dialogs ──────────────────────────────────────────── */
+.rs-dim{position:absolute; inset:0; z-index:4; background:rgba(5,9,18,.62)}
+.rs-dim.heavy{background:rgba(4,7,14,.86)}
+
+.rs-dlg{position:absolute; z-index:5; left:50%; top:50%; transform:translate(-50%,-50%);
+  width:calc(100% - 34px); background:var(--rs-paper); color:var(--rs-navy);
+  border-radius:10px; box-shadow:0 14px 34px rgba(0,0,0,.45); overflow:hidden}
+.rs-dlg .hd{padding:9px 12px; font:700 10.5px/1.2 Inter,sans-serif; letter-spacing:.03em;
+  text-transform:uppercase; color:#5b6b85; background:#f2f5fb;
+  border-bottom:1px solid #e4e9f2}
+.rs-dlg .bd{padding:12px; font-size:11.5px; line-height:1.5; color:#2b3648}
+.rs-dlg .bd .code{display:block; margin-top:7px; font:600 10.5px/1.3 "SFMono-Regular",Menlo,monospace;
+  color:#b42318}
+.rs-dlg .ft{display:flex; gap:7px; padding:0 12px 12px}
+.rs-dlg.mid{top:44%}
+
+/* buttons */
+.rs-btn{flex:1 1 0; text-align:center; padding:7px 8px; border-radius:6px;
+  font:600 10.5px/1.2 Inter,sans-serif; border:1px solid #d3dbe9; color:#37455c; background:#fff}
+.rs-btn.pri{background:#1a6dff; border-color:#1a6dff; color:#fff}
+.rs-btn.warn{background:#b42318; border-color:#b42318; color:#fff}
+.rs-btn.ok{background:#0a7d4a; border-color:#0a7d4a; color:#fff}
+.rs-btn.dim{opacity:.5}
+
+/* ── toasts / banners ───────────────────────────────────────── */
+.rs-toast{position:absolute; z-index:7; left:12px; right:12px;
+  padding:7px 9px; border-radius:6px; font:600 10px/1.4 Inter,sans-serif;
+  box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.rs-toast.yellow{background:#fde68a; color:#713f12; border:1px solid #f0c33c}
+.rs-toast.red{background:#fecaca; color:#7f1d1d; border:1px solid #f08d8d}
+.rs-toast.t1{top:24%}.rs-toast.t2{top:36%}.rs-toast.t3{top:48%}.rs-toast.t4{top:60%}
+
+/* ── fail plate ─────────────────────────────────────────────── */
+.rs-fail{position:absolute; z-index:6; left:50%; top:46%; transform:translate(-50%,-50%);
+  width:calc(100% - 30px); text-align:center}
+.rs-fail .stage{font:700 9.5px/1.2 Inter,sans-serif; letter-spacing:.13em;
+  text-transform:uppercase; color:rgba(255,255,255,.72)}
+.rs-fail .big{margin:5px 0 10px; font:800 28px/1 Poppins,Inter,sans-serif;
+  letter-spacing:.05em; color:#ff6b6b; text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.rs-fail .row{display:flex; gap:8px}
+.rs-fail .auto{margin-top:9px; font:500 9px/1 Inter,sans-serif; color:rgba(255,255,255,.6)}
+
+/* ── panels (store, enhance, list) ──────────────────────────── */
+.rs-panel{position:absolute; z-index:5; left:12px; right:12px; top:50%;
+  transform:translateY(-50%); background:#fff; color:#2b3648; border-radius:10px;
+  overflow:hidden; box-shadow:0 14px 34px rgba(0,0,0,.45)}
+.rs-panel .hd{padding:9px 12px; font:700 10.5px/1.2 Inter,sans-serif;
+  color:#0b1b3a; background:#f2f5fb; border-bottom:1px solid #e4e9f2}
+.rs-row{display:flex; align-items:center; gap:9px; padding:9px 12px;
+  border-bottom:1px solid #eef1f6; font-size:10.5px}
+.rs-row:last-child{border-bottom:0}
+.rs-row .ic{flex:0 0 auto; width:26px; height:26px; border-radius:6px;
+  background:linear-gradient(140deg,#dbe6ff,#b9ccf7); border:1px solid #c3d3f2}
+.rs-row .tx{flex:1 1 auto; min-width:0}
+.rs-row .tx b{display:block; color:#0b1b3a; font-weight:600}
+.rs-row .tx span{color:#7b8aa3; font-size:9.5px}
+.rs-row .pill{flex:0 0 auto; padding:5px 9px; border-radius:5px;
+  font:600 10px/1 Inter,sans-serif; background:#0a7d4a; color:#fff; white-space:nowrap}
+.rs-row .pill.blue{background:#1a6dff}
+.rs-row .pill.gold{background:#b98007}
+.rs-row .pill.ghost{background:#fff; color:#37455c; border:1px solid #d3dbe9}
+
+/* ── chat panel ─────────────────────────────────────────────── */
+.rs-chat{position:absolute; z-index:5; left:9px; right:9px; bottom:9px; top:24%;
+  background:rgba(9,14,26,.86); border:1px solid rgba(255,255,255,.14);
+  border-radius:9px; overflow:hidden; display:flex; flex-direction:column}
+.rs-chat .tabs{display:flex; gap:4px; padding:7px 8px; border-bottom:1px solid rgba(255,255,255,.1)}
+.rs-chat .tab{padding:3px 8px; border-radius:5px; font:600 8.5px/1.3 Inter,sans-serif;
+  color:rgba(255,255,255,.55); background:rgba(255,255,255,.07)}
+.rs-chat .tab.on{background:#1a6dff; color:#fff}
+.rs-chat .log{flex:1 1 auto; padding:7px 8px; display:flex; flex-direction:column; gap:5px;
+  overflow:hidden}
+.rs-msg{font-size:9.5px; line-height:1.45; color:rgba(255,255,255,.82)}
+.rs-msg b{color:#7fb0ff; font-weight:600}
+.rs-msg.spam{color:#ffd166}
+.rs-msg.flag{background:rgba(255,107,107,.16); border-left:2px solid #ff6b6b;
+  padding:4px 6px; border-radius:0 4px 4px 0}
+.rs-msg.muted{color:rgba(255,255,255,.42)}
+.rs-chat .inbox{padding:6px 8px; border-top:1px solid rgba(255,255,255,.1);
+  display:flex; gap:6px; align-items:center}
+.rs-chat .inbox .f{flex:1 1 auto; height:17px; border-radius:5px;
+  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.13)}
+.rs-chat .inbox .s{padding:4px 8px; border-radius:5px; background:#1a6dff;
+  font:600 8.5px/1.2 Inter,sans-serif; color:#fff}
+
+/* ── spinner / server wait ──────────────────────────────────── */
+.rs-spin{width:20px; height:20px; margin:0 auto 9px; border-radius:50%;
+  border:2.5px solid #d7e0f0; border-top-color:#1a6dff}
+.rs-spin.corner{position:absolute; z-index:6; right:14px; bottom:16px; margin:0;
+  width:16px; height:16px; border-width:2px;
+  border-color:rgba(255,255,255,.25); border-top-color:rgba(255,255,255,.75)}
+
+/* ── ad end card ────────────────────────────────────────────── */
+.rs-ad{position:absolute; inset:0; z-index:5;
+  background:linear-gradient(165deg,#2d1b4e,#1b1030); display:flex;
+  flex-direction:column; align-items:center; justify-content:center; gap:10px; padding:18px}
+.rs-ad .art{width:62px; height:62px; border-radius:14px;
+  background:linear-gradient(140deg,#ffb35c,#ff6b6b); border:1px solid rgba(255,255,255,.25)}
+.rs-ad .nm{font:700 12px/1.2 Poppins,Inter,sans-serif; color:#fff; text-align:center}
+.rs-ad .sub{font-size:9.5px; color:rgba(255,255,255,.6); text-align:center}
+.rs-ad .cta{margin-top:2px; padding:7px 22px; border-radius:7px; background:#1a6dff;
+  font:700 11px/1 Inter,sans-serif; color:#fff}
+.rs-sheet{position:absolute; z-index:6; left:0; right:0; bottom:0; height:38%;
+  background:#fff; border-radius:12px 12px 0 0; box-shadow:0 -10px 28px rgba(0,0,0,.4);
+  padding:11px 12px; color:#2b3648}
+.rs-sheet .bar{height:4px; width:34px; border-radius:2px; background:#dfe5ef; margin:0 auto 10px}
+.rs-sheet .ttl{font:700 11px/1.2 Inter,sans-serif; color:#0b1b3a}
+.rs-sheet .mt{font-size:9.5px; color:#7b8aa3; margin-top:3px}
+
+/* ── form (support ticket) ──────────────────────────────────── */
+.rs-form{position:absolute; z-index:5; left:11px; right:11px; top:11px; bottom:11px;
+  background:#fff; border-radius:9px; padding:11px; color:#2b3648; display:flex;
+  flex-direction:column; gap:7px}
+.rs-form .ttl{font:700 11px/1.2 Inter,sans-serif; color:#0b1b3a}
+.rs-form .fl{height:15px; border-radius:4px; background:#eef2f8; border:1px solid #e0e7f2}
+.rs-form .fl.tall{flex:1 1 auto; min-height:44px}
+.rs-form .fl.filled{background:#fff; border-color:#c9d5e8; display:flex; align-items:center;
+  padding:0 7px; font-size:9.5px; color:#5b6b85; height:auto; min-height:19px}
+
+/* ── the disclosure line ────────────────────────────────────── */
+.recon-note{margin:22px 0 0; padding:12px 14px; border-radius:8px;
+  background:#f6f9ff; border:1px solid #dbe5fa;
+  font-size:12.5px; line-height:1.6; color:#475467}
+.recon-note b{color:#0b1b3a}
+
+@media (max-width:620px){
+  .rs{max-width:250px}
+}
+
+/* wider single-panel feed reconstruction */
+.rs.feed{max-width:380px; aspect-ratio:3/4}
+.rs.feed .rs-chat{top:14%}
+
+/* fit reconstructions into the report pages' figure shells */
+figure.ev .shots{padding:16px 12px; gap:12px; align-items:flex-start}
+figure.ev .shots .rs{max-width:225px}
+.pair .rs{max-width:250px}
+
+/* when a screen shows a panel AND a dialog, stack them instead of overlapping */
+.rs:has(.rs-dlg) .rs-panel{top:31%}
+.rs:has(.rs-panel) .rs-dlg{top:69%}
+.rs:has(.rs-panel) .rs-dlg.mid{top:69%}
+
+/* keep the provenance tag clear of the chat composer */
+.rs:has(.rs-chat) .rs-tag{bottom:auto; top:7px; right:7px}
+.rs:has(.rs-chat) .rs-hud{top:auto; bottom:9px; left:9px; right:70px; opacity:.5}
+
+/* tighten panel rows so labels do not wrap into ladders */
+.rs-row{padding:8px 10px; gap:7px; font-size:10px}
+.rs-row .ic{width:22px; height:22px}
+.rs-row .tx b{line-height:1.25}
+.rs-row .tx span{font-size:9px; line-height:1.3}
+.rs-row .pill{padding:4px 7px; font-size:9px}
+.rs-panel .hd{padding:8px 10px; font-size:10px}

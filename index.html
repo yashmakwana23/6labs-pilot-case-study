@@ -1,0 +1,436 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Game A Pilot Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="recon.css">
+<style>
+:root{
+  --navy:#0b1b3a; --ink:#101828; --body:#475467; --muted:#8593a8;
+  --blue:#1a6dff; --blue-dk:#1450c8; --blue-tint:#eef3fe; --blue-tint2:#f6f9ff;
+  --line:#e4e9f2; --hair:#eef1f6; --white:#fff; --page:#f7f9fc;
+  --good:#0a7d4a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--body);
+  font:16px/1.65 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.sheet{max-width:1060px;margin:26px auto;background:var(--white);border:1px solid var(--line)}
+h1,h2,h3{font-family:Poppins,Inter,sans-serif;color:var(--navy);margin:0;
+  letter-spacing:-.015em}
+p{margin:13px 0}
+a{color:var(--blue-dk);text-decoration:none;font-weight:600}
+a:hover{text-decoration:underline}
+a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+/* ── brand bar ─────────────────────────────────────── */
+.brandbar{display:flex;justify-content:space-between;align-items:flex-start;
+  padding:38px 46px 0}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--blue);padding-top:4px}
+.logo{display:block;height:30px;width:auto;flex-shrink:0}
+
+/* ── hero ──────────────────────────────────────────── */
+.hero{padding:14px 46px 34px}
+.hero h1{font-size:clamp(34px,4.6vw,46px);font-weight:700;line-height:1.08}
+.hero h1 .hl{color:var(--blue)}
+.hero .meta b{color:var(--navy);font-weight:600}
+.hero .meta{margin-top:20px;font-size:14.5px;color:var(--muted);
+  padding-top:16px;border-top:1px solid var(--line)}
+.hero .meta div+div{margin-top:4px}
+
+/* ── stat tiles (house style) ──────────────────────── */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:16px;
+  padding:0 46px 8px}
+.tile{background:var(--blue-tint);border-radius:8px;padding:20px 22px}
+.tile .n{font-family:Poppins,sans-serif;font-size:34px;font-weight:700;color:var(--navy);
+  line-height:1;font-variant-numeric:tabular-nums}
+.tile .n small{font-size:15px;font-weight:500;color:var(--muted);margin-left:5px}
+.tile .l{font-size:13.5px;color:var(--body);margin-top:9px}
+
+main{padding:0 46px}
+section{padding:56px 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0;padding-top:34px}
+h2{font-size:23px;font-weight:600;margin:0 0 6px}
+h2+.rule{width:44px;height:3px;background:var(--blue);border-radius:2px;margin-bottom:18px}
+.kick{font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:8px}
+
+/* ── numbered steps (house style) ──────────────────── */
+.steps{margin-top:22px}
+.step{display:grid;grid-template-columns:36px 1fr;gap:18px;padding:20px 0;
+  border-top:1px solid var(--hair)}
+.step:first-child{border-top:0;padding-top:4px}
+.badge{width:34px;height:34px;border-radius:7px;background:var(--navy);color:#fff;
+  display:grid;place-items:center;font-family:Poppins,sans-serif;font-weight:600;font-size:15px}
+.step h3{font-size:18px;font-weight:600;margin-bottom:6px}
+.step p{font-size:15px;margin:0}
+.step .src{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;margin-bottom:5px}
+
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:26px}
+.col{border-top:2px solid var(--blue);padding-top:14px}
+.col h3{font-size:17px;font-weight:600;margin-bottom:7px}
+.col p{font-size:14.5px;margin:0;max-width:none}
+.notes{list-style:none;margin:30px 0 0;padding:20px 0 0;border-top:1px solid var(--hair)}
+.notes li{position:relative;padding-left:20px;margin:9px 0;font-size:14.5px;}
+.notes li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;
+  border-radius:50%;background:var(--blue)}
+
+/* ── tables ────────────────────────────────────────── */
+table{border-collapse:collapse;width:100%;margin:20px 0 0;font-size:15px}
+th{text-align:left;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);padding:0 14px 11px 0;border-bottom:1.5px solid var(--line)}
+td{padding:13px 14px 13px 0;border-bottom:1px solid var(--hair);vertical-align:top}
+td.n,th.n{text-align:right;padding-right:0}
+td.n{font-variant-numeric:tabular-nums;font-weight:700;color:var(--navy);
+  font-family:Poppins,sans-serif;white-space:nowrap}
+.good{color:var(--good);font-weight:500}
+.foot{font-size:13.5px;color:var(--muted);margin-top:16px;}
+
+.vs{margin-top:44px;padding-top:36px;border-top:1px solid var(--hair)}
+.vs:first-of-type{border-top:0;margin-top:26px;padding-top:0}
+.vscat{display:flex;align-items:center;gap:9px;font-size:11.5px;font-weight:700;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.vsnum{width:22px;height:22px;border-radius:5px;background:var(--navy);color:#fff;
+  display:grid;place-items:center;font-family:Poppins,sans-serif;font-size:11.5px;letter-spacing:0}
+.vsq{font-family:Poppins,sans-serif;font-size:22px;font-weight:600;color:var(--navy);margin-bottom:18px}
+.vslead{font-size:15px;margin:0 0 20px}
+.vslead b,.evpts b{color:var(--navy);font-weight:600}
+.evrow{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:26px;align-items:start}
+.evfig{margin:0}
+.evfig img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:8px;background:#000}
+.evfig figcaption{font-size:12.5px;color:var(--muted);margin-top:9px;line-height:1.5}
+.evpts{list-style:none;margin:0;padding:0}
+.evpts li{position:relative;padding-left:20px;margin:0 0 14px;font-size:14.5px;line-height:1.55}
+.evpts li:last-child{margin-bottom:0}
+.evpts li::before{content:"";position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%;background:var(--blue)}
+
+.jrn{display:flex;align-items:stretch;gap:0;margin:14px 0 0}
+.jstep{flex:1 1 0;min-width:0;padding:12px 13px;border-radius:6px;background:#fff;
+  border:1px solid var(--line);border-top:3px solid var(--muted)}
+.jstep.ok{border-top-color:var(--blue)}
+.jstep.err{border-top-color:#d9534f;background:#fff6f5;border-color:#f3d4d2}
+.jstep.gone{border-top-color:#8a8f98;background:#f4f5f7}
+.jlab{display:block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:5px}
+.jstep.err .jlab{color:#b23a2e}
+.jtxt{display:block;font-size:12.5px;line-height:1.42;color:var(--navy)}
+.jarr{display:flex;align-items:center;padding:0 5px;color:var(--muted);font-size:17px}
+.jmid{font-size:14.5px;margin:18px 0 0!important}
+.jnote{margin-top:11px;font-size:12.5px;color:var(--muted);line-height:1.5}
+.jnote b{color:var(--navy)}
+
+.caps{display:grid;grid-template-columns:repeat(4,1fr);gap:26px 28px;margin-top:26px}
+.cap{border-top:2px solid var(--blue);padding-top:14px}
+.cap h3{font-size:16px;font-weight:600;margin-bottom:7px;color:var(--navy)}
+.cap p{font-size:14px;margin:0;line-height:1.5}
+
+/* ── report cards ──────────────────────────────────── */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+.card{border:1px solid var(--line);border-radius:8px;padding:24px 26px;background:var(--white);
+  text-decoration:none;color:inherit;display:flex;flex-direction:column;
+  transition:border-color .14s,box-shadow .14s,transform .14s}
+.card:hover{border-color:var(--blue);box-shadow:0 8px 24px rgba(26,109,255,.12);
+  transform:translateY(-2px);text-decoration:none}
+.card .num{font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:9px}
+.card h3{font-size:20px;font-weight:600;margin-bottom:9px}
+.card p{font-size:14.5px;margin:0 0 16px;flex:1;max-width:none}
+.card .go{font-size:14px;color:var(--blue-dk);font-weight:600}
+
+footer{padding:26px 46px 40px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+
+@media(max-width:760px){
+  .brandbar,.hero,.tiles,main,footer{padding-left:22px;padding-right:22px}
+  .cards,.cols,.evrow{grid-template-columns:1fr}
+  .caps{grid-template-columns:1fr 1fr}
+  .vsa{grid-template-columns:1fr}
+  .vsa .vsx{border-left:0;border-top:1px solid var(--line);padding-left:0;padding-top:12px}
+  .jrn{flex-wrap:wrap;gap:8px}
+  .jstep{flex:1 1 140px}
+  .jarr{display:none}
+  .sheet{margin:0;border-left:0;border-right:0}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{body{background:#fff}.sheet{border:0;margin:0}.card{break-inside:avoid}}
+/* ── language switch ───────────────────────────────── */
+
+
+.navbar{display:flex;align-items:center;gap:16px;padding:14px 46px;
+  border-bottom:1px solid var(--line);background:var(--white)}
+.navbar .crumbs{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--muted);
+  min-width:0;flex:1}
+.navbar .crumbs .here{color:var(--navy);font-weight:600;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis}
+.navbar .logo{height:26px;width:auto;flex-shrink:0;margin-right:2px}
+.navbar{padding-left:22px;padding-right:22px;gap:11px}
+.hero .anon{margin-top:10px;font-size:13.5px;line-height:1.6;color:var(--muted);
+  max-width:74ch;padding-left:13px;border-left:2px solid var(--line)}
+.hero .anon b{color:var(--navy);font-weight:600}
+.nextstep{background:var(--blue-tint2);border-top:1px solid var(--line)}
+footer .fnote{display:block;margin-top:8px;font-size:12px;color:var(--muted);font-weight:400}
+</style></head><body>
+<div class="sheet">
+  <div class="navbar">
+    <img class="logo" src="6labs-logo.png" alt="6labs.ai">
+    <div style="flex:1"></div>
+  </div>
+
+
+  <div class="brandbar">
+    <div class="eyebrow">Case study &middot; Game A &times; Oracle</div>
+    
+  </div>
+
+  <div class="hero">
+    <h1>Every Player Counted.<br><span class="hl">Every Reason Seen.</span></h1>
+    <div class="meta">
+      <div><b>Paid pilot &middot; Phase 2</b> &nbsp;&middot;&nbsp; 31 August &ndash; 8 September 2026 &nbsp;&middot;&nbsp; the client&rsquo;s data warehouse + recorded gameplay sessions</div>
+      <div class="anon"><b>Game A</b> is a mobile idle RPG run by a mobile game publisher. The game, the publisher and their vendors are not named here; every metric, denominator, error code, currency amount and date is the real one.</div>
+    </div>
+  </div>
+
+  <div class="tiles">
+    <div class="tile"><div class="n">7</div><div class="l">users on the client side</div></div>
+    <div class="tile"><div class="n">25</div><div class="l">sessions</div></div>
+    <div class="tile"><div class="n">89</div><div class="l">questions asked</div></div>
+    <div class="tile"><div class="n">44</div><div class="l">about the game itself</div></div>
+    <div class="tile"><div class="n">29<small>%</small></div><div class="l">used warehouse and recordings together</div></div>
+  </div>
+
+  <main>
+    <section>
+      <div class="kick">Executive summary</div>
+      <h2>In two weeks, Oracle went from &ldquo;analysis of a sample&rdquo; to &ldquo;counting everyone, and seeing why&rdquo;</h2><div class="rule"></div>
+      <div class="cols">
+        <div class="col">
+          <h3>It counts everyone</h3>
+          <p>8,119 first payers, 38.3M purchase attempts, 104K churned players. Answers computed on
+          the client&rsquo;s actual populations.</p>
+        </div>
+        <div class="col">
+          <h3>It sees the why</h3>
+          <p>The actual screens behind the numbers. The popup right before a first payment, the boss
+          fight before a churn, the error dialog behind a failed purchase.</p>
+        </div>
+        <div class="col">
+          <h3>It checks the data too</h3>
+          <p>Telemetry and schema issues discovered during analysis, packaged so the data team can
+          verify and act on them directly.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="kick">How it works</div>
+      <h2>Every answer starts from the client&rsquo;s data and ends on an actual screen</h2><div class="rule"></div>
+      <div class="steps">
+        <div class="step">
+          <div class="badge">1</div>
+          <div>
+            <div class="src">Client warehouse &middot; quantitative</div>
+            <h3>Count everyone</h3>
+            <p>Full-population computation on the tables and definitions the client&rsquo;s data team built.
+            Revenue, payments, churn segments, loyalty, predicted LTV, with &ldquo;this is your
+            population&rdquo; stated on the result.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="badge">2</div>
+          <div>
+            <div class="src">Recorded gameplay &middot; qualitative</div>
+            <h3>See the reason</h3>
+            <p>Replays actual sessions from the cohort stage 1 identified, to confirm the on-screen
+            cause. Error dialogs, offer popups, chat, UI friction. The layer that never lands in a log.</p>
+          </div>
+        </div>
+      </div>
+      <p class="foot">Every question in the pilot was handled in natural language. Table selection,
+      query writing, validation. At no point did an analyst touch the warehouse directly.</p>
+    </section>
+
+    <section>
+      <div class="kick">What we add</div>
+      <h2>Your data says what happened. The screen says why.</h2><div class="rule"></div>
+      <p>Your dashboards already give you the numbers. What they cannot give you is a reason, because
+      the reason only ever existed on the player&rsquo;s screen. Oracle plays the sessions back and names
+      it, with the footage attached.</p>
+
+      <div class="recon-note"><b>About the screens below.</b> Screens are reconstructions of moments
+      observed in recorded sessions. Actual client footage is withheld to preserve anonymity &mdash;
+      in your pilot, findings ship with the real clips attached.</div>
+
+      <div class="vs">
+        <div class="vscat"><span class="vsnum">1</span>New-player churn</div>
+        <div class="vsq">Where do new players hit friction?</div>
+        <p class="vslead">BI answers this with a count. So many new players installed, so many never came back. What it cannot show is what they ran into on the way, because friction leaves no row in a table. The recordings surface those friction points one at a time, starting before the game has finished loading.</p>
+        <div class="evrow">
+          <figure class="evfig">
+            <div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Sign in</span><span class="rs-chip grow"></span></div>
+              <div class="rs-panel" style="top:38%"><div class="hd">Sign in to continue</div>
+                <div class="rs-row"><div class="tx"><b>Account ID</b><span>tap to enter</span></div></div>
+                <div class="rs-row"><div class="tx"><b>Password</b><span>&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span></div></div>
+                <div class="rs-row"><span class="pill blue" style="flex:1;text-align:center">Sign in</span></div>
+              </div>
+              <div class="rs-dim"></div>
+              <div class="rs-dlg"><div class="hd">Notice</div>
+                <div class="bd">ID or password error.<span class="code">(2001)</span></div>
+                <div class="ft"><span class="rs-btn pri">OK</span></div>
+              </div><div class="rs-tag">Reconstruction</div></div>
+            <figcaption>&ldquo;ID or password error. (2001)&rdquo; &mdash; a sign-in failure met on install day, before any gameplay. Screen text rendered in English.</figcaption>
+          </figure>
+          <ul class="evpts">
+            <li><b>The first friction point is the sign-in screen.</b> Four new players met a failure there on install day: a wrong password, a cancelled sign-in, a publisher account in protection mode.</li>
+            <li>The failures start at the account layer, not in the game. What the game controls is the recovery, and it offers none. The player gets a bare number &mdash; <b>2001</b>, <b>0006</b>, <b>10006</b> &mdash; with no reset, no explanation, no way forward.</li>
+            <li>One was sent to open <b>the publisher&rsquo;s website on a PC</b>, confirm their identity and reset a password before playing. On install day, before a single minute of gameplay.</li>
+            <li>None of this exists in any table. A churn dashboard counts the player who left. Only the recording shows the screen that met them first.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="vs">
+        <div class="vscat"><span class="vsnum">2</span>Monetization</div>
+        <div class="vsq">What opens the wallet, and what blocks it?</div>
+        <p class="vslead">Revenue reporting tells you a purchase happened, or failed. It cannot tell you which screen produced it. Oracle finds the session, plays it back, and shows the moment the wallet opened &mdash; and the moment the sale was lost.</p>
+        <div class="evrow">
+          <figure class="evfig">
+            <div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Shop</span><span class="rs-chip grow"></span><span class="rs-chip w2"></span></div>
+              <div class="rs-panel"><div class="hd">Featured pass</div>
+                <div class="rs-row"><div class="ic"></div><div class="tx"><b>Weapon Summoning Pass</b><span>limited period</span></div><span class="pill">SGD 46.98</span></div>
+                <div class="rs-row"><div class="ic"></div><div class="tx"><b>Bonus summon tickets</b><span>included</span></div><span class="pill ghost">&times;10</span></div>
+              </div>
+              <div class="rs-dim"></div>
+              <div class="rs-dlg"><div class="hd">Notice</div>
+                <div class="bd">Vendor not initialized.<span class="code">(errorCode: 9 - 100204)</span></div>
+                <div class="ft"><span class="rs-btn pri">OK</span></div>
+              </div><div class="rs-tag">Reconstruction</div></div>
+            <figcaption>&ldquo;Vendor not initialized, (errorCode: 9 - 100204)&rdquo; on a <b>46.98 SGD</b> weapon-summoning pass, day 13. The store refused before the payment sheet appeared.</figcaption>
+          </figure>
+          <ul class="evpts">
+            <li>This player had already spent <b>USD 531</b> by day 29. They opened the pass, tapped buy, and the store refused before the payment sheet ever appeared.</li>
+            <li>The error fires <b>instantly on tap</b>, then the identical attempt frequently clears seconds later. That is a pattern consistent with a race condition in the store handshake, rather than connectivity or the player&rsquo;s network.</li>
+            <li>All <b>5 players</b> hit by it were <b>active spenders</b>. This is not lost conversion, it is revenue refused at the moment the customer had already decided to pay.</li>
+            <li>Warehouse reporting records the attempt as incomplete. It cannot say the store never opened, or that the same tap worked on retry.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="vs">
+        <div class="vscat"><span class="vsnum">3</span>UX friction</div>
+        <div class="vsq">Why do players stop trying?</div>
+        <p class="vslead">A failure screen is where the game either teaches or loses someone. These ones state the outcome and withhold everything a player would need to fix it.</p>
+        <div class="evrow">
+          <figure class="evfig">
+            <div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Lv 29</span><span class="rs-chip grow"></span><span class="rs-chip w2"></span></div>
+              <div class="rs-boss"><div class="nm">Chapter 3 boss</div><div class="rs-bar"><i style="width:42%"></i></div><div class="rs-timer out">00:00</div></div>
+              <div class="rs-dim"></div>
+              <div class="rs-fail"><div class="stage">Chapter 3 &middot; boss stage</div><div class="big">TIME OVER</div>
+                <div class="row"><span class="rs-btn">Leave</span><span class="rs-btn pri">Retry</span></div>
+                <div class="auto">Closing automatically in 3s</div>
+              </div><div class="rs-tag">Reconstruction</div></div>
+            <figcaption>Chapter 3 boss, level 29. The timer is spent and the boss health bar still reads 42 per cent.</figcaption>
+          </figure>
+          <ul class="evpts"><li>The timer reads <b>00:00</b> and the boss still holds <b>42%</b> of its health. The game knows precisely how far short the player fell and never says it.</li><li><b>No combat power target. No damage figure. No suggestion of what to raise.</b> The screen offers Retry or Leave, so players retry the same fight unchanged and fail the same way.</li><li>A new player has no way to work any of this out on their own. Nothing on screen connects the failure to the system that would fix it.</li></ul>
+        </div>
+      </div>
+
+      <div class="vs">
+        <div class="vscat"><span class="vsnum">4</span>Progression locks</div>
+        <div class="vsq">What is the game refusing, and why?</div>
+        <p class="vslead">Players meet refusals the game never explains. This one blocks a first-day action behind a prerequisite it declines to name.</p>
+        <div class="evrow">
+          <figure class="evfig">
+            <div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Guide Quest 25</span><span class="rs-chip grow"></span></div>
+              <div class="rs-panel" style="top:42%"><div class="hd">Change nickname</div>
+                <div class="rs-row"><div class="tx"><b>New nickname</b><span>2 characters entered</span></div><span class="pill ghost">Check</span></div>
+                <div class="rs-row"><span class="pill blue" style="flex:1;text-align:center">Confirm</span></div>
+              </div>
+              <div class="rs-dim"></div>
+              <div class="rs-dlg"><div class="hd">Notice</div>
+                <div class="bd">You have not completed the preceding guide quest.</div>
+                <div class="ft"><span class="rs-btn pri">OK</span></div>
+              </div><div class="rs-tag">Reconstruction</div></div>
+            <figcaption>The nickname dialog with Guide Quest 25 still active. The refusal never names the quest it is waiting on.</figcaption>
+          </figure>
+          <ul class="evpts"><li>The player typed a two-character nickname and was refused: <b>&ldquo;You have not completed the preceding guide quest.&rdquo;</b></li><li><b>The message never names the quest</b>, never says how far away it is, and never says what renaming has to do with quest progress. The quest tracker in the corner reads <b>Guide Quest 25</b>, but nothing connects the two.</li><li>The same dialog carries a second, unrelated meaning elsewhere: the name is taken, or contains a blocked word. One refusal, two causes, and no way to tell which one you hit.</li><li>Naming your character is one of the first things a new player tries. Here it is gated by something invisible, at the moment they are deciding whether the game is worth their time.</li></ul>
+        </div>
+      </div>
+
+      <div class="vs">
+        <div class="vscat"><span class="vsnum">5</span>Unexplained limits</div>
+        <div class="vsq">When does this unlock, and what do I do about it?</div>
+        <p class="vslead">The button is live, the price is on it, and the ceiling is invisible. Nothing says a cap has been reached, what lifts it, or when. The player finds out by tapping.</p>
+        <div class="evrow">
+          <figure class="evfig">
+            <div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Gold 214,700</span><span class="rs-chip grow"></span></div>
+              <div class="rs-panel"><div class="hd">Potion enhancement &middot; stage 9 of 9</div>
+                <div class="rs-row"><div class="ic"></div><div class="tx"><b>HP recovery</b><span>stage 9 of 9</span></div><span class="pill gold">Enhance &middot; 98,600</span></div>
+                <div class="rs-row"><div class="ic"></div><div class="tx"><b>MP recovery</b><span>stage 9 of 9</span></div><span class="pill gold">Enhance &middot; 97,500</span></div>
+              </div><div class="rs-tag">Reconstruction</div></div>
+            <figcaption>Potion enhancement at stage 9 of 9. Both Enhance buttons are fully lit and priced; nothing on the panel says the ceiling has been reached.</figcaption>
+          </figure>
+          <ul class="evpts">
+            <li>Both <b>Enhance</b> buttons are fully lit and priced &mdash; <b>98,600</b> and <b>97,500</b> gold. Nothing on the panel says a ceiling has been reached.</li>
+            <li>The refusal only arrives after the tap: <b>&ldquo;Recovery cannot be enhanced beyond Max HP or MP.&rdquo;</b> The rule exists, and the screen keeps it hidden until the player commits.</li>
+            <li>That message appears in <b>613 recordings</b> across the observed population. This is not one confused player, it is a control that invites an action it will refuse.</li>
+            <li>The missing piece is the same one as the nickname lock above: <b>what raises this, and when</b>. A greyed button with the cap named turns a wasted tap into a goal.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <section>
+      <div class="kick">Where this goes next</div>
+      <h2>What else the recordings can answer</h2><div class="rule"></div>
+      <p>The five above are examples, not the limit. Because the evidence is the screen itself, what can be asked is not fixed by what was logged.</p>
+      <div class="caps"><div class="cap"><h3>Journey mapping</h3><p>Every session for one player, install onward, on one timeline.</p></div><div class="cap"><h3>Ask anything on screen</h3><p>No instrumentation needed. The chat filter answer exists in no table.</p></div><div class="cap"><h3>Tutorial step analysis</h3><p>Which onboarding step players stall on, and where guidance stops.</p></div><div class="cap"><h3>Long sessions vs short</h3><p>What is in the hour that is missing from the five minutes.</p></div><div class="cap"><h3>Churned vs retained</h3><p>Same chapter, same spend tier, opposite outcome. Compare what they did.</p></div><div class="cap"><h3>Path to first payment</h3><p>The minutes before a wallet opens, and what non-payers do instead.</p></div><div class="cap"><h3>Market by market</h3><p>The same friction compared across regions and client languages.</p></div></div>
+    </section>
+    <section>
+      <div class="kick">Findings</div>
+      <h2>Category reports</h2><div class="rule"></div>
+      <div class="cards">
+        <a class="card" href="chat-moderation.html" target="_blank" rel="noopener">
+          <div class="num">Report 01</div>
+          <h3>Chat moderation</h3>
+          <p>The same money-selling advert running untouched on four servers. A filter that blocks &ldquo;palabok&rdquo; and &ldquo;Buccees&rdquo; without saying why, then lets a spaced-out slur through. Players report spam and give up on abuse. None of it exists in the warehouse.</p>
+          <span class="go">Open the report &rarr;</span>
+        </a>
+        <a class="card" href="retention-churn.html" target="_blank" rel="noopener">
+          <div class="num">Report 02</div>
+          <h3>Retention and churn</h3>
+          <p>Where new players stall in the first hour, and what fills the last minutes before they
+          stop. Each moment seen on a real recording.</p>
+          <span class="go">Open the report &rarr;</span>
+        </a>
+        <a class="card" href="monetization-ux.html" target="_blank" rel="noopener">
+          <div class="num">Report 03</div>
+          <h3>Technical issues and UX friction</h3>
+          <p>Eight issues on screen: a live store bug, a purchase that succeeds without telling the player, ad errors that report the wrong reason, and a session crash landing right after a boss failure.</p>
+          <span class="go">Open the report &rarr;</span>
+        </a>
+        
+      </div>
+    </section>
+
+
+    <section class="nextstep">
+      <div class="kick">Next step</div>
+      <h2>After the pilot: deeper game intelligence through SDK integration</h2><div class="rule"></div>
+      <p>This pilot read gameplay from the outside. With the SDK integrated, gameplay, events and
+      screen data arrive together &mdash; richer insight, and a faster path from finding to fix.</p>
+      <div class="caps">
+        <div class="cap"><h3>A/B testing</h3><p><b>See what players actually did.</b> Beyond the conversion rate: whether players noticed the change, engaged with it, or ignored it.</p></div>
+        <div class="cap"><h3>Journey mapping</h3><p><b>The whole player journey.</b> Behaviour, events and gameplay on one timeline, so you can see where players drop, stall or convert.</p></div>
+        <div class="cap"><h3>Tutorial analysis</h3><p><b>Pinpoint the stall.</b> Which step becomes a wall, how long players sit on it, and whether the guidance actually moves them forward.</p></div>
+        <div class="cap"><h3>Deeper player insight</h3><p><b>The reason behind the behaviour.</b> Link what a player did to what they saw, and the intent, the obstacle and the decision become legible.</p></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>Game A pilot &middot; reconstructed screen evidence &middot; Aug 31 &ndash; Sep 8, 2026<br>
+  <span class="fnote">Anonymised case study. Client, game, region and vendor names withheld; all metrics, error codes and dates are unchanged.</span></footer>
+</div></body></html>

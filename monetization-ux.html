@@ -1,0 +1,609 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Game A &mdash; Technical Issues &amp; UX Friction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="recon.css">
+<style>
+:root{
+  --navy:#0b1b3a; --ink:#101828; --body:#475467; --muted:#8593a8;
+  --blue:#1a6dff; --blue-dk:#1450c8; --blue-tint:#eef3fe; --blue-tint2:#f6f9ff;
+  --line:#e4e9f2; --hair:#eef1f6; --white:#fff; --page:#f7f9fc;
+  --good:#0a7d4a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--body);
+  font:16px/1.65 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.sheet{max-width:1060px;margin:26px auto;background:var(--white);border:1px solid var(--line)}
+h1,h2,h3{font-family:Poppins,Inter,sans-serif;color:var(--navy);margin:0;letter-spacing:-.015em}
+p{margin:13px 0}
+strong,b{color:var(--navy);font-weight:600}
+em{color:var(--ink);font-style:italic}
+a{color:var(--blue-dk);text-decoration:none;font-weight:600}
+a:hover{text-decoration:underline}
+a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+img{max-width:100%}
+
+/* -- brand bar -------------------------------------- */
+.brandbar{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;
+  padding:38px 46px 0}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--blue);padding-top:4px}
+.hero .eyebrow{margin-bottom:10px}
+.brandright{display:flex;align-items:center;gap:20px;flex-shrink:0}
+
+
+.logo{display:block;height:30px;width:auto;flex-shrink:0}
+
+/* -- hero ------------------------------------------- */
+.hero{padding:14px 46px 34px}
+.hero h1{font-size:clamp(30px,4.2vw,42px);font-weight:700;line-height:1.1}
+.hsub{margin:20px 0 0;padding-top:16px;border-top:1px solid var(--line);
+  font-size:15.5px;color:var(--body)}
+
+/* -- sections --------------------------------------- */
+main{padding:0 46px}
+section{padding:56px 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0;padding-top:6px}
+h2{font-size:23px;font-weight:600;margin:0 0 6px}
+h3{font-size:17px;font-weight:600;margin:28px 0 6px}
+.rule{width:44px;height:3px;background:var(--blue);border-radius:2px;margin-bottom:18px}
+.kick{font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:8px}
+.sechd{display:grid;grid-template-columns:34px 1fr;gap:16px;align-items:start}
+.badge{width:34px;height:34px;border-radius:7px;background:var(--navy);color:#fff;
+  display:grid;place-items:center;font-family:Poppins,sans-serif;font-weight:600;
+  font-size:15px;margin-top:19px}
+
+/* -- lists ------------------------------------------ */
+ol,ul{margin:14px 0;padding-left:22px}
+li{margin:8px 0}
+ol li::marker{color:var(--blue);font-weight:700}
+ul li::marker{color:var(--blue)}
+
+code{background:var(--blue-tint);color:var(--blue-dk);padding:1px 6px;border-radius:4px;
+  font-size:.87em;font-family:ui-monospace,Menlo,Consolas,monospace}
+blockquote{border-left:3px solid var(--blue);margin:16px 0;padding:2px 0 2px 16px;
+  color:var(--body)}
+
+/* -- tables ----------------------------------------- */
+.tablewrap{overflow-x:auto;margin:22px 0 0;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:600px}
+th{text-align:left;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);padding:0 16px 11px 0;border-bottom:1.5px solid var(--line)}
+td{padding:13px 16px 13px 0;border-bottom:1px solid var(--hair);vertical-align:top}
+th:last-child,td:last-child{padding-right:0}
+tbody tr:last-child td{border-bottom:0}
+
+/* -- evidence figures ------------------------------- */
+.evgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px;
+  margin:28px 0 0}
+figure.ev{margin:0;background:var(--white);border:1px solid var(--line);border-radius:8px;
+  overflow:hidden;display:flex;flex-direction:column}
+figure.ev.pair{grid-column:1/-1}
+figure.ev .shots{display:flex;gap:2px;background:var(--navy);justify-content:center}
+figure.ev .shots img{width:100%;height:auto;display:block;object-fit:contain}
+figure.ev.pair .shots img{width:50%}
+.vidid{text-align:center;font-size:11px;color:var(--muted);margin:0;padding:9px 12px 0;
+  font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.02em;word-break:break-all}
+.vidid b{color:var(--navy);font-weight:600}
+figure.ev figcaption{padding:9px 14px 14px;font-size:12.5px;line-height:1.5;color:var(--body)}
+figure.ev figcaption b{color:var(--navy);font-weight:600}
+.evtext{color:var(--muted);display:block;margin:4px 0 0}
+.cite{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--muted);
+  display:block;margin-top:4px}
+
+footer{padding:26px 46px 40px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+footer b{color:var(--navy);font-weight:600}
+
+@media(max-width:760px){
+  .brandbar,.hero,main,footer{padding-left:22px;padding-right:22px}
+  .sheet{margin:0;border-left:0;border-right:0}
+  section{padding:40px 0}
+  .evgrid{grid-template-columns:1fr}
+  figure.ev.pair .shots{flex-wrap:wrap}
+  figure.ev.pair .shots img{width:100%}
+  .sechd{grid-template-columns:1fr;gap:10px}
+  .sechd .badge{margin-top:0}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{body{background:#fff}.sheet{border:0;margin:0}figure.ev{break-inside:avoid}}
+
+
+/* navbar */
+.navbar{display:flex;align-items:center;gap:16px;padding:14px 46px;border-bottom:1px solid var(--line);background:var(--white)}
+.navbar .crumbs{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--muted);min-width:0;flex:1}
+.navbar .crumbs a{color:var(--body);font-weight:600;text-decoration:none}
+.navbar .crumbs a:hover{color:var(--blue-dk);text-decoration:underline}
+.navbar .crumbs .sep{color:var(--line)}
+.navbar .crumbs .here{color:var(--navy);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--body);
+  text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:7px 13px;background:var(--white);
+  flex-shrink:0;transition:border-color .14s,color .14s,background .14s}
+.backlink:hover{border-color:var(--blue);color:var(--blue-dk);background:var(--blue-tint);text-decoration:none}
+.navbar .logo{height:26px;width:auto;flex-shrink:0;margin-right:2px}
+@media(max-width:760px){.navbar{padding-left:22px;padding-right:22px;gap:11px}.navbar .crumbs{display:none}}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:34px 46px 44px;background:var(--white)}
+.fgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:start}
+.flab{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.fgrid p{margin:0;font-size:14px;color:var(--body)}
+.fmeta{margin-top:10px!important;font-size:13px!important;color:var(--muted)!important}
+.flinks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.flinks a{font-size:14.5px;color:var(--body);text-decoration:none;font-weight:600;display:inline-flex;gap:8px}
+.flinks a:hover{color:var(--blue-dk);text-decoration:underline}
+.flinks .arrow{color:var(--blue)}
+.fbot{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:30px;padding-top:20px;border-top:1px solid var(--hair);font-size:12.5px;color:var(--muted)}
+.fbot img{height:22px;width:auto}
+@media(max-width:760px){footer{padding-left:22px;padding-right:22px}.fgrid{grid-template-columns:1fr;gap:26px}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ── language switch ───────────────────────────────── */
+
+/* ── evidence strip ────────────────────────────────── */
+.evbox{margin-top:26px}
+.evlab{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.evhint{font-weight:400;letter-spacing:0;text-transform:none;font-size:12.5px;color:var(--muted)}
+.evstrip{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px}
+.evtile{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;
+  cursor:zoom-in;background:#000;aspect-ratio:16/9;
+  transition:border-color .14s,transform .14s,box-shadow .14s}
+.evtile:hover,.evtile:focus-visible{border-color:var(--blue);transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(26,109,255,.18);outline:none}
+.evtile img{width:100%;height:100%;object-fit:cover;display:block}
+.evtile .num{position:absolute;top:6px;left:6px;background:rgba(11,27,58,.86);color:#fff;
+  font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:4px;letter-spacing:.02em}
+figure.lb-src{display:none}
+
+/* ── lightbox ──────────────────────────────────────── */
+.lb{position:fixed;inset:0;z-index:9999;background:rgba(8,14,24,.94);display:none;
+  align-items:center;justify-content:center;flex-direction:column;padding:28px 64px 20px}
+.lb.open{display:flex}
+.lb>img{max-width:100%;max-height:calc(100vh - 160px);object-fit:contain;border-radius:6px;
+  background:#000;box-shadow:0 18px 60px rgba(0,0,0,.5)}
+.lb-cap{color:#e6ebf2;font-size:14px;line-height:1.55;max-width:900px;text-align:center;
+  margin-top:16px}
+.lb-cap a{color:#7ab9ff}
+.lb-cap b:first-child,.lb-cap strong:first-child{display:block;margin-bottom:6px;color:#fff;font-size:15px}
+.lb-count{position:absolute;top:20px;left:26px;color:#9fb0c4;font-size:12.5px;letter-spacing:.06em}
+.lb-x,.lb-prev,.lb-next{position:absolute;background:rgba(255,255,255,.1);border:0;color:#fff;
+  cursor:pointer;border-radius:8px;display:grid;place-items:center;transition:background .14s}
+.lb-x:hover,.lb-prev:hover,.lb-next:hover{background:rgba(255,255,255,.22)}
+.lb-x{top:16px;right:20px;width:38px;height:38px;font-size:20px;line-height:1}
+.lb-prev,.lb-next{top:50%;transform:translateY(-50%);width:44px;height:64px;font-size:24px}
+.lb-prev{left:12px} .lb-next{right:12px}
+@media(max-width:760px){.lb{padding:16px 12px}.lb-prev,.lb-next{width:36px;height:52px}}
+@media print{.lb{display:none!important}.evbox{display:none}figure.lb-src{display:block}}
+</style></head><body>
+<div class="sheet">
+
+<div class="navbar">
+    <img class="logo" src="6labs-logo.png" alt="6labs.ai">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Pilot report</a><span class="sep">/</span><span class="here">Technical issues and UX friction</span></nav>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">Case study &middot; Game A &times; Oracle</div>
+    <h1>Technical Issues &amp; UX friction</h1>
+    <p class="hsub">Store, purchase, and play-flow friction seen in recorded player sessions &mdash; the blockers that never reach the warehouse.</p>
+    <div class="recon-note"><b>About the screens below.</b> Screens are reconstructions of
+    moments observed in recorded sessions. Actual client footage is withheld to preserve anonymity
+    &mdash; in your pilot, findings ship with the real clips attached.</div>
+  </div>
+
+  <main>
+
+
+<section>
+<div class="kick">3.1</div>
+<h2 id="31-issue-1--the-near-miss-wall-has-no-pity-mechanic">The near-miss wall has no pity mechanic</h2>
+<div class="rule"></div>
+<p><strong>What happens on screen:</strong> the player
+reaches a timed chapter boss, plays the fight well, and loses to the
+<strong>timer</strong> with the boss at 1–5% HP ("TIME OVER" — a damage
+gap, not dying). They retry. And retry. Between some retries they
+upgrade (summons, gear-enhancement materials, gems); between others they change nothing.
+The screen says nothing about how to close the gap: <strong>no combat power target, no damage figure, no suggestion of what to raise</strong>. The game knows exactly how far short the player fell and never tells them, so they retry the same fight unchanged and fail the same way. Nor is there a bridging mechanic &mdash; no building buff, no mercy damage bonus, no "you were close" assist. After 6–14 straight
+near-misses the run ends one of three ways: an upgrade-then-retry loop,
+a pivot to low-stakes content, or a spend escalation into premium shop
+packs.</p>
+<p><strong>The give-up marker:</strong> the
+fail screen offers <strong>Retry</strong> and <strong>Leave</strong>.
+The moment a player taps <em>Leave</em> instead of <em>Retry</em>, the
+session's shape changes — Leave-players pivot to low-engagement
+activities (World Boss idle, Arena, Sleep Mode) and often do not come
+back to the boss.</p>
+<p><strong>Where seen:</strong> churned-cohort walls span Ch 22–30 plus
+Growth Dungeons; the same anatomy appears at Ch 2–5 for brand-new
+players (bounce cohort) and at Ch 7&ndash;31 for Segment 469 members.</p>
+<p><strong>Business cost:</strong> this is the trigger that starts most
+churn arcs on video (wall → spend → no payoff → fade). One pity/bridging mechanic addresses it at every level band at once.</p>
+<p><strong>Examples:</strong></p>
+<ol type="1">
+<li>Ch 23 Stage 7 — <strong>11 consecutive fails</strong>, boss at 1% HP
+three or more times, no breakthrough.</li>
+<li>Ch 25 Stage 9 (Boss D) — <strong>14 consecutive fails</strong> in one
+stretch; retries continue without any upgrade action between attempts.</li>
+<li>Ch 26 (Boss F) — fail → player taps <strong>Leave</strong>, then
+manually logs out via settings; one of the clearest filmed give-up
+moments.</li>
+<li>Ch 29 Stage 11 (Boss E) — a whale-tier churned player fails 3×
+at the same wall: spending relocates the wall, it does not remove it.</li>
+</ol>
+<div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Ch 23 &middot; St 7</span><span class="rs-chip grow"></span></div><div class="rs-boss"><div class="nm">Stage boss</div><div class="rs-bar"><i style="width:4%"></i></div><div class="rs-timer out">00:00</div></div><div class="rs-dim"></div>
+<div class="rs-fail"><div class="stage">Chapter 23 &middot; Stage 07</div><div class="big">FAILED</div>
+<div class="row"><span class="rs-btn">Leave</span><span class="rs-btn pri">Retry</span></div>
+<div class="auto">Closing automatically in 3s</div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Ch23 St7: 11 consecutive fails.</b> The defeat plate reads &ldquo;CHAPTER23 STAGE 07 FAILED&rdquo;, with Leave / Retry buttons and a 3-second auto-close timer. The player has reached 11 consecutive fails on this stage, the boss finishing at 4% health.</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Ch 25 &middot; St 9</span><span class="rs-chip grow"></span></div><div class="rs-boss"><div class="nm">Boss D</div><div class="rs-bar"><i style="width:2%"></i></div><div class="rs-timer out">00:00</div></div><div class="rs-dim"></div>
+<div class="rs-fail"><div class="stage">Chapter 25 &middot; Stage 09</div><div class="big">FAILED</div>
+<div class="row"><span class="rs-btn">Leave</span><span class="rs-btn pri">Retry</span></div>
+<div class="auto">Closing automatically in 4s</div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Ch25 St9 (Boss D): 14 consecutive fails.</b> The &ldquo;CHAPTER 25 STAGE 09&rdquo; label, Leave / Retry, and &ldquo;Automatically closing in 4 sec&rdquo; while FAILED fades in. Fourteen consecutive fails on this boss.</figcaption></figure><figure class="ev pair"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Ch 26 &middot; St 10</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
+<div class="rs-fail"><div class="stage">Chapter 26 &middot; Stage 10</div><div class="big">FAILED</div>
+<div class="row"><span class="rs-btn">Leave</span><span class="rs-btn pri">Retry</span></div>
+<div class="auto">Closing automatically in 3s</div></div><div class="rs-tag">Reconstruction</div></div><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Settings</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
+<div class="rs-dlg"><div class="hd">Notice</div><div class="bd">Would you like to log out? The game will be closed.</div><div class="ft"><span class="rs-btn">Cancel</span><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Ch26 Boss F fail, then a logout give-up.</b> Frame (a) is the stage-10 defeat plate. In frame (b) the player opens Settings &gt; Account and triggers the log-out confirmation &mdash; one of the clearest filmed give-up moments.</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Ch 29 &middot; St 11</span><span class="rs-chip grow"></span></div><div class="rs-boss"><div class="nm">Boss E</div><div class="rs-bar"><i style="width:6%"></i></div><div class="rs-timer out">00:00</div></div><div class="rs-dim"></div>
+<div class="rs-fail"><div class="stage">Chapter 29 &middot; Stage 11</div><div class="big">FAILED</div>
+<div class="row"><span class="rs-btn">Leave</span><span class="rs-btn pri">Retry</span></div>
+<div class="auto">Closing automatically in 3s</div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Ch29 St11 Boss E fail.</b> A late-chapter zone, Leave / Retry, 3-second auto-close. This player is a high-spend churned account failing the same wall three times over.</figcaption></figure></div>
+</section>
+
+<section>
+<div class="kick">3.2</div>
+<h2 id="32-issue-2--store-bug-errorcode-9-100302-unavailable-in-store">Store bug: <code>errorCode 9-100302</code> "Unavailable in store"</h2>
+<div class="rule"></div>
+<p><strong>What happens on screen:</strong> a player with visible intent
+to pay opens a real-money offer (premium-gem packs, memberships, hot
+deals), reaches checkout, and gets <strong>"Unavailable in store"
+(errorCode 9-100302)</strong>. Within a single session the error repeats deterministically — the same offer fails every time — and players <strong>retry
+the same broken offer 2–3 times</strong> before giving up. Purchases in the affected cohorts span
+<strong>four different storefront currencies</strong> — this is not a single-storefront
+glitch.</p>
+<p><strong>Business cost:</strong> these are <em>willing buyers</em>
+blocked at the till. Warehouse framing for scale: 30,693 players had a
+failed/cancelled payment before their first-ever purchase (&sect;3.9) &mdash; the
+recordings point to a store-side failure as one of the causes.</p>
+<p><strong>Examples:</strong></p>
+<ol type="1">
+<li>One player fired the same event hot-deal purchase <strong>3×
+in one session</strong> — same <code>9-100302</code> error each time.</li>
+<li>Another hit the error on a Deluxe Membership, then tried Special
+Membership — blocked on both.</li>
+<li>A related vendor error (<code>9-100204</code> "Vendor not
+initialized") appears in BOTH converting and abandoning sessions —
+successful buyers retry through it, window-shoppers stop; the error is
+the same, the need-state differs.</li>
+<li>Corroboration on a client-defined cohort: a Segment 469
+member triggers a reward-ad purchase and gets an immediate
+<strong>"Unable to purchase"</strong> error (same purchase-blocking
+family).</li>
+</ol>
+<div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Hot deal</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Limited-Time Event Hot Deal 1</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Event bundle</b><span>limited period</span></div><span class="pill">USD 10.90</span></div></div><div class="rs-dim"></div>
+<div class="rs-dlg"><div class="hd">Notice</div><div class="bd">Unavailable in store.<span class="code">(errorCode: 9 - 100302)</span></div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Event hot-deal 9-100302 pay-fail.</b> &ldquo;Unavailable in store. (errorCode: 9 - 100302)&rdquo; over Limited-Time Event Hot Deal 1, during an attempted USD 10.90 purchase.</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Membership</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Deluxe Membership &middot; 30 days</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Deluxe Membership</b><span>30-day term</span></div><span class="pill">Buy</span></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Daily reward crate</b><span>included</span></div><span class="pill ghost">&times;30</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>9-100302 cited on Deluxe Membership.</b> The item page carries its regional-storefront price on the purchase button. <span class="evtext">Verification note: no 9-100302 popup appears anywhere in this 441-second clip &mdash; the citation did not hold up.</span></figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Hot deal</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Limited-Time Event Hot Deal 1</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Event bundle</b><span>checkout</span></div><span class="pill">Buy</span></div></div><div class="rs-dim"></div>
+<div class="rs-dlg"><div class="hd">Notice</div><div class="bd">Vendor not initialized.<span class="code">(errorCode: 9 - 100204)</span></div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Vendor error 9-100204.</b> The same offer, a different refusal: the store never initialised. The error fires instantly on tap.</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Quick Hunt</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Quick Hunt &middot; Watch Ad</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Instant clear reward</b><span>watch an ad to claim</span></div><span class="pill blue">Watch Ad</span></div></div>
+   <div class="rs-toast yellow t2">Unable to load the ad.</div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Reward-ad purchase blocked by an ad error.</b> The Quick Hunt reward popup is open on its Watch Ad tab; a yellow &ldquo;unable to load the ad&rdquo; message lands over the rewards.</figcaption></figure></div>
+</section>
+
+<section>
+<div class="kick">3.3</div>
+<h2 id="33-issue-3--the-silent-success-trust-bug">The silent-success trust bug</h2>
+<div class="rule"></div>
+<p><strong>What happens on screen:</strong> the player completes a
+purchase, the UI shows a <strong>failure</strong> screen (error codes
+<strong>100315</strong>, <strong>100107</strong>,
+<strong>100204-24001</strong>) — and moments later the purchased item
+<strong>arrives in the mailbox anyway</strong>. The transaction
+succeeded; the interface said it failed.</p>
+<p><strong>Why it matters:</strong> a payment flow that reports false
+failures teaches players not to trust the store. The likely behaviors it
+trains — double-purchasing, refund requests, or refusing to buy again —
+are all bad outcomes, and none are visible in billing data (the order
+row looks normal).</p>
+<p><strong>Examples:</strong></p>
+<ol type="1">
+<li>"Failure" screen (codes 100315 / 100107 / 100204-24001) followed by
+the item landing in the mailbox in the same session — UI says fail,
+transaction completed.</li>
+<li>Independent sighting of the same error family in the exit-signal
+cohort: payment errors <code>9-100315</code> / <code>10-100107</code>
+during checkout in churned players' final sessions.</li>
+</ol>
+<div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Checkout</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
+<div class="rs-dlg"><div class="hd">Notice</div><div class="bd">A pending payment exists. Please complete purchasing in the possible step. The items will be issued afterward.<span class="code">(errorCode: 9 - 100315)</span></div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Failure 100315 &mdash; item later lands in the mailbox.</b> Shown during a regional-storefront purchase of Premium Gem &times;3,000. The interface reported a failure; the item arrived anyway.</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Checkout</span><span class="rs-chip grow"></span></div><div class="rs-panel" style="top:34%"><div class="hd">Weapon Hot Deal &middot; T1</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>T1 weapon bundle</b><span>checkout in progress</span></div><span class="pill">Buy</span></div></div><div class="rs-dim"></div>
+<div class="rs-dlg"><div class="hd">Notice</div><div class="bd">Payment could not be completed.<span class="code">(errorCode: 9 - 100315)</span></div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Payment error 9-100315 at checkout.</b> The notice lands over the T1 Weapon Hot Deal mid-checkout. Screen text is rendered in English here; the original was in the player&rsquo;s own client language.</figcaption></figure></div>
+</section>
+
+<section>
+<div class="kick">3.4</div>
+<h2 id="34-issue-4--ad-errors-that-lie">Ad errors that lie</h2>
+<div class="rule"></div>
+<p><strong>What happens on screen:</strong> a player watches a rewarded
+ad <strong>to the end</strong> — and the game fires <strong>"The ad has
+not loaded."</strong> In the sharpest clip the error overlay persists
+<em>behind</em> a successful "Obtained Items" popup: the game
+simultaneously claims the ad failed and pays the reward. In another, one
+attempt produces a <strong>double error</strong> — "you skipped the ad"
+(red) plus "ad has not loaded" (yellow) — for a single watch. Skipping
+is separately punished with reward denial.</p>
+<p><strong>Why it matters:</strong> rewarded ads are the primary
+resource pipeline for non-spenders (issue 7). Errors that misreport what
+the player just did erode trust in the exact loop that keeps non-payers
+progressing — and they cluster at the churn-adjacent moments
+(post-failure, reward claim).</p>
+<p><strong>Examples:</strong></p>
+<ol type="1">
+<li>Ad completes visibly → "The ad has not loaded" fires anyway.</li>
+<li>Contradictory double state: error overlay persisting behind a
+successful "Obtained Items" popup.</li>
+<li>Double error on one attempt: "you skipped the ad" + "ad has not
+loaded" together; the monetization lens also caught a "you skipped the
+ad" reward denial mid-flow — players retried rather than abandoning.</li>
+</ol>
+<div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Purchase info</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Purchase Information</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Event Token &times;500</b><span>free with one ad</span></div><span class="pill blue">Watch Ad</span></div></div>
+   <div class="rs-toast yellow t1">The ad has not loaded.</div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>The ad completes, then &ldquo;the ad has not loaded&rdquo; fires.</b> The banner appears after the ad has visibly finished playing.</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Rewards</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
+   <div class="rs-dlg"><div class="hd">Obtained Items</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Event Token &times;500</b><span>added to your bag</span></div><span class="pill ok" style="background:#0a7d4a;color:#fff;padding:5px 9px;border-radius:5px">Received</span></div>
+     <div class="ft" style="padding-top:12px"><span class="rs-btn pri">OK</span></div></div>
+   <div class="rs-toast yellow t1">The ad has not loaded.</div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>The error overlay persists behind the success popup.</b> The game pays the reward and simultaneously claims the ad failed &mdash; two contradictory states on one screen.</figcaption></figure><figure class="ev pair"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Booster</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Daily Ad Booster</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Daily Ad Booster</b><span>1 of 3 used today</span></div><span class="pill blue">Watch Ad</span></div></div>
+   <div class="rs-toast red t1">You cannot receive the reward because you have skipped the ad.</div><div class="rs-tag">Reconstruction</div></div><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Booster</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Daily Ad Booster</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Daily Ad Booster</b><span>same attempt</span></div><span class="pill blue">Watch Ad</span></div></div>
+   <div class="rs-toast yellow t1">The ad has not loaded.</div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Two contradictory ad errors on a single attempt.</b> The same Daily Ad Booster row produces &ldquo;you skipped the ad&rdquo; (red) and then &ldquo;the ad has not loaded&rdquo; (yellow) for one watch.</figcaption></figure></div>
+</section>
+
+<section>
+<div class="kick">3.5</div>
+<h2 id="35-issue-5--server-wait-stacking">Server-wait stacking</h2>
+<div class="rule"></div>
+<p><strong>What happens on screen:</strong> "Waiting for server
+response" modals appear at predictable chokepoints — login, combat
+menus, party matching, friend list, guild screens, guild conquest, bulk
+summons, arena transitions. The modal <strong>blocks input while the
+game world keeps running underneath</strong>. The waits stack: one
+player hit <strong>4 modals within 2 minutes</strong>.</p>
+<p><strong>Why it matters:</strong> no single wait is fatal; the
+stacking is. It lands on the highest- engagement surfaces (guild, arena,
+summons) — the content that retains social players.</p>
+<p><strong>Examples:</strong></p>
+<ol type="1">
+<li>Four consecutive "Waiting for server response" modals within 2
+minutes for one player, input blocked each time.</li>
+<li>Waits observed at every UI layer for fully-churned players — login,
+combat menus, party matching, guild, friends.</li>
+<li>One churned player failed Ch 23 five times consecutively
+<strong>with server overlays stacking during the attempts</strong> —
+wall friction and server friction compounding in the same minutes.</li>
+</ol>
+<div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Ch 23 &middot; St 7</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
+<div class="rs-fail"><div class="stage">Chapter 23 &middot; Stage 07</div><div class="big">FAILED</div>
+<div class="row"><span class="rs-btn">Leave</span><span class="rs-btn pri">Retry</span></div>
+<div class="auto">Closing automatically in 3s</div></div><div class="rs-toast yellow t4" style="opacity:.92">Waiting for server response&hellip;</div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Five consecutive failures at Chapter 23, Stage 7 &mdash; with server-wait modals stacking during the attempts.</b> Wall friction and server friction compounding in the same minutes.</figcaption></figure></div>
+</section>
+
+<section>
+<div class="kick">3.6</div>
+<h2 id="36-issue-6--session-expired-crash-right-after-boss-failures">"Session expired" crash right after boss failures</h2>
+<div class="rule"></div>
+<p><strong>What happens on screen:</strong> the player fails a chapter
+boss twice in a row, and then — at their most frustrated moment —
+<strong>"Session has expired"</strong> fires,
+the loading screen freezes, and the run ends. On re-login, another
+server wait. Seen in <strong>four independent verified cohorts</strong>,
+so it is a pattern, not a one-off.</p>
+<p><strong>Why it matters:</strong> the crash lands precisely on the
+churn-adjacent moment (consecutive boss failure). For several filmed
+players it was the last meaningful event before the session dissolved
+into Sleep Mode or disconnection.</p>
+<p><strong>Examples:</strong></p>
+<ol type="1">
+<li>Two consecutive fails at Boss C (Ch 22) → session-expiration crash →
+frozen loading screen, run over.</li>
+<li>Same wall, different cohort: repeated near-miss fails at Ch 22 Boss C
+ending in a session-expiry error in a churned player's final sessions.</li>
+<li>A Minnow-tier spender's session collapses into idle after a
+near-miss wall plus a session-expiry error.</li>
+<li>Corroboration: "Session has expired" freezes recur in
+Segment 469 members' sessions.</li>
+</ol>
+<div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-dim heavy"></div><div class="rs-dlg"><div class="hd">Notice</div><div class="bd">Session has expired.</div><div class="ft"><span class="rs-btn pri">OK</span></div></div>
+   <div class="rs-spin corner"></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Boss C fails &rarr; session expiry &rarr; frozen load.</b> The loading spinner is stuck in the corner behind the notice; the run ends here.</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">In combat</span><span class="rs-chip grow"></span></div><div class="rs-boss"><div class="nm">Stage boss</div><div class="rs-bar"><i style="width:38%"></i></div><div class="rs-timer">00:41</div></div><div class="rs-dim"></div><div class="rs-dlg"><div class="hd">Notice</div><div class="bd">Session has expired.</div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Session expiry, session collapses to idle.</b> Combat is frozen underneath the notice; the player does not return.</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">In combat</span><span class="rs-chip grow"></span></div><div class="rs-boss"><div class="nm">Stage boss</div><div class="rs-bar"><i style="width:55%"></i></div><div class="rs-timer">01:12</div></div><div class="rs-dim"></div><div class="rs-dlg"><div class="hd">Notice</div><div class="bd">Session has expired.</div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>The same freeze in another client language.</b> Combat frozen in the background, session over. Screen text is rendered in English here.</figcaption></figure></div>
+</section>
+
+<section>
+<div class="kick">3.7</div>
+<h2 id="37-issue-7--ad-loop-friction-on-the-players-who-depend-on-ads">Ad-loop friction on the players who depend on ads</h2>
+<div class="rule"></div>
+<p><strong>What happens on screen:</strong> non-spending players chain
+<strong>5–10+ rewarded-ad breaks per session</strong> across five
+touchpoints (shop currency, free summons, Quick Hunt, Daily Ad Booster,
+timer skips) — ads are their primary resource pipeline. Inside that
+loop: rewards denied on "skipped" ads, ad-cooldown blocks, ad-load
+failures — while players who bought the ad-removal package skip the
+entire tax. And the ad inventory itself is competitor marketing: 40+ rival titles shown at the player's most frustrated moments, with breaks running 15s&ndash;3min each.</p>
+<p><strong>Why it matters:</strong> the loop concentrates friction on
+exactly the segment with no wallet alternative — the game's most
+churn-fragile population — and monetizes their frustration with rivals'
+install ads.</p>
+<p><strong>Examples:</strong></p>
+<ol type="1">
+<li>A churned non-spender watches many full-screen ads for other games
+in one session, is <strong>denied a reward on a "skipped" ad</strong>,
+and then hits ad-cooldown blocks — while ad-removal buyers in the same
+cohort skip all of it.</li>
+<li>Ad breaks run 15 seconds to ~3 minutes with store-redirect end cards
+on nearly every ad; one tap-through to a rival's store page caught on
+film.</li>
+<li>"The ad has not loaded" failures 3–4× in a row blocking the
+zero-commitment monetization touchpoint for payment-cohort players.</li>
+</ol>
+<div class="evgrid"><figure class="ev pair"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Guild &middot; time accel</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Guild time acceleration</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Skip 1 hour</b><span>watch an ad</span></div><span class="pill blue">Watch Ad</span></div></div>
+   <div class="rs-toast red t1">You cannot receive the reward because the ad was skipped.</div><div class="rs-tag">Reconstruction</div></div><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Guild &middot; time accel</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Guild time acceleration</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Skip 1 hour</b><span>on cooldown</span></div><span class="pill ghost">Watch in 4:00</span></div></div>
+   <div class="rs-toast red t1">You cannot watch an ad yet. Available in 4 min.</div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Skipped-ad reward denial, then an ad-cooldown block.</b> The same guild time-acceleration screen refuses the reward, then refuses the retry for another four minutes.</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-ad"><div class="art"></div><div class="nm">A rival idle-RPG title</div><div class="sub">Ad end card</div><div class="cta">Install</div></div>
+   <div class="rs-sheet"><div class="bar"></div><div class="ttl">A rival idle-RPG title</div><div class="mt">Platform store &middot; Install</div>
+     <div class="rs-row" style="padding-left:0;padding-right:0"><div class="ic"></div><div class="tx"><b>Free</b><span>In-app purchases</span></div><span class="pill blue">Install</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Ad end-card redirect to a rival title.</b> The end card carries an Install button; the platform store panel slides up over the game. Forty-plus rival titles were served this way, at the player&rsquo;s most frustrated moments.</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Purchase info</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Purchase Information</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Event Token &times;500</b><span>Watch Ad option</span></div><span class="pill blue">Watch Ad</span></div></div>
+   <div class="rs-toast yellow t1">The ad has not loaded.</div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>&ldquo;The ad has not loaded&rdquo; reward-ad failure.</b> The zero-commitment monetisation touchpoint, blocked &mdash; three to four times in a row for some players.</figcaption></figure></div>
+</section>
+
+<section>
+<div class="kick">3.8</div>
+<h2 id="38-issue-8--new-in-iteration-3-the-arena-cannot-generate-recommendations-bug">The Arena "cannot generate recommendations" bug</h2>
+<div class="rule"></div>
+<p><strong>What happens on screen:</strong> a player opens Arena — a
+<strong>prerequisite for main-quest advancement</strong> — and
+matchmaking never loads: the game <strong>"cannot generate
+recommendations."</strong> There is no workaround on screen. The player
+is hard-blocked on the main quest, <strong>files an in-game support
+ticket mid-session</strong>, and eventually logs out. Baseline expectation: Arena should load for every player who has unlocked it.</p>
+<p><strong>Where found:</strong> <strong>Segment 469</strong> &mdash; a top-5 cohort from the client's own player-segmentation system; every clip proven to belong to a Segment 469 member.</p>
+<p><strong>Why it matters:</strong> unlike issues 1–7, this one
+<strong>stops the main progression line outright</strong> — it is the
+only filmed defect where the player cannot continue the game's core loop
+at all. It also produced the pilot's clearest player-initiated evidence: a support ticket filed on camera. Recommended sizing step: pull the error-state logs to count how many
+players are blocked, on which servers, for how long.</p>
+<p><strong>Examples:</strong></p>
+<ol type="1">
+<li>Arena recommendation list fails to generate → main quest blocked →
+support ticket filed in-session → logout.</li>
+<li>Same verified harvest, adjacent payment moments show the friction
+texture around it: a Monthly Gem Gift Pack taken to the payment modal then cancelled; a Companion Dummy attempt blocked by insufficient diamonds.</li>
+<li>Several Segment 469 sessions <strong>end with a payment
+confirmation popup still on screen</strong> — the session dissolves
+mid-checkout.</li>
+</ol>
+<div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-form"><div class="ttl">Customer support &middot; inquiry</div>
+     <div class="fl filled">Email address</div>
+     <div class="fl filled">Category: cannot enter Arena</div>
+     <div class="fl tall"></div>
+     <div class="rs-row" style="padding:0"><span class="pill ghost">Cancel</span><span class="pill blue">Register</span></div></div>
+   <div class="rs-dim"></div>
+   <div class="rs-dlg"><div class="hd">Confirm</div><div class="bd">Are you sure you want to submit your inquiry?</div>
+     <div class="ft"><span class="rs-btn">Cancel</span><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Arena blocked &rarr; an in-session support ticket.</b> The inquiry form is open and the submit confirmation is up. The pilot&rsquo;s clearest player-initiated evidence: a support ticket filed on camera.</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Monthly pack</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
+   <div class="rs-dlg"><div class="hd">Purchase details</div>
+     <div class="rs-row" style="padding-left:12px;padding-right:12px"><div class="ic"></div><div class="tx"><b>Monthly Coin Gift Pack</b><span>coins &times;1,000,000</span></div></div>
+     <div class="ft" style="padding-top:12px"><span class="rs-btn">3,000 gems</span><span class="rs-btn ok">Buy</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Monthly pack payment modal, then cancelled.</b> The modal offers a regional-storefront cash price alongside a 3,000-gem alternative. The player took it to the payment step and backed out.</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Shop</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
+   <div class="rs-dlg"><div class="hd">Buy premium gems</div>
+     <div class="rs-row" style="padding-left:12px;padding-right:12px"><div class="ic"></div><div class="tx"><b>Premium Gem &times;9,000</b><span>confirm purchase</span></div></div>
+     <div class="ft" style="padding-top:12px"><span class="rs-btn">Cancel</span><span class="rs-btn ok">Buy</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>The session ends mid-checkout, on the payment modal.</b> The clip runs out with the confirmation still on screen &mdash; several sessions in this cohort end exactly here.</figcaption></figure></div>
+</section>
+
+<section>
+<div class="kick">3.9</div>
+<h2 id="39-what-the-warehouse-sees-of-all-this-the-contrast">What the warehouse sees of all this (the contrast)</h2>
+<div class="rule"></div>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>What billing/telemetry shows</th>
+<th>What it cannot show</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>30,693 players</strong> had a Failed/Cancelled billing order
+before their first completed purchase (Jul 1–Aug 15, full population);
+largest single market = 60.7% (18,635)</td>
+<td>No cause, no error code, no screen — a Failed row looks identical
+whether it was the store bug, a deliberate cancel, or a silent
+success</td>
+</tr>
+<tr>
+<td><code>purchase_failure</code> telemetry events exist</td>
+<td>They carry <strong>no shop/offer/item context — 483 of 483 events
+(100%)</strong>: <em>which</em> offer fails is uninstrumented</td>
+</tr>
+<tr>
+<td>Nothing for issues 1, 4, 5, 6, 7, 8</td>
+<td>Walls, lying ad errors, server waits, crashes, ad friction and the
+Arena block leave <strong>no warehouse trace at all</strong> (no
+client-error/UX/telemetry table exists in the granted set)</td>
+</tr>
+</tbody>
+</table></div>
+<p>The warehouse counts one issue family's footprint; the recordings turned it into eight named, fixable defects &mdash; two of which (silent success, lying ad errors) misreport reality to both the player and the data.</p>
+</section>
+
+</main>
+<footer>
+  <div class="fgrid">
+    <div>
+      <div class="flab">This report</div>
+      <p><b>Technical issues and UX friction</b> &mdash; one of three category reports from the Game A pilot.</p>
+      <p class="fmeta">Findings read from recorded player sessions. Clip links are withheld in this anonymised copy.</p>
+    </div>
+    <div>
+      <div class="flab">Other reports</div>
+      <ul class="flinks"><li><a href="index.html"><span class="arrow">&rarr;</span>Main report</a></li><li><a href="chat-moderation.html"><span class="arrow">&rarr;</span>Chat moderation</a></li><li><a href="retention-churn.html"><span class="arrow">&rarr;</span>Retention and churn</a></li></ul>
+    </div>
+  </div>
+  <div class="fbot"><span>Game A pilot &middot; Aug 31 &ndash; Sep 8, 2026 &middot; anonymised case study</span><img src="6labs-logo.png" alt="6labs.ai"></div>
+</footer>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>
