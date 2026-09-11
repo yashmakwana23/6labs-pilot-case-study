@@ -1,0 +1,356 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Game-01 &mdash; チャットモデレーション</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../recon.css">
+<style>
+:root{
+  --navy:#0b1b3a; --ink:#101828; --body:#475467; --muted:#8593a8;
+  --blue:#1a6dff; --blue-dk:#1450c8; --blue-tint:#eef3fe; --blue-tint2:#f6f9ff;
+  --line:#e4e9f2; --hair:#eef1f6; --white:#fff; --page:#f7f9fc;
+  --good:#0a7d4a; --bad:#b42318; --bad-tint:#fef3f2;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--body);
+  font:16px/1.65 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.sheet{max-width:1060px;margin:26px auto;background:var(--white);border:1px solid var(--line)}
+h1,h2,h3{font-family:Poppins,Inter,sans-serif;color:var(--navy);margin:0;
+  letter-spacing:-.015em}
+p{margin:13px 0}
+b,strong{color:var(--navy);font-weight:600}
+a{color:var(--blue-dk);text-decoration:none;font-weight:600}
+a:hover{text-decoration:underline}
+a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+code{font-family:var(--mono);font-size:13px;background:var(--blue-tint);color:var(--navy);
+  padding:1px 6px;border-radius:4px;word-break:break-word}
+
+/* -- brand bar ------------------------------------------------- */
+.brandbar{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;
+  padding:38px 46px 0}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--blue);padding-top:4px}
+.brandright{display:flex;align-items:center;gap:18px;flex-shrink:0;margin-left:auto}
+
+
+.logo{display:block;height:30px;width:auto;flex-shrink:0}
+
+/* -- title block ----------------------------------------------- */
+.titleblock{padding:14px 46px 32px}
+.titleblock h1{font-size:clamp(30px,4.2vw,42px);font-weight:700;line-height:1.1}
+.titleblock .sub{font-size:16.5px;color:var(--body);margin:16px 0 0}
+.kick{font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:10px}
+
+/* -- stat tiles ------------------------------------------------- */
+.heroes{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:16px;
+  padding:0 46px 8px}
+.hero{background:var(--blue-tint);border-radius:8px;padding:20px 22px}
+.hero .n{font-family:Poppins,sans-serif;font-size:26px;font-weight:700;color:var(--navy);
+  line-height:1.15;font-variant-numeric:tabular-nums}
+.hero .l{font-size:13.5px;color:var(--body);margin-top:9px}
+
+/* -- sections --------------------------------------------------- */
+main{padding:0 46px}
+section{padding:56px 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0;padding-top:34px}
+h2{font-size:23px;font-weight:600;margin:0 0 6px;line-height:1.28}
+h2+.rule{width:44px;height:3px;background:var(--blue);border-radius:2px;margin-bottom:18px}
+h3{font-size:17px;font-weight:600;margin:40px 0 10px}
+p.lead{font-size:15.5px;color:var(--body);margin:0}
+
+/* -- evidence figures ------------------------------------------- */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:24px 0 0}
+.pair figure{margin:0;display:flex;flex-direction:column;min-width:0}
+.pair img{order:1;display:block;width:100%;height:auto;border:1px solid var(--line);
+  border-radius:8px;background:#000}
+.pair figcaption{order:2;font-size:13px;font-weight:600;color:var(--navy);margin-top:10px;
+  line-height:1.45}
+.vidid{order:3;font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:4px;
+  letter-spacing:.02em;word-break:break-all}
+.vidid b{color:var(--muted);font-weight:500}
+p.cap{font-size:14.5px;color:var(--body);background:var(--blue-tint2);
+  border-left:3px solid var(--blue);padding:12px 16px;border-radius:0 8px 8px 0;
+  margin:16px 0 28px}
+
+/* -- callouts ---------------------------------------------------- */
+.callout{font-size:14.5px;background:var(--blue-tint);border-left:4px solid var(--blue);
+  padding:15px 18px;border-radius:0 8px 8px 0;margin:26px 0 0}
+.callout.warn{background:var(--bad-tint);border-left-color:var(--bad)}
+
+/* -- tables ------------------------------------------------------ */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:18px 0 0}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:15px}
+th{text-align:left;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);padding:0 14px 11px 0;border-bottom:1.5px solid var(--line)}
+td{padding:13px 14px 13px 0;border-bottom:1px solid var(--hair);vertical-align:top}
+tr th:last-child,tr td:last-child{padding-right:0}
+.muted{color:var(--muted);font-size:14px}
+.fp{color:var(--bad);font-weight:700;font-size:11.5px;text-transform:uppercase;
+  letter-spacing:.06em;white-space:nowrap}
+.ok{color:var(--muted);font-weight:600;font-size:11.5px;text-transform:uppercase;
+  letter-spacing:.06em;white-space:nowrap}
+
+footer.foot{padding:26px 46px 40px;margin:0;color:var(--muted);font-size:13px;
+  border-top:1px solid var(--line)}
+footer.foot b{color:var(--muted);font-weight:600}
+
+@media(max-width:760px){
+  .brandbar,.titleblock,.heroes,main,footer.foot{padding-left:22px;padding-right:22px}
+  .brandbar{flex-wrap:wrap}
+  .heroes{grid-template-columns:1fr}
+  .pair{grid-template-columns:1fr;gap:18px}
+  section{padding:40px 0}
+  .sheet{margin:0;border-left:0;border-right:0}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#fff}
+  .sheet{border:0;margin:0}
+  
+  figure,.pair,.callout,p.cap,table,tr{break-inside:avoid}
+  section{break-inside:auto}
+}
+
+
+/* navbar */
+.navbar{display:flex;align-items:center;gap:16px;padding:14px 46px;border-bottom:1px solid var(--line);background:var(--white)}
+.navbar .crumbs{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--muted);min-width:0;flex:1}
+.navbar .crumbs a{color:var(--body);font-weight:600;text-decoration:none}
+.navbar .crumbs a:hover{color:var(--blue-dk);text-decoration:underline}
+.navbar .crumbs .sep{color:var(--line)}
+.navbar .crumbs .here{color:var(--navy);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--body);
+  text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:7px 13px;background:var(--white);
+  flex-shrink:0;transition:border-color .14s,color .14s,background .14s}
+.backlink:hover{border-color:var(--blue);color:var(--blue-dk);background:var(--blue-tint);text-decoration:none}
+.navbar .logo{height:26px;width:auto;flex-shrink:0;margin-right:2px}
+@media(max-width:760px){.navbar{padding-left:22px;padding-right:22px;gap:11px}.navbar .crumbs{display:none}}
+.rec{border:1px solid #d6e4ff;background:var(--blue-tint);border-radius:8px;padding:18px 22px;margin:26px 0 0}
+.rec .reclab{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+.rec p{margin:0;font-size:14.5px}
+.rec b{color:var(--navy);font-weight:600}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:34px 46px 44px;background:var(--white)}
+.fgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:start}
+.flab{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.fgrid p{margin:0;font-size:14px;color:var(--body)}
+.fmeta{margin-top:10px!important;font-size:13px!important;color:var(--muted)!important}
+.flinks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.flinks a{font-size:14.5px;color:var(--body);text-decoration:none;font-weight:600;display:inline-flex;gap:8px}
+.flinks a:hover{color:var(--blue-dk);text-decoration:underline}
+.flinks .arrow{color:var(--blue)}
+.fbot{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:30px;padding-top:20px;border-top:1px solid var(--hair);font-size:12.5px;color:var(--muted)}
+.fbot img{height:22px;width:auto}
+@media(max-width:760px){footer{padding-left:22px;padding-right:22px}.fgrid{grid-template-columns:1fr;gap:26px}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ── language switch ───────────────────────────────── */
+
+/* ── evidence strip ────────────────────────────────── */
+.evbox{margin-top:26px}
+.evlab{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.evhint{font-weight:400;letter-spacing:0;text-transform:none;font-size:12.5px;color:var(--muted)}
+.evstrip{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px}
+.evtile{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;
+  cursor:zoom-in;background:#000;aspect-ratio:16/9;
+  transition:border-color .14s,transform .14s,box-shadow .14s}
+.evtile:hover,.evtile:focus-visible{border-color:var(--blue);transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(26,109,255,.18);outline:none}
+.evtile img{width:100%;height:100%;object-fit:cover;display:block}
+.evtile .num{position:absolute;top:6px;left:6px;background:rgba(11,27,58,.86);color:#fff;
+  font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:4px;letter-spacing:.02em}
+figure.lb-src{display:none}
+
+/* ── lightbox ──────────────────────────────────────── */
+.lb{position:fixed;inset:0;z-index:9999;background:rgba(8,14,24,.94);display:none;
+  align-items:center;justify-content:center;flex-direction:column;padding:28px 64px 20px}
+.lb.open{display:flex}
+.lb>img{max-width:100%;max-height:calc(100vh - 160px);object-fit:contain;border-radius:6px;
+  background:#000;box-shadow:0 18px 60px rgba(0,0,0,.5)}
+.lb-cap{color:#e6ebf2;font-size:14px;line-height:1.55;max-width:900px;text-align:center;
+  margin-top:16px}
+.lb-cap a{color:#7ab9ff}
+.lb-cap b:first-child,.lb-cap strong:first-child{display:block;margin-bottom:6px;color:#fff;font-size:15px}
+.lb-count{position:absolute;top:20px;left:26px;color:#9fb0c4;font-size:12.5px;letter-spacing:.06em}
+.lb-x,.lb-prev,.lb-next{position:absolute;background:rgba(255,255,255,.1);border:0;color:#fff;
+  cursor:pointer;border-radius:8px;display:grid;place-items:center;transition:background .14s}
+.lb-x:hover,.lb-prev:hover,.lb-next:hover{background:rgba(255,255,255,.22)}
+.lb-x{top:16px;right:20px;width:38px;height:38px;font-size:20px;line-height:1}
+.lb-prev,.lb-next{top:50%;transform:translateY(-50%);width:44px;height:64px;font-size:24px}
+.lb-prev{left:12px} .lb-next{right:12px}
+@media(max-width:760px){.lb{padding:16px 12px}.lb-prev,.lb-next{width:36px;height:52px}}
+@media print{.lb{display:none!important}.evbox{display:none}figure.lb-src{display:block}}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+/* CJK face for the prose; reconstructions are Latin, so they keep Inter */
+body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",Meiryo,sans-serif}
+.rs,.rs *{font-family:"Inter",system-ui,-apple-system,sans-serif}
+</style>
+</head><body>
+<div class="sheet">
+
+<div class="navbar">
+    <img class="logo" src="../6labs-logo.png" alt="6labs.ai">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">パイロットレポート</a><span class="sep">/</span><span class="here">チャットモデレーション</span></nav>
+    <nav class="langs" aria-label="Language"><a href="../chat-moderation.html" hreflang="en">EN</a><a href="../zh/chat-moderation.html" hreflang="zh-Hans">中文</a><span class="on">日本語</span><a href="../ko/chat-moderation.html" hreflang="ko">한국어</a></nav>
+  </div>
+
+  <div class="titleblock">
+    <div class="eyebrow">ケーススタディ &middot; Game-01 &times; Oracle</div>
+    <h1>録画から読むチャットモデレーションのシグナル</h1>
+    <p class="sub">DWH にはこれが<b>1 つもありません</b>。ワールドチャットを見られるのは録画セッションだけです &mdash; フィルタが素通りさせる RMT スパム、見当違いのものを弾く単語フィルタ、そしてすり抜けるハラスメント。</p>
+  </div>
+
+  <div class="heroes">
+    <div class="hero"><div class="n">89,240</div><div class="l">本の録画にワールドまたは地域チャットが映っています &mdash; 録画全体の 19%</div></div>
+  </div>
+
+    <div class="recon-note"><b>画面について。</b> 掲載画面は、録画セッションで観察された場面の再構成であり、画面上の文言は軽微に言い換えています。匿名性を守るため、クライアントの実映像は公開していません。再構成画面と、本文中で引用しているゲーム内メッセージは、いずれも英語で表示しています。</div>
+
+  <main>
+
+    <section>
+      <div class="kick">レンズ 1</div>
+      <h2>RMT ボットが 4 つのサーバーで同じ広告を流す &mdash; そしてフィルタは何もしない</h2><div class="rule"></div>
+      <p class="lead">テンプレート化された広告 &mdash; 高レア装備や <b>&ldquo;300,900 Premium Gems&rdquo;</b> を現金で、外部の <b>&ldquo;Inquiry Website: an external RMT site&rdquo;</b> へ誘導するもの &mdash; が、低レベル・ギルド未所属・名声 0 のボットアカウントによって、4 つの地域サーバーのワールド / 地域 / 全体チャットに繰り返し投稿されています。自動フィルタは何もせず、プレイヤーが手作業でブロックし通報しています。</p>
+<div class="pair"><figure><div class="rs "><div class="rs-chat"><div class="tabs"><span class="tab on">All</span><span class="tab">World</span><span class="tab">Region</span><span class="tab">Whisper</span></div><div class="log"><div class="rs-msg "><b>Player</b> anyone selling weapon mats</div><div class="rs-msg spam"><b>Bot handle A</b> $49.99 = Premium Gem 300,900 &mdash; Inquiry Website: [external RMT site]</div><div class="rs-msg "><b>Player</b> again? third time today</div><div class="rs-msg spam"><b>Bot handle A</b> $49.99 = Premium Gem 300,900 &mdash; Inquiry Website: [external RMT site]</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>全体 / ワールドチャットに流れる広告。同一アカウントが数分おきに再投稿しています。</figcaption></figure><figure><div class="rs "><div class="rs-dim heavy"></div>
+<div class="rs-dlg"><div class="hd">Report player</div>
+  <div class="bd">Select a reason for reporting this message.</div>
+  <div class="rs-row"><div class="tx"><b>Inappropriate message</b></div><span class="pill blue">Selected</span></div>
+  <div class="rs-row"><div class="tx"><b>Abusive language</b></div></div>
+  <div class="rs-row"><div class="tx"><b>Unfair play</b></div></div>
+  <div class="ft" style="padding-top:12px"><span class="rs-btn">Cancel</span><span class="rs-btn pri">Report</span></div>
+</div><div class="rs-tag">Reconstruction</div></div><figcaption>プレイヤーが通報ダイアログを開き、&ldquo;Inappropriate message&rdquo; を選択します。</figcaption></figure></div><p class='cap'><b>ボットアカウント A</b> が全体 / ワールドチャットに RMT 広告を投稿 &mdash; <b>&ldquo;$49.99 = Premium Gem 300,900 (Inquiry Website: [external RMT site])&rdquo;</b>。プレイヤーが通報ダイアログを開き、&ldquo;Inappropriate message&rdquo; を選択しています。</p><div class="pair"><figure><div class="rs "><div class="rs-dim heavy"></div>
+<div class="rs-dlg"><div class="hd">Report &middot; reason</div>
+  <div class="bd">Describe the problem.</div>
+  <div class="rs-form" style="position:static;padding:0 12px 12px;background:transparent">
+    <div class="fl filled" style="min-height:34px">spamming link to spend money on another site</div>
+  </div>
+  <div class="ft"><span class="rs-btn">Cancel</span><span class="rs-btn pri">Submit</span></div>
+</div><div class="rs-tag">Reconstruction</div></div><figcaption>通報者は自由記述欄に自分で理由を打ち込んでいます。</figcaption></figure><figure><div class="rs "><div class="rs-chat" style="top:12%"><div class="tabs"><span class="tab on">All</span><span class="tab">World</span><span class="tab">Region</span><span class="tab">Whisper</span></div><div class="log"><div class="rs-msg spam"><b>Bot handle A</b> $49.99 = Premium Gem 300,900 &mdash; Inquiry Website: [external RMT site]</div><div class="rs-msg muted">&hellip;</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div>
+<div class="rs-dim"></div>
+<div class="rs-panel" style="top:44%"><div class="hd">Player profile</div>
+  <div class="rs-row"><div class="ic"></div><div class="tx"><b>Bot handle A</b><span>Lv.32 &middot; Not in Guild &middot; 0 fame</span></div><span class="pill warn" style="background:#b42318">Reported</span></div>
+</div><div class="rs-tag">Reconstruction</div></div><figcaption>同じアカウントに &ldquo;Reported&rdquo; が付きました &mdash; プロフィールカードの背後には、広告がまだはっきり読めています。</figcaption></figure></div><p class='cap'><b>同じボットアカウント</b>が別セッションにも登場します。通報者が書いた理由は &ldquo;spamming link to spend money on another site&rdquo;。プロフィールは Lv.32、ギルド未所属、名声ゼロで、&ldquo;Reported&rdquo; と表示され、その背後には RMT 広告がまだはっきり読めています。</p>
+    </section>
+
+    <section>
+      <div class="kick">レンズ 2</div>
+      <h2>禁止語フィルタは &ldquo;palabok&rdquo; と &ldquo;Buccees&rdquo; を弾き、理由は一度も告げない</h2><div class="rule"></div>
+      <p class="lead">拒否されたメッセージが返すのは、常に同じ汎用ポップアップ <b>&ldquo;This text cannot be used.&rdquo;</b> 1 つだけ &mdash; どの語かも、なぜかも示しません。部分文字列でマッチするため、無害な文も暴言も一緒くたに弾き、プレイヤーが学べるのは回避方法だけです。</p>
+<div class="pair"><figure><div class="rs "><div class="rs-chat"><div class="tabs"><span class="tab">All</span><span class="tab on">World</span><span class="tab">Region</span><span class="tab">Whisper</span></div><div class="log"><div class="rs-msg "><b>Player</b> what do you all eat over there</div><div class="rs-msg "><b>Player</b> palabok is a type of pan&hellip;</div><div class="rs-msg muted">typing&hellip;</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>ワールドチャットでの他愛ない食べ物の会話。</figcaption></figure><figure><div class="rs "><div class="rs-chat"><div class="tabs"><span class="tab">All</span><span class="tab on">World</span><span class="tab">Region</span><span class="tab">Whisper</span></div><div class="log"><div class="rs-msg muted">&hellip;</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-dim"></div>
+<div class="rs-dlg"><div class="hd">Notice</div><div class="bd">This text cannot be used.</div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>メッセージは汎用の通知で拒否されます &mdash; 語の指摘も、理由の提示もありません。</figcaption></figure></div><p class='cap'><b>誤検出。</b> 他愛ない食べ物の会話で、プレイヤーが <b>&ldquo;palabok is a type of pan…&rdquo;</b> と打つと、フィルタは汎用の &ldquo;This text cannot be used.&rdquo; で弾きました。</p><div class="pair"><figure><div class="rs "><div class="rs-chat"><div class="tabs"><span class="tab">All</span><span class="tab">World</span><span class="tab">Region</span><span class="tab on">Whisper</span></div><div class="log"><div class="rs-msg "><b>You</b> damn lost connecttion :P</div><div class="rs-msg muted">to a friend, 1-to-1</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>友人に個人的に送った軽い悪態の一文。</figcaption></figure><figure><div class="rs "><div class="rs-chat"><div class="tabs"><span class="tab">All</span><span class="tab">World</span><span class="tab">Region</span><span class="tab on">Whisper</span></div><div class="log"><div class="rs-msg muted">&hellip;</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-dim"></div>
+<div class="rs-dlg"><div class="hd">Notice</div><div class="bd">This text cannot be used.</div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>ウィスパーでも同じ通知で弾かれます。1 対 1 の私信もフィルタ対象です。</figcaption></figure></div><p class='cap'>友人宛ての軽い悪態 &mdash; <b>&ldquo;damn lost connecttion :P&rdquo;</b> &mdash; がウィスパーで同じ汎用通知に弾かれました。1 対 1 の私信すらフィルタされています。</p><div class="pair"><figure><div class="rs "><div class="rs-chat"><div class="tabs"><span class="tab">All</span><span class="tab on">World</span><span class="tab">Region</span><span class="tab">Whisper</span></div><div class="log"><div class="rs-msg "><b>Player</b> [crude innuendo &mdash; content described, not reproduced]</div><div class="rs-msg muted">World banter</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>妥当なブロック &mdash; ワールドチャットでの下品な当てこすり。</figcaption></figure><figure><div class="rs "><div class="rs-chat"><div class="tabs"><span class="tab">All</span><span class="tab on">World</span><span class="tab">Region</span><span class="tab">Whisper</span></div><div class="log"><div class="rs-msg muted">&hellip;</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-dim"></div>
+<div class="rs-dlg"><div class="hd">Notice</div><div class="bd">This text cannot be used.</div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>返ってくるのは、無害なケースとまったく同じ区別のないポップアップです。</figcaption></figure></div><p class='cap'>妥当なブロック（ワールドチャットでの下品な当てこすり &mdash; 内容は記述にとどめ、原文は再現しません）。返るのは無害なケースと<b>まったく区別のつかない同じポップアップ</b>です。</p>
+      <h3>フィルタが捕まえたもの &mdash; その多くは見当違い</h3>
+      <div class="tw">
+<table><thead><tr><th>ブロックされたテキスト</th><th>チャンネル</th><th>判定</th><th></th></tr></thead>
+<tbody><tr><td>&ldquo;damn lost connecttion :P&rdquo;</td><td>ウィスパー</td><td>やや妥当 &mdash; 私信での軽い悪態</td><td><span class='ok'>妥当</span></td></tr><tr><td>&ldquo;palabok is a type of pan…&rdquo;</td><td>ワールド</td><td>誤検出 &mdash; フィリピンの麺料理</td><td><span class='fp'>誤検出</span></td></tr><tr><td>&ldquo;Buccees&rdquo;</td><td>ワールド</td><td>誤検出 &mdash; 米国のガソリンスタンドチェーン</td><td><span class='fp'>誤検出</span></td></tr><tr><td>&ldquo;patrick mccaw&rdquo;（NBA 選手）</td><td>ワールド</td><td>誤検出 &mdash; &ldquo;mccaw&rdquo; に部分文字列 &ldquo;cock&rdquo; が含まれる</td><td><span class='fp'>誤検出</span></td></tr><tr><td>&ldquo;Not for sale, ask someone else&rdquo;（英語以外）</td><td>ウィスパー（英語以外）</td><td>誤検出 &mdash; ごく普通の取引の返信</td><td><span class='fp'>誤検出</span></td></tr><tr><td>&ldquo;shit&rdquo; / &ldquo;ass&rdquo; / &ldquo;mf&rdquo;</td><td>ワールド / ウィスパー</td><td>妥当なブロック（あるプレイヤーは 5 回試している）</td><td><span class='ok'>妥当</span></td></tr></tbody></table>
+      </div>
+      <div class="callout"><b>代償は 2 つ。</b> 正当なチャットが弾かれてプレイヤーが苛立つこと。そして通知が汎用であるがゆえに、プレイヤーは<b>手当たり次第に試して回避する</b>こと &mdash; 本来弾くべき語に対して、フィルタが機能しなくなります。</div>
+    </section>
+
+    <section>
+      <div class="kick">レンズ 3</div>
+      <h2>プレイヤーが通報するのは暴言ではなくスパム &mdash; そしてスペースで分割された差別語は通ってしまった</h2><div class="rule"></div>
+      <p class="lead">結論は 2 つ。第 1 に、通報 / ブロック機能は絶えず使われていますが、その大半は<b>スパム</b>に対してです &mdash; &ldquo;Inappropriate message&rdquo; として提出されたものまで RMT 広告でした。第 2 に、本当の暴言に対してはフィルタこそが弱点です。</p>
+<div class="pair"><figure><div class="rs "><div class="rs-chat"><div class="tabs"><span class="tab on">All</span><span class="tab">World</span><span class="tab">Region</span><span class="tab">Whisper</span></div><div class="log"><div class="rs-msg spam flag"><b>Bot handle B</b> $49.99 = Premium Gem 300,900 &mdash; Inquiry Website: [external RMT site]</div><div class="rs-msg "><b>Player</b> reporting this one</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>プレイヤーが広告を長押しして報告しようとしています。</figcaption></figure><figure><div class="rs "><div class="rs-dim heavy"></div>
+<div class="rs-dlg"><div class="hd">Report player</div>
+  <div class="bd">Reported message and category.</div>
+  <div class="rs-row"><div class="tx"><b>Inappropriate message</b><span>selected category</span></div><span class="pill blue">Selected</span></div>
+  <div class="ft" style="padding-top:12px"><span class="rs-btn">Cancel</span><span class="rs-btn pri">Report</span></div>
+</div><div class="rs-tag">Reconstruction</div></div><figcaption>&ldquo;Inappropriate message&rdquo; として提出 &mdash; 通報された内容は、また別の RMT 広告です。</figcaption></figure></div><p class='cap'>&ldquo;Inappropriate message&rdquo; として提出 &mdash; ただし<b>ボットアカウント B</b> の通報内容も、やはり<b>同じ RMT 広告</b>でした。</p>
+      <h3>実際のハラスメント事例 &mdash; フィルタが取りこぼす種類の暴言</h3>
+<div class="pair" style="grid-template-columns:1fr;max-width:100%"><figure><div class="rs feed"><div class="rs-chat"><div class="tabs"><span class="tab">All</span><span class="tab on">World</span><span class="tab">Region</span><span class="tab">Whisper</span></div><div class="log"><div class="rs-msg flag"><b>One player</b> [racially demeaning message targeting a nationality]</div><div class="rs-msg "><b>Another</b> not this again</div><div class="rs-msg flag"><b>One player</b> [same player, letters spaced out to slip past the word filter]</div><div class="rs-msg "><b>Another</b> just block them</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>ワールド / 全体チャットの流れ。メッセージはチャンネルに残り続け、システム側の処置は何も起きません。</figcaption></figure></div>
+      <p class="cap">このセッションでは、1 人のプレイヤーがワールドチャットに<b>特定の国籍を標的とした人種差別的なメッセージ</b>を投稿し、単語フィルタをすり抜けるために<b>文字の間にスペースを入れて</b>います。システム側の処置は何も起きず、他のプレイヤーは返信するか、そのまま流すだけです。問題の文言はここでは再現せず、記述にとどめます。</p>
+      <h3>フィルタが画面上で失敗した 3 つの形</h3>
+      <div class="tw">
+<table><thead><tr><th>ギャップ</th><th>画面で何が起きたか</th></tr></thead>
+<tbody><tr><td>スペース分割ですり抜けた差別語</td><td class='muted'>あるプレイヤーがアンダースコアやスペースで差別語を分割し、そのまま投稿された</td></tr><tr><td>暴言が押し通された</td><td class='muted'>何度か弾かれたあと、ありふれた暴言がワールドチャットに到達した</td></tr><tr><td>ハラスメントが放置された</td><td class='muted'>継続的な敵意ある発言に対してシステム側の目に見える処置がない。プレイヤーは黙ってブロックするため、スタジオには何も届かない</td></tr></tbody></table>
+      </div>
+      <div class="callout warn"><b>ギャップ：</b>フィルタは無害な部分文字列には厳格である一方、<b>差別語をスペースで分割する者には誰にでも回避され</b>、継続的なハラスメントには目に見える処置を取りません。通報の分類はスパムと暴言を分けておらず、多くのプレイヤーは黙ってブロックします &mdash; 本当のシグナルはスタジオに届かないままです。</div>
+    </section>
+
+  </main>
+
+  <footer>
+  <div class="fgrid">
+    <div>
+      <div class="flab">このレポート</div>
+      <p><b>チャットモデレーション</b> &mdash; Game-01 パイロットの 3 本のカテゴリ別レポートのうちの 1 本。</p>
+      <p class="fmeta">すべての所見は録画されたプレイセッションから読み取ったものです。この匿名版ではクリップへのリンクを掲載していません。</p>
+    </div>
+    <div>
+      <div class="flab">他のレポート</div>
+      <ul class="flinks"><li><a href="index.html"><span class="arrow">&rarr;</span>メインレポート</a></li><li><a href="retention-churn.html"><span class="arrow">&rarr;</span>リテンションと離脱</a></li><li><a href="monetization-ux.html"><span class="arrow">&rarr;</span>技術的問題と UX の摩擦</a></li></ul>
+    </div>
+  </div>
+  <div class="fbot"><span>Game-01 パイロット &middot; 匿名化されたケーススタディ</span><img src="../6labs-logo.png" alt="6labs.ai"></div>
+</footer>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="../recon.js"></script>
+</body></html>

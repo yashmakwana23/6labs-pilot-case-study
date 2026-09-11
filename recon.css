@@ -261,3 +261,15 @@ body.rlb-open{overflow:hidden}
   .rlb-x{top:8px; right:8px}
   .rlb-meta{font-size:12px}
 }
+
+/* ── language switcher (navbar, right-aligned) ─────────────────────────── */
+.langs{display:flex;align-items:center;gap:2px;margin-left:auto;flex-shrink:0}
+.langs a,.langs .on{font-size:12.5px;line-height:1;padding:5px 8px;border-radius:6px;
+  white-space:nowrap;text-decoration:none}
+.langs a{color:#8593a8}
+.langs a:hover{color:#0b1b3a;background:#eef3fe}
+.langs .on{color:#0b1b3a;font-weight:600;background:#eef3fe}
+@media (max-width:560px){
+  .langs{gap:0}
+  .langs a,.langs .on{padding:5px 6px;font-size:12px}
+}

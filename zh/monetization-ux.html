@@ -1,0 +1,493 @@
+<!doctype html><html lang="zh-Hans"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Game-01 &mdash; 技术问题与体验阻力</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../recon.css">
+<style>
+:root{
+  --navy:#0b1b3a; --ink:#101828; --body:#475467; --muted:#8593a8;
+  --blue:#1a6dff; --blue-dk:#1450c8; --blue-tint:#eef3fe; --blue-tint2:#f6f9ff;
+  --line:#e4e9f2; --hair:#eef1f6; --white:#fff; --page:#f7f9fc;
+  --good:#0a7d4a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--body);
+  font:16px/1.65 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.sheet{max-width:1060px;margin:26px auto;background:var(--white);border:1px solid var(--line)}
+h1,h2,h3{font-family:Poppins,Inter,sans-serif;color:var(--navy);margin:0;letter-spacing:-.015em}
+p{margin:13px 0}
+strong,b{color:var(--navy);font-weight:600}
+em{color:var(--ink);font-style:italic}
+a{color:var(--blue-dk);text-decoration:none;font-weight:600}
+a:hover{text-decoration:underline}
+a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+img{max-width:100%}
+
+/* -- brand bar -------------------------------------- */
+.brandbar{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;
+  padding:38px 46px 0}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--blue);padding-top:4px}
+.hero .eyebrow{margin-bottom:10px}
+.brandright{display:flex;align-items:center;gap:20px;flex-shrink:0}
+
+
+.logo{display:block;height:30px;width:auto;flex-shrink:0}
+
+/* -- hero ------------------------------------------- */
+.hero{padding:14px 46px 34px}
+.hero h1{font-size:clamp(30px,4.2vw,42px);font-weight:700;line-height:1.1}
+.hsub{margin:20px 0 0;padding-top:16px;border-top:1px solid var(--line);
+  font-size:15.5px;color:var(--body)}
+
+/* -- sections --------------------------------------- */
+main{padding:0 46px}
+section{padding:56px 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0;padding-top:6px}
+h2{font-size:23px;font-weight:600;margin:0 0 6px}
+h3{font-size:17px;font-weight:600;margin:28px 0 6px}
+.rule{width:44px;height:3px;background:var(--blue);border-radius:2px;margin-bottom:18px}
+.kick{font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:8px}
+.sechd{display:grid;grid-template-columns:34px 1fr;gap:16px;align-items:start}
+.badge{width:34px;height:34px;border-radius:7px;background:var(--navy);color:#fff;
+  display:grid;place-items:center;font-family:Poppins,sans-serif;font-weight:600;
+  font-size:15px;margin-top:19px}
+
+/* -- lists ------------------------------------------ */
+ol,ul{margin:14px 0;padding-left:22px}
+li{margin:8px 0}
+ol li::marker{color:var(--blue);font-weight:700}
+ul li::marker{color:var(--blue)}
+
+code{background:var(--blue-tint);color:var(--blue-dk);padding:1px 6px;border-radius:4px;
+  font-size:.87em;font-family:ui-monospace,Menlo,Consolas,monospace}
+blockquote{border-left:3px solid var(--blue);margin:16px 0;padding:2px 0 2px 16px;
+  color:var(--body)}
+
+/* -- tables ----------------------------------------- */
+.tablewrap{overflow-x:auto;margin:22px 0 0;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:600px}
+th{text-align:left;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);padding:0 16px 11px 0;border-bottom:1.5px solid var(--line)}
+td{padding:13px 16px 13px 0;border-bottom:1px solid var(--hair);vertical-align:top}
+th:last-child,td:last-child{padding-right:0}
+tbody tr:last-child td{border-bottom:0}
+
+/* -- evidence figures ------------------------------- */
+.evgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px;
+  margin:28px 0 0}
+figure.ev{margin:0;background:var(--white);border:1px solid var(--line);border-radius:8px;
+  overflow:hidden;display:flex;flex-direction:column}
+figure.ev.pair{grid-column:1/-1}
+figure.ev .shots{display:flex;gap:2px;background:var(--navy);justify-content:center}
+figure.ev .shots img{width:100%;height:auto;display:block;object-fit:contain}
+figure.ev.pair .shots img{width:50%}
+.vidid{text-align:center;font-size:11px;color:var(--muted);margin:0;padding:9px 12px 0;
+  font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.02em;word-break:break-all}
+.vidid b{color:var(--navy);font-weight:600}
+figure.ev figcaption{padding:9px 14px 14px;font-size:12.5px;line-height:1.5;color:var(--body)}
+figure.ev figcaption b{color:var(--navy);font-weight:600}
+.evtext{color:var(--muted);display:block;margin:4px 0 0}
+.cite{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--muted);
+  display:block;margin-top:4px}
+
+footer{padding:26px 46px 40px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+footer b{color:var(--navy);font-weight:600}
+
+@media(max-width:760px){
+  .brandbar,.hero,main,footer{padding-left:22px;padding-right:22px}
+  .sheet{margin:0;border-left:0;border-right:0}
+  section{padding:40px 0}
+  .evgrid{grid-template-columns:1fr}
+  figure.ev.pair .shots{flex-wrap:wrap}
+  figure.ev.pair .shots img{width:100%}
+  .sechd{grid-template-columns:1fr;gap:10px}
+  .sechd .badge{margin-top:0}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{body{background:#fff}.sheet{border:0;margin:0}figure.ev{break-inside:avoid}}
+
+
+/* navbar */
+.navbar{display:flex;align-items:center;gap:16px;padding:14px 46px;border-bottom:1px solid var(--line);background:var(--white)}
+.navbar .crumbs{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--muted);min-width:0;flex:1}
+.navbar .crumbs a{color:var(--body);font-weight:600;text-decoration:none}
+.navbar .crumbs a:hover{color:var(--blue-dk);text-decoration:underline}
+.navbar .crumbs .sep{color:var(--line)}
+.navbar .crumbs .here{color:var(--navy);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--body);
+  text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:7px 13px;background:var(--white);
+  flex-shrink:0;transition:border-color .14s,color .14s,background .14s}
+.backlink:hover{border-color:var(--blue);color:var(--blue-dk);background:var(--blue-tint);text-decoration:none}
+.navbar .logo{height:26px;width:auto;flex-shrink:0;margin-right:2px}
+@media(max-width:760px){.navbar{padding-left:22px;padding-right:22px;gap:11px}.navbar .crumbs{display:none}}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:34px 46px 44px;background:var(--white)}
+.fgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:start}
+.flab{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.fgrid p{margin:0;font-size:14px;color:var(--body)}
+.fmeta{margin-top:10px!important;font-size:13px!important;color:var(--muted)!important}
+.flinks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.flinks a{font-size:14.5px;color:var(--body);text-decoration:none;font-weight:600;display:inline-flex;gap:8px}
+.flinks a:hover{color:var(--blue-dk);text-decoration:underline}
+.flinks .arrow{color:var(--blue)}
+.fbot{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:30px;padding-top:20px;border-top:1px solid var(--hair);font-size:12.5px;color:var(--muted)}
+.fbot img{height:22px;width:auto}
+@media(max-width:760px){footer{padding-left:22px;padding-right:22px}.fgrid{grid-template-columns:1fr;gap:26px}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ── language switch ───────────────────────────────── */
+
+/* ── evidence strip ────────────────────────────────── */
+.evbox{margin-top:26px}
+.evlab{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.evhint{font-weight:400;letter-spacing:0;text-transform:none;font-size:12.5px;color:var(--muted)}
+.evstrip{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px}
+.evtile{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;
+  cursor:zoom-in;background:#000;aspect-ratio:16/9;
+  transition:border-color .14s,transform .14s,box-shadow .14s}
+.evtile:hover,.evtile:focus-visible{border-color:var(--blue);transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(26,109,255,.18);outline:none}
+.evtile img{width:100%;height:100%;object-fit:cover;display:block}
+.evtile .num{position:absolute;top:6px;left:6px;background:rgba(11,27,58,.86);color:#fff;
+  font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:4px;letter-spacing:.02em}
+figure.lb-src{display:none}
+
+/* ── lightbox ──────────────────────────────────────── */
+.lb{position:fixed;inset:0;z-index:9999;background:rgba(8,14,24,.94);display:none;
+  align-items:center;justify-content:center;flex-direction:column;padding:28px 64px 20px}
+.lb.open{display:flex}
+.lb>img{max-width:100%;max-height:calc(100vh - 160px);object-fit:contain;border-radius:6px;
+  background:#000;box-shadow:0 18px 60px rgba(0,0,0,.5)}
+.lb-cap{color:#e6ebf2;font-size:14px;line-height:1.55;max-width:900px;text-align:center;
+  margin-top:16px}
+.lb-cap a{color:#7ab9ff}
+.lb-cap b:first-child,.lb-cap strong:first-child{display:block;margin-bottom:6px;color:#fff;font-size:15px}
+.lb-count{position:absolute;top:20px;left:26px;color:#9fb0c4;font-size:12.5px;letter-spacing:.06em}
+.lb-x,.lb-prev,.lb-next{position:absolute;background:rgba(255,255,255,.1);border:0;color:#fff;
+  cursor:pointer;border-radius:8px;display:grid;place-items:center;transition:background .14s}
+.lb-x:hover,.lb-prev:hover,.lb-next:hover{background:rgba(255,255,255,.22)}
+.lb-x{top:16px;right:20px;width:38px;height:38px;font-size:20px;line-height:1}
+.lb-prev,.lb-next{top:50%;transform:translateY(-50%);width:44px;height:64px;font-size:24px}
+.lb-prev{left:12px} .lb-next{right:12px}
+@media(max-width:760px){.lb{padding:16px 12px}.lb-prev,.lb-next{width:36px;height:52px}}
+@media print{.lb{display:none!important}.evbox{display:none}figure.lb-src{display:block}}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+/* CJK face for the prose; reconstructions are Latin, so they keep Inter */
+body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+.rs,.rs *{font-family:"Inter",system-ui,-apple-system,sans-serif}
+</style>
+</head><body>
+<div class="sheet">
+
+<div class="navbar">
+    <img class="logo" src="../6labs-logo.png" alt="6labs.ai">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">试点报告</a><span class="sep">/</span><span class="here">技术问题与体验阻力</span></nav>
+    <nav class="langs" aria-label="Language"><a href="../monetization-ux.html" hreflang="en">EN</a><span class="on">中文</span><a href="../ja/monetization-ux.html" hreflang="ja">日本語</a><a href="../ko/monetization-ux.html" hreflang="ko">한국어</a></nav>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">案例研究 &middot; Game-01 &times; Oracle</div>
+    <h1>技术问题与体验阻力</h1>
+    <p class="hsub">在录制的玩家会话中看到的商店、购买与游玩流程阻力 &mdash; 这些拦路石从来到不了数仓。</p>
+    <div class="recon-note"><b>关于这些画面。</b> 画面是对录像中所观察到的时刻的复原图，屏幕上的文案经过轻微改写。为保护匿名性，客户的真实录像不予公开。复原画面及正文中引用的游戏内提示，一律以英文呈现。</div>
+  </div>
+
+  <main>
+
+
+<section>
+<div class="kick">3.1</div>
+<h2 id="31-issue-1--the-near-miss-wall-has-no-pity-mechanic">险胜之墙没有任何怜悯机制</h2>
+<div class="rule"></div>
+<p><strong>屏幕上发生了什么：</strong>玩家打到一个有计时的章节 Boss，打得不错，却在 Boss 还剩 1–5% 血时输给了<strong>计时</strong>（&ldquo;TIME OVER&rdquo; &mdash; 是伤害差距，不是被打死）。他重试，再重试。有些重试之间他会做升级（召唤、装备强化材料、宝石），有些之间则什么都不改。屏幕对如何补上这段差距只字不提：<strong>没有战力目标，没有伤害数值，没有任何该提升什么的提示</strong>。玩家看得出自己差得有多近 &mdash; 血条就摆在那里 &mdash; 但没有任何东西把它变成一个可以去追的数字，于是他原封不动地重打同一场，再以同样的方式失败。也没有任何过渡机制 &mdash; 没有累积增益，没有怜悯伤害加成，没有&ldquo;你已经很接近了&rdquo;的辅助。在连续 6–14 次险胜之后，这段过程会以三种方式之一结束：升级再重试的循环、转向低风险内容，或升级为在高价商店礼包上的花费。</p>
+<p><strong>放弃的标记：</strong>失败界面提供 <strong>Retry</strong> 和 <strong>Leave</strong>。玩家按下 <em>Leave</em> 而不是 <em>Retry</em> 的那一刻，会话的形态就变了 &mdash; 按 Leave 的玩家会转向低投入活动（世界 Boss 挂机、竞技场、休眠模式），而且往往不再回到那个 Boss。</p>
+<p><strong>在哪里看到：</strong>流失人群的墙横跨第 22–30 章外加成长副本；同样的结构出现在全新玩家（跳出人群）的第 2–5 章，以及分层 469 成员的第 7&ndash;31 章。</p>
+<p><strong>业务代价：</strong>这是录像里大多数流失弧线的起点（墙 → 花钱 → 没有回报 → 淡出）。一个怜悯 / 过渡机制可以一次性覆盖所有等级段。</p>
+<p><strong>实例：</strong></p>
+<ol type="1">
+<li>第 23 章第 7 关 &mdash; <strong>连续失败 11 次</strong>，其中三次以上 Boss 只剩 1% 血，始终没能突破。</li>
+<li>第 25 章第 9 关（Boss D）&mdash; 一段时间内<strong>连续失败 14 次</strong>；两次尝试之间没有任何升级动作，仍在继续重试。</li>
+<li>第 26 章（Boss F）&mdash; 失败 → 玩家按下 <strong>Leave</strong>，随后在设置里手动登出；这是录像中最清晰的放弃瞬间之一。</li>
+<li>第 29 章第 11 关（Boss E）&mdash; 一名巨鲸档的流失玩家在同一堵墙上失败 3 次：花钱只是把墙挪了位置，并没有把它拆掉。</li>
+</ol>
+<div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Ch 23 &middot; St 7</span><span class="rs-chip grow"></span></div><div class="rs-boss"><div class="nm">Stage boss</div><div class="rs-bar"><i style="width:4%"></i></div><div class="rs-timer out">00:00</div></div><div class="rs-dim"></div>
+<div class="rs-fail"><div class="stage">Chapter 23 &middot; Stage 07</div><div class="big">FAILED</div>
+<div class="row"><span class="rs-btn">Leave</span><span class="rs-btn pri">Retry</span></div>
+<div class="auto">Closing automatically in 3s</div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>第 23 章第 7 关：连续失败 11 次。</b>失败面板写着 &ldquo;CHAPTER23 STAGE 07 FAILED&rdquo;，带 Leave / Retry 按钮和 3 秒自动关闭计时。这名玩家在这一关已经连续失败 11 次，Boss 最终停在 4% 血量。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Ch 25 &middot; St 9</span><span class="rs-chip grow"></span></div><div class="rs-boss"><div class="nm">Boss D</div><div class="rs-bar"><i style="width:2%"></i></div><div class="rs-timer out">00:00</div></div><div class="rs-dim"></div>
+<div class="rs-fail"><div class="stage">Chapter 25 &middot; Stage 09</div><div class="big">FAILED</div>
+<div class="row"><span class="rs-btn">Leave</span><span class="rs-btn pri">Retry</span></div>
+<div class="auto">Closing automatically in 4s</div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>第 25 章第 9 关（Boss D）：连续失败 14 次。</b>&ldquo;CHAPTER 25 STAGE 09&rdquo; 标签、Leave / Retry，以及 FAILED 淡入时的 &ldquo;Closing automatically in 4 sec&rdquo;。在这个 Boss 上连续失败十四次。</figcaption></figure><figure class="ev pair"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Ch 26 &middot; St 10</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
+<div class="rs-fail"><div class="stage">Chapter 26 &middot; Stage 10</div><div class="big">FAILED</div>
+<div class="row"><span class="rs-btn">Leave</span><span class="rs-btn pri">Retry</span></div>
+<div class="auto">Closing automatically in 3s</div></div><div class="rs-tag">Reconstruction</div></div><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Settings</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
+<div class="rs-dlg"><div class="hd">Notice</div><div class="bd">Do you want to log out? The game will close.</div><div class="ft"><span class="rs-btn">Cancel</span><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>第 26 章 Boss F 失败，随后登出放弃。</b>画面 (a) 是第 10 关的失败面板。在画面 (b) 中玩家打开设置 &gt; 账号并触发了登出确认 &mdash; 这是录像中最清晰的放弃瞬间之一。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Ch 29 &middot; St 11</span><span class="rs-chip grow"></span></div><div class="rs-boss"><div class="nm">Boss E</div><div class="rs-bar"><i style="width:6%"></i></div><div class="rs-timer out">00:00</div></div><div class="rs-dim"></div>
+<div class="rs-fail"><div class="stage">Chapter 29 &middot; Stage 11</div><div class="big">FAILED</div>
+<div class="row"><span class="rs-btn">Leave</span><span class="rs-btn pri">Retry</span></div>
+<div class="auto">Closing automatically in 3s</div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>第 29 章第 11 关 Boss E 失败。</b>一个后期章节区域，Leave / Retry，3 秒自动关闭。这名玩家是一个高消费的流失账号，在同一堵墙上失败了三次。</figcaption></figure></div>
+</section>
+
+<section>
+<div class="kick">3.2</div>
+<h2 id="32-issue-2--store-bug-errorcode-9-100302-unavailable-in-store">商店 bug：<code>errorCode 9-100302</code> &ldquo;Not available in store&rdquo;</h2>
+<div class="rule"></div>
+<p><strong>屏幕上发生了什么：</strong>一名明显有付费意图的玩家打开一个真钱商品（高级宝石包、会员、限时优惠），走到结算，然后收到 <strong>&ldquo;Not available in store&rdquo;（errorCode 9-100302）</strong>。在同一次会话内，这个错误会确定性地重复出现 &mdash; 同一个商品每次都失败 &mdash; 玩家会在放弃之前<strong>对同一个坏掉的商品重试 2–3 次</strong>。受影响人群中的购买跨越<strong>四种不同的店面货币</strong> &mdash; 这不是单一店面的故障。</p>
+<p><strong>业务代价：</strong>这些是被挡在收银台前的<em>愿意付钱的买家</em>。数仓侧的规模参照：有 30,693 名玩家在其有史以来第一次成功购买之前出现过失败 / 取消的支付（&sect;3.9）&mdash; 录像指出商店侧故障是其中一个原因。</p>
+<p><strong>实例：</strong></p>
+<ol type="1">
+<li>有一名玩家在同一次会话中对同一个活动限时优惠发起了 <strong>3 次</strong>购买 &mdash; 每次都是同一个 <code>9-100302</code> 错误。</li>
+<li>第二条引用 &mdash; 同一个错误出现在豪华会员、随后又出现在特别会员上 &mdash; <strong>未通过复核</strong>：所引用的片段中根本没有出现该弹窗。此处列出它，是作为一条未成立的引用，而不是作为证据。</li>
+<li>一个相关的供应商错误（<code>9-100204</code> &ldquo;Vendor is not initialized&rdquo;）在成功转化和放弃的会话中都出现 &mdash; 成功的买家会顶着它重试，只是逛逛的人则就此停下；错误一样，需求状态不同。</li>
+<li>在客户自定义人群上的旁证：一名分层 469 成员触发了一次激励广告购买，立刻收到 <strong>&ldquo;Purchase not possible&rdquo;</strong> 错误（同一个阻断购买的错误家族）。</li>
+</ol>
+<div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Hot deal</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Limited-Time Event Hot Deal 1</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Event bundle</b><span>limited period</span></div><span class="pill">USD 10.90</span></div></div><div class="rs-dim"></div>
+<div class="rs-dlg"><div class="hd">Notice</div><div class="bd">Not available in store.<span class="code">(errorCode: 9 - 100302)</span></div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>活动限时优惠 9-100302 支付失败。</b>&ldquo;Not available in store. (errorCode: 9 - 100302)&rdquo; 覆盖在 Limited-Time Event Hot Deal 1 上，发生在一次 USD 10.90 的购买尝试中。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Membership</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Deluxe Membership &middot; 30 days</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Deluxe Membership</b><span>30-day term</span></div><span class="pill">Buy</span></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Daily reward crate</b><span>included</span></div><span class="pill ghost">&times;30</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>在豪华会员上引用的 9-100302。</b>商品页在购买按钮上带着其区域店面价格。<span class="evtext">复核说明：在这段 441 秒的片段中任何位置都没有出现 9-100302 弹窗 &mdash; 该引用未能成立。</span></figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Hot deal</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Limited-Time Event Hot Deal 1</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Event bundle</b><span>checkout</span></div><span class="pill">Buy</span></div></div><div class="rs-dim"></div>
+<div class="rs-dlg"><div class="hd">Notice</div><div class="bd">Vendor is not initialized.<span class="code">(errorCode: 9 - 100204)</span></div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>供应商错误 9-100204。</b>同一个商品，另一种拒绝：商店从未完成初始化。错误在点击的瞬间弹出。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Quick Hunt</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Quick Hunt &middot; Watch Ad</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Instant clear reward</b><span>watch an ad to claim</span></div><span class="pill blue">Watch Ad</span></div></div>
+   <div class="rs-toast yellow t2">Could not load the ad.</div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>激励广告购买被广告错误挡住。</b>Quick Hunt 奖励弹窗停在其 Watch Ad 标签页上；一条黄色的 &ldquo;could not load the ad&rdquo; 消息落在奖励上方。</figcaption></figure></div>
+</section>
+
+<section>
+<div class="kick">3.3</div>
+<h2 id="33-issue-3--the-silent-success-trust-bug">静默成功造成的信任 bug</h2>
+<div class="rule"></div>
+<p><strong>屏幕上发生了什么：</strong>玩家完成了一次购买，界面却显示<strong>失败</strong>（错误码 <strong>100315</strong>、<strong>100107</strong>、<strong>100204-24001</strong>）&mdash; 而几分钟后，买到的物品<strong>照样进了邮箱</strong>。交易是成功的，界面却说失败了。</p>
+<p><strong>为什么重要：</strong>一个会谎报失败的支付流程，会教玩家不要信任商店。它可能训练出的行为 &mdash; 重复购买、申请退款，或干脆不再买 &mdash; 全是坏结果，而且在账单数据里一个都看不见（订单行看上去很正常）。</p>
+<p><strong>实例：</strong></p>
+<ol type="1">
+<li>&ldquo;失败&rdquo;界面（错误码 100315 / 100107 / 100204-24001）之后，物品在同一次会话中进入了邮箱 &mdash; 界面说失败，交易却完成了。</li>
+<li>在退出信号人群中对同一错误家族的独立发现：churn 玩家最后几次会话的结算过程中出现支付错误 <code>9-100315</code> / <code>10-100107</code>。</li>
+</ol>
+<div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Checkout</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
+<div class="rs-dlg"><div class="hd">Notice</div><div class="bd">A pending payment exists. Please finish the purchase at the available step. Items will be issued afterward.<span class="code">(errorCode: 9 - 100315)</span></div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>失败 100315 &mdash; 物品随后进入邮箱。</b>出现在一次区域店面的 Premium Gem &times;3,000 购买中。界面报告了失败，物品照样到了。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Checkout</span><span class="rs-chip grow"></span></div><div class="rs-panel" style="top:34%"><div class="hd">Weapon Hot Deal &middot; T1</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>T1 weapon bundle</b><span>checkout in progress</span></div><span class="pill">Buy</span></div></div><div class="rs-dim"></div>
+<div class="rs-dlg"><div class="hd">Notice</div><div class="bd">The payment could not be completed.<span class="code">(errorCode: 9 - 100315)</span></div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>结算时的支付错误 9-100315。</b>提示落在结算途中的 T1 Weapon Hot Deal 上。此处屏幕文字以英文呈现；原文使用的是玩家自己的客户端语言。</figcaption></figure></div>
+</section>
+
+<section>
+<div class="kick">3.4</div>
+<h2 id="34-issue-4--ad-errors-that-lie">会说谎的广告错误</h2>
+<div class="rule"></div>
+<p><strong>屏幕上发生了什么：</strong>玩家把一条激励广告<strong>完整看完</strong> &mdash; 游戏却弹出 <strong>&ldquo;The ad did not load.&rdquo;</strong>。在最清晰的一段片段里，错误浮层<em>留在</em>一个成功的 &ldquo;Items Obtained&rdquo; 弹窗后面：游戏一边声称广告失败，一边把奖励发了出去。另一段里，一次尝试产生了<strong>双重错误</strong> &mdash; &ldquo;you skipped the ad&rdquo;（红）加上 &ldquo;the ad did not load&rdquo;（黄）&mdash; 而这只是一次观看。跳过还会被单独惩罚，直接拒发奖励。</p>
+<p><strong>为什么重要：</strong>激励广告是非付费玩家的主要资源管道（问题 7）。谎报玩家刚刚做了什么的错误，正在侵蚀那条让非付费玩家继续推进的闭环的可信度 &mdash; 而且它们集中出现在最接近流失的时刻（失败之后、领奖之时）。</p>
+<p><strong>实例：</strong></p>
+<ol type="1">
+<li>广告肉眼可见地播完了 → &ldquo;The ad did not load&rdquo; 照样弹出。</li>
+<li>自相矛盾的双重状态：错误浮层留在一个成功的 &ldquo;Items Obtained&rdquo; 弹窗后面。</li>
+<li>一次尝试上的双重错误：&ldquo;you skipped the ad&rdquo; 与 &ldquo;the ad did not load&rdquo; 同时出现；商业化视角还抓到一次流程中途的 &ldquo;you skipped the ad&rdquo; 拒发奖励 &mdash; 玩家选择了重试而不是放弃。</li>
+</ol>
+<div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Purchase info</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Purchase Information</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Event Token &times;500</b><span>free with one ad</span></div><span class="pill blue">Watch Ad</span></div></div>
+   <div class="rs-toast yellow t1">The ad did not load.</div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>广告播完了，然后 &ldquo;the ad did not load&rdquo; 弹了出来。</b>这条横幅出现在广告已经明显播放结束之后。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Rewards</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
+   <div class="rs-dlg"><div class="hd">Items Obtained</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Event Token &times;500</b><span>added to your bag</span></div><span class="pill ok" style="background:#0a7d4a;color:#fff;padding:5px 9px;border-radius:5px">Received</span></div>
+     <div class="ft" style="padding-top:12px"><span class="rs-btn pri">OK</span></div></div>
+   <div class="rs-toast yellow t1">The ad did not load.</div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>错误浮层留在成功弹窗后面。</b>游戏一边发放奖励，一边同时声称广告失败了 &mdash; 同一块屏幕上的两个互相矛盾的状态。</figcaption></figure><figure class="ev pair"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Booster</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Daily Ad Booster</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Daily Ad Booster</b><span>1 of 3 used today</span></div><span class="pill blue">Watch Ad</span></div></div>
+   <div class="rs-toast red t1">You cannot receive the reward because the ad was skipped.</div><div class="rs-tag">Reconstruction</div></div><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Booster</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Daily Ad Booster</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Daily Ad Booster</b><span>same attempt</span></div><span class="pill blue">Watch Ad</span></div></div>
+   <div class="rs-toast yellow t1">The ad did not load.</div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>一次尝试上的两个互相矛盾的广告错误。</b>同一行 Daily Ad Booster 在一次观看中先给出 &ldquo;you skipped the ad&rdquo;（红），接着又给出 &ldquo;the ad did not load&rdquo;（黄）。</figcaption></figure></div>
+</section>
+
+<section>
+<div class="kick">3.5</div>
+<h2 id="35-issue-5--server-wait-stacking">服务器等待的层层叠加</h2>
+<div class="rule"></div>
+<p><strong>屏幕上发生了什么：</strong>&ldquo;Awaiting server response&rdquo; 模态框出现在可预测的关卡口 &mdash; 登录、战斗菜单、组队匹配、好友列表、公会界面、公会攻城、批量召唤、竞技场切换。这个模态框<strong>在锁住输入的同时，游戏世界仍在下面继续运行</strong>。等待会叠加：有一名玩家<strong>在 2 分钟内撞上 4 个模态框</strong>。</p>
+<p><strong>为什么重要：</strong>单次等待都不致命，致命的是叠加。而且它落在参与度最高的界面上（公会、竞技场、召唤）&mdash; 正是留住社交型玩家的那些内容。</p>
+<p><strong>实例：</strong></p>
+<ol type="1">
+<li>同一名玩家在 2 分钟内连续遇到四个 &ldquo;Awaiting server response&rdquo; 模态框，每次输入都被锁住。</li>
+<li>在完全流失的玩家身上，各个 UI 层都观察到了等待 &mdash; 登录、战斗菜单、组队匹配、公会、好友。</li>
+<li>一名流失玩家在第 23 章连续失败五次，<strong>期间服务器浮层不断叠加</strong> &mdash; 墙的阻力与服务器的阻力在同一段时间里叠在一起。</li>
+</ol>
+<div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Ch 23 &middot; St 7</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
+<div class="rs-fail"><div class="stage">Chapter 23 &middot; Stage 07</div><div class="big">FAILED</div>
+<div class="row"><span class="rs-btn">Leave</span><span class="rs-btn pri">Retry</span></div>
+<div class="auto">Closing automatically in 3s</div></div><div class="rs-toast yellow t4" style="opacity:.92">Awaiting server response&hellip;</div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>第 23 章第 7 关连续五次失败 &mdash; 期间服务器等待模态框不断叠加。</b>墙的阻力与服务器的阻力在同一段时间里叠在一起。</figcaption></figure></div>
+</section>
+
+<section>
+<div class="kick">3.6</div>
+<h2 id="36-issue-6--session-expired-crash-right-after-boss-failures">Boss 失败之后紧接着的 &ldquo;your session has expired&rdquo; 崩溃</h2>
+<div class="rule"></div>
+<p><strong>屏幕上发生了什么：</strong>玩家连续两次输给章节 Boss，然后 &mdash; 就在他最沮丧的那一刻 &mdash; <strong>&ldquo;Your session has expired&rdquo;</strong> 弹了出来，加载界面卡死，这段游玩就此结束。重新登录后，又是一次服务器等待。在<strong>四个相互独立、各自经过验证的人群</strong>中都看到了这一现象，因此它是一个模式，而不是偶发。</p>
+<p><strong>为什么重要：</strong>这次崩溃正好落在最接近流失的时刻（连续 Boss 失败）。对好几位被拍到的玩家来说，它是会话溶解进休眠模式或断线之前，最后一件有意义的事。</p>
+<p><strong>实例：</strong></p>
+<ol type="1">
+<li>在 Boss C（第 22 章）连续两次失败 → 会话过期崩溃 → 加载界面冻住，这段游玩结束。</li>
+<li>同一堵墙，不同人群：在第 22 章 Boss C 上反复以微小差距失败，最终在一名流失玩家的最后几次会话中以会话过期错误告终。</li>
+<li>一名小额付费档玩家的会话，在险胜之墙加上一次会话过期错误之后，塌陷成了挂机。</li>
+<li>旁证：&ldquo;Your session has expired&rdquo; 造成的冻结在分层 469 成员的会话中反复出现。</li>
+</ol>
+<div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-dim heavy"></div><div class="rs-dlg"><div class="hd">Notice</div><div class="bd">Your session has expired.</div><div class="ft"><span class="rs-btn pri">OK</span></div></div>
+   <div class="rs-spin corner"></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>Boss C 失败 &rarr; 会话过期 &rarr; 加载冻死。</b>加载转圈卡在提示后面的角落里；这段游玩到此为止。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">In combat</span><span class="rs-chip grow"></span></div><div class="rs-boss"><div class="nm">Stage boss</div><div class="rs-bar"><i style="width:38%"></i></div><div class="rs-timer">00:41</div></div><div class="rs-dim"></div><div class="rs-dlg"><div class="hd">Notice</div><div class="bd">Your session has expired.</div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>会话过期，会话塌陷为挂机。</b>战斗在提示下方被冻住；这名玩家没有再回来。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">In combat</span><span class="rs-chip grow"></span></div><div class="rs-boss"><div class="nm">Stage boss</div><div class="rs-bar"><i style="width:55%"></i></div><div class="rs-timer">01:12</div></div><div class="rs-dim"></div><div class="rs-dlg"><div class="hd">Notice</div><div class="bd">Your session has expired.</div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>另一种客户端语言下的同一次冻结。</b>背景中的战斗被冻住，会话结束。此处屏幕文字以英文呈现。</figcaption></figure></div>
+</section>
+
+<section>
+<div class="kick">3.7</div>
+<h2 id="37-issue-7--ad-loop-friction-on-the-players-who-depend-on-ads">落在最依赖广告的那批玩家身上的广告闭环阻力</h2>
+<div class="rule"></div>
+<p><strong>屏幕上发生了什么：</strong>不付费的玩家在五个触点上（商店货币、免费召唤、Quick Hunt、Daily Ad Booster、跳过计时）<strong>每次会话连看 5–10 次以上激励广告</strong> &mdash; 广告是他们的主要资源管道。而在这个闭环里：&ldquo;跳过&rdquo;的广告被拒发奖励、广告冷却封锁、广告加载失败 &mdash; 与此同时，买了去广告礼包的玩家完全不用交这份税。而广告库存本身就是竞品营销：40 多款竞品在玩家最沮丧的时刻被展示，每段广告时长 15 秒到 3 分钟不等。</p>
+<p><strong>为什么重要：</strong>这个闭环把阻力精准地集中在唯一没有钱包替代方案的那一群人身上 &mdash; 游戏中最脆弱、最容易流失的人群 &mdash; 并用竞品的安装广告把他们的沮丧变现。</p>
+<p><strong>实例：</strong></p>
+<ol type="1">
+<li>一名流失的非付费玩家在一次会话中观看了大量其他游戏的全屏广告，<strong>在一条&ldquo;被跳过&rdquo;的广告上被拒发奖励</strong>，随后又撞上广告冷却封锁 &mdash; 而同一人群中买了去广告的玩家完全跳过了这一切。</li>
+<li>广告时长从 15 秒到约 3 分钟不等，几乎每条广告都带跳转商店的结束卡；录像中拍到一次点进竞品商店页面的操作。</li>
+<li>&ldquo;The ad did not load&rdquo; 失败连续出现 3–4 次，挡住了付费人群玩家那个零门槛的商业化触点。</li>
+</ol>
+<div class="evgrid"><figure class="ev pair"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Guild &middot; time accel</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Guild time acceleration</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Skip 1 hour</b><span>watch an ad</span></div><span class="pill blue">Watch Ad</span></div></div>
+   <div class="rs-toast red t1">You cannot receive the reward because the ad was skipped.</div><div class="rs-tag">Reconstruction</div></div><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Guild &middot; time accel</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Guild time acceleration</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Skip 1 hour</b><span>on cooldown</span></div><span class="pill ghost">Watch in 4:00</span></div></div>
+   <div class="rs-toast red t1">You cannot watch an ad yet. Try again in 4 min.</div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>跳过广告导致拒发奖励，随后是广告冷却封锁。</b>同一块公会时间加速界面先拒绝了奖励，接着又把重试挡在四分钟之外。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-ad"><div class="art"></div><div class="nm">A rival idle-RPG title</div><div class="sub">Ad end card</div><div class="cta">Install</div></div>
+   <div class="rs-sheet"><div class="bar"></div><div class="ttl">A rival idle-RPG title</div><div class="mt">Platform store &middot; Install</div>
+     <div class="rs-row" style="padding-left:0;padding-right:0"><div class="ic"></div><div class="tx"><b>Free</b><span>In-app purchases</span></div><span class="pill blue">Install</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>广告结束卡跳转到一款竞品。</b>结束卡上带着 Install 按钮；平台商店面板从游戏上方滑出。有四十多款竞品以这种方式被投放，而且正好在玩家最沮丧的时刻。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Purchase info</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">Purchase Information</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>Event Token &times;500</b><span>Watch Ad option</span></div><span class="pill blue">Watch Ad</span></div></div>
+   <div class="rs-toast yellow t1">The ad did not load.</div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>&ldquo;The ad did not load&rdquo; 激励广告失败。</b>这个零门槛的商业化触点被挡住了 &mdash; 对某些玩家而言连续三到四次。</figcaption></figure></div>
+</section>
+
+<section>
+<div class="kick">3.8</div>
+<h2 id="38-issue-8--new-in-iteration-3-the-arena-cannot-generate-recommendations-bug">竞技场的 &ldquo;could not generate recommendations&rdquo; bug</h2>
+<div class="rule"></div>
+<p><strong>屏幕上发生了什么：</strong>玩家打开竞技场 &mdash; 这是<strong>推进主线任务的前置条件</strong> &mdash; 而匹配始终加载不出来：游戏 <strong>&ldquo;could not generate recommendations.&rdquo;</strong>。屏幕上没有任何绕开的办法。玩家在主线上被硬卡住，<strong>在会话中途提交了一张游戏内客服工单</strong>，最终登出。基线预期：竞技场应当对每一个已解锁它的玩家正常加载。</p>
+<p><strong>在哪里发现：</strong><strong>分层 469</strong> &mdash; 来自客户自有玩家分层体系的前五大人群；每一段片段都已证实属于分层 469 的成员。</p>
+<p><strong>为什么重要：</strong>与问题 1–7 不同，这一个<strong>直接中断了主进度线</strong> &mdash; 这是唯一一个被拍到的、让玩家完全无法继续游戏核心循环的缺陷。它还产生了本次试点中最清晰的玩家主动证据：一张在镜头前提交的客服工单。建议的规模评估步骤：调取错误状态日志，统计有多少玩家被卡住、在哪些服务器上、持续了多久。</p>
+<p><strong>实例：</strong></p>
+<ol type="1">
+<li>竞技场推荐列表生成失败 → 主线任务被挡住 → 会话中提交客服工单 → 登出。</li>
+<li>同一批经过验证的素材中，相邻的支付时刻展现出它周围的阻力质感：一个月度金币礼包被带到支付弹窗后又取消；一次同伴木桩的尝试因钻石不足被挡住。</li>
+<li>有好几次分层 469 的会话<strong>是在支付确认弹窗仍留在屏幕上时结束的</strong> &mdash; 会话在结算中途溶解掉了。</li>
+</ol>
+<div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-form"><div class="ttl">Customer support &middot; inquiry</div>
+     <div class="fl filled">Email address</div>
+     <div class="fl filled">Category: cannot enter Arena</div>
+     <div class="fl tall"></div>
+     <div class="rs-row" style="padding:0"><span class="pill ghost">Cancel</span><span class="pill blue">Register</span></div></div>
+   <div class="rs-dim"></div>
+   <div class="rs-dlg"><div class="hd">Confirm</div><div class="bd">Do you want to submit this inquiry?</div>
+     <div class="ft"><span class="rs-btn">Cancel</span><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>竞技场被挡住 &rarr; 会话中提交客服工单。</b>咨询表单已打开，提交确认弹窗也已弹出。这是本次试点中最清晰的玩家主动证据：一张在镜头前提交的客服工单。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Monthly pack</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
+   <div class="rs-dlg"><div class="hd">Purchase details</div>
+     <div class="rs-row" style="padding-left:12px;padding-right:12px"><div class="ic"></div><div class="tx"><b>Monthly Coin Gift Pack</b><span>coins &times;1,000,000</span></div></div>
+     <div class="ft" style="padding-top:12px"><span class="rs-btn">3,000 gems</span><span class="rs-btn ok">Buy</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>月度礼包支付弹窗，随后被取消。</b>该弹窗在提供区域店面现金价格的同时，也给出 3,000 宝石的替代方案。玩家把它带到了支付步骤，然后退了出来。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">Shop</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
+   <div class="rs-dlg"><div class="hd">Buy premium gems</div>
+     <div class="rs-row" style="padding-left:12px;padding-right:12px"><div class="ic"></div><div class="tx"><b>Premium Gem &times;9,000</b><span>confirm purchase</span></div></div>
+     <div class="ft" style="padding-top:12px"><span class="rs-btn">Cancel</span><span class="rs-btn ok">Buy</span></div></div><div class="rs-tag">Reconstruction</div></div></div><figcaption><b>会话在结算中途、停在支付弹窗上结束。</b>片段在确认框仍留在屏幕上时就播完了 &mdash; 这一人群中有好几次会话正好停在这里。</figcaption></figure></div>
+</section>
+
+<section>
+<div class="kick">3.9</div>
+<h2 id="39-what-the-warehouse-sees-of-all-this-the-contrast">数仓对这一切能看到什么（对照）</h2>
+<div class="rule"></div>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>账单 / 埋点能显示的</th>
+<th>它无法显示的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>30,693 名玩家</strong>在其首次完成购买之前出现过失败 / 取消的账单订单（7 月 1 日–8 月 15 日，全量人群）；最大单一市场 = 60.7%（18,635）</td>
+<td>没有原因，没有错误码，没有屏幕 &mdash; 无论是商店 bug、玩家主动取消，还是一次静默成功，失败行看上去完全一样</td>
+</tr>
+<tr>
+<td>存在 <code>purchase_failure</code> 埋点事件</td>
+<td>它们<strong>不携带任何商店 / 商品 / 道具上下文 &mdash; 483 个事件中的 483 个（100%）</strong>：究竟是<em>哪一个</em>商品失败了，根本没有被埋点</td>
+</tr>
+<tr>
+<td>问题 1、4、5、6、7、8 完全没有数据</td>
+<td>墙、说谎的广告错误、服务器等待、崩溃、广告阻力以及竞技场封锁，<strong>在数仓里完全没有留下任何痕迹</strong>（授权范围内不存在任何客户端错误 / 体验 / 埋点表）</td>
+</tr>
+</tbody>
+</table></div>
+<p>数仓只数出了一类问题的足迹；录像把它变成了八个有名有姓、可修复的缺陷 &mdash; 其中两个（静默成功、说谎的广告错误）同时向玩家和数据谎报了现实。</p>
+</section>
+
+</main>
+<footer>
+  <div class="fgrid">
+    <div>
+      <div class="flab">本报告</div>
+      <p><b>技术问题与体验阻力</b> &mdash; Game-01 试点三份分类报告之一。</p>
+      <p class="fmeta">结论均读自录制的玩家会话。本匿名版本不含录像链接。</p>
+    </div>
+    <div>
+      <div class="flab">其他报告</div>
+      <ul class="flinks"><li><a href="index.html"><span class="arrow">&rarr;</span>主报告</a></li><li><a href="chat-moderation.html"><span class="arrow">&rarr;</span>聊天治理</a></li><li><a href="retention-churn.html"><span class="arrow">&rarr;</span>留存与流失</a></li></ul>
+    </div>
+  </div>
+  <div class="fbot"><span>Game-01 试点 &middot; 匿名案例研究</span><img src="../6labs-logo.png" alt="6labs.ai"></div>
+</footer>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="../recon.js"></script>
+</body></html>

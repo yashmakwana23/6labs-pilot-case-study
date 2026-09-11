@@ -1,0 +1,356 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Game-01 &mdash; 채팅 모더레이션</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../recon.css">
+<style>
+:root{
+  --navy:#0b1b3a; --ink:#101828; --body:#475467; --muted:#8593a8;
+  --blue:#1a6dff; --blue-dk:#1450c8; --blue-tint:#eef3fe; --blue-tint2:#f6f9ff;
+  --line:#e4e9f2; --hair:#eef1f6; --white:#fff; --page:#f7f9fc;
+  --good:#0a7d4a; --bad:#b42318; --bad-tint:#fef3f2;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--body);
+  font:16px/1.65 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.sheet{max-width:1060px;margin:26px auto;background:var(--white);border:1px solid var(--line)}
+h1,h2,h3{font-family:Poppins,Inter,sans-serif;color:var(--navy);margin:0;
+  letter-spacing:-.015em}
+p{margin:13px 0}
+b,strong{color:var(--navy);font-weight:600}
+a{color:var(--blue-dk);text-decoration:none;font-weight:600}
+a:hover{text-decoration:underline}
+a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+code{font-family:var(--mono);font-size:13px;background:var(--blue-tint);color:var(--navy);
+  padding:1px 6px;border-radius:4px;word-break:break-word}
+
+/* -- brand bar ------------------------------------------------- */
+.brandbar{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;
+  padding:38px 46px 0}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--blue);padding-top:4px}
+.brandright{display:flex;align-items:center;gap:18px;flex-shrink:0;margin-left:auto}
+
+
+.logo{display:block;height:30px;width:auto;flex-shrink:0}
+
+/* -- title block ----------------------------------------------- */
+.titleblock{padding:14px 46px 32px}
+.titleblock h1{font-size:clamp(30px,4.2vw,42px);font-weight:700;line-height:1.1}
+.titleblock .sub{font-size:16.5px;color:var(--body);margin:16px 0 0}
+.kick{font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:10px}
+
+/* -- stat tiles ------------------------------------------------- */
+.heroes{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:16px;
+  padding:0 46px 8px}
+.hero{background:var(--blue-tint);border-radius:8px;padding:20px 22px}
+.hero .n{font-family:Poppins,sans-serif;font-size:26px;font-weight:700;color:var(--navy);
+  line-height:1.15;font-variant-numeric:tabular-nums}
+.hero .l{font-size:13.5px;color:var(--body);margin-top:9px}
+
+/* -- sections --------------------------------------------------- */
+main{padding:0 46px}
+section{padding:56px 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0;padding-top:34px}
+h2{font-size:23px;font-weight:600;margin:0 0 6px;line-height:1.28}
+h2+.rule{width:44px;height:3px;background:var(--blue);border-radius:2px;margin-bottom:18px}
+h3{font-size:17px;font-weight:600;margin:40px 0 10px}
+p.lead{font-size:15.5px;color:var(--body);margin:0}
+
+/* -- evidence figures ------------------------------------------- */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:24px 0 0}
+.pair figure{margin:0;display:flex;flex-direction:column;min-width:0}
+.pair img{order:1;display:block;width:100%;height:auto;border:1px solid var(--line);
+  border-radius:8px;background:#000}
+.pair figcaption{order:2;font-size:13px;font-weight:600;color:var(--navy);margin-top:10px;
+  line-height:1.45}
+.vidid{order:3;font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:4px;
+  letter-spacing:.02em;word-break:break-all}
+.vidid b{color:var(--muted);font-weight:500}
+p.cap{font-size:14.5px;color:var(--body);background:var(--blue-tint2);
+  border-left:3px solid var(--blue);padding:12px 16px;border-radius:0 8px 8px 0;
+  margin:16px 0 28px}
+
+/* -- callouts ---------------------------------------------------- */
+.callout{font-size:14.5px;background:var(--blue-tint);border-left:4px solid var(--blue);
+  padding:15px 18px;border-radius:0 8px 8px 0;margin:26px 0 0}
+.callout.warn{background:var(--bad-tint);border-left-color:var(--bad)}
+
+/* -- tables ------------------------------------------------------ */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:18px 0 0}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:15px}
+th{text-align:left;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);padding:0 14px 11px 0;border-bottom:1.5px solid var(--line)}
+td{padding:13px 14px 13px 0;border-bottom:1px solid var(--hair);vertical-align:top}
+tr th:last-child,tr td:last-child{padding-right:0}
+.muted{color:var(--muted);font-size:14px}
+.fp{color:var(--bad);font-weight:700;font-size:11.5px;text-transform:uppercase;
+  letter-spacing:.06em;white-space:nowrap}
+.ok{color:var(--muted);font-weight:600;font-size:11.5px;text-transform:uppercase;
+  letter-spacing:.06em;white-space:nowrap}
+
+footer.foot{padding:26px 46px 40px;margin:0;color:var(--muted);font-size:13px;
+  border-top:1px solid var(--line)}
+footer.foot b{color:var(--muted);font-weight:600}
+
+@media(max-width:760px){
+  .brandbar,.titleblock,.heroes,main,footer.foot{padding-left:22px;padding-right:22px}
+  .brandbar{flex-wrap:wrap}
+  .heroes{grid-template-columns:1fr}
+  .pair{grid-template-columns:1fr;gap:18px}
+  section{padding:40px 0}
+  .sheet{margin:0;border-left:0;border-right:0}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#fff}
+  .sheet{border:0;margin:0}
+  
+  figure,.pair,.callout,p.cap,table,tr{break-inside:avoid}
+  section{break-inside:auto}
+}
+
+
+/* navbar */
+.navbar{display:flex;align-items:center;gap:16px;padding:14px 46px;border-bottom:1px solid var(--line);background:var(--white)}
+.navbar .crumbs{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--muted);min-width:0;flex:1}
+.navbar .crumbs a{color:var(--body);font-weight:600;text-decoration:none}
+.navbar .crumbs a:hover{color:var(--blue-dk);text-decoration:underline}
+.navbar .crumbs .sep{color:var(--line)}
+.navbar .crumbs .here{color:var(--navy);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--body);
+  text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:7px 13px;background:var(--white);
+  flex-shrink:0;transition:border-color .14s,color .14s,background .14s}
+.backlink:hover{border-color:var(--blue);color:var(--blue-dk);background:var(--blue-tint);text-decoration:none}
+.navbar .logo{height:26px;width:auto;flex-shrink:0;margin-right:2px}
+@media(max-width:760px){.navbar{padding-left:22px;padding-right:22px;gap:11px}.navbar .crumbs{display:none}}
+.rec{border:1px solid #d6e4ff;background:var(--blue-tint);border-radius:8px;padding:18px 22px;margin:26px 0 0}
+.rec .reclab{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+.rec p{margin:0;font-size:14.5px}
+.rec b{color:var(--navy);font-weight:600}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:34px 46px 44px;background:var(--white)}
+.fgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:start}
+.flab{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.fgrid p{margin:0;font-size:14px;color:var(--body)}
+.fmeta{margin-top:10px!important;font-size:13px!important;color:var(--muted)!important}
+.flinks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.flinks a{font-size:14.5px;color:var(--body);text-decoration:none;font-weight:600;display:inline-flex;gap:8px}
+.flinks a:hover{color:var(--blue-dk);text-decoration:underline}
+.flinks .arrow{color:var(--blue)}
+.fbot{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:30px;padding-top:20px;border-top:1px solid var(--hair);font-size:12.5px;color:var(--muted)}
+.fbot img{height:22px;width:auto}
+@media(max-width:760px){footer{padding-left:22px;padding-right:22px}.fgrid{grid-template-columns:1fr;gap:26px}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ── language switch ───────────────────────────────── */
+
+/* ── evidence strip ────────────────────────────────── */
+.evbox{margin-top:26px}
+.evlab{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.evhint{font-weight:400;letter-spacing:0;text-transform:none;font-size:12.5px;color:var(--muted)}
+.evstrip{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px}
+.evtile{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;
+  cursor:zoom-in;background:#000;aspect-ratio:16/9;
+  transition:border-color .14s,transform .14s,box-shadow .14s}
+.evtile:hover,.evtile:focus-visible{border-color:var(--blue);transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(26,109,255,.18);outline:none}
+.evtile img{width:100%;height:100%;object-fit:cover;display:block}
+.evtile .num{position:absolute;top:6px;left:6px;background:rgba(11,27,58,.86);color:#fff;
+  font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:4px;letter-spacing:.02em}
+figure.lb-src{display:none}
+
+/* ── lightbox ──────────────────────────────────────── */
+.lb{position:fixed;inset:0;z-index:9999;background:rgba(8,14,24,.94);display:none;
+  align-items:center;justify-content:center;flex-direction:column;padding:28px 64px 20px}
+.lb.open{display:flex}
+.lb>img{max-width:100%;max-height:calc(100vh - 160px);object-fit:contain;border-radius:6px;
+  background:#000;box-shadow:0 18px 60px rgba(0,0,0,.5)}
+.lb-cap{color:#e6ebf2;font-size:14px;line-height:1.55;max-width:900px;text-align:center;
+  margin-top:16px}
+.lb-cap a{color:#7ab9ff}
+.lb-cap b:first-child,.lb-cap strong:first-child{display:block;margin-bottom:6px;color:#fff;font-size:15px}
+.lb-count{position:absolute;top:20px;left:26px;color:#9fb0c4;font-size:12.5px;letter-spacing:.06em}
+.lb-x,.lb-prev,.lb-next{position:absolute;background:rgba(255,255,255,.1);border:0;color:#fff;
+  cursor:pointer;border-radius:8px;display:grid;place-items:center;transition:background .14s}
+.lb-x:hover,.lb-prev:hover,.lb-next:hover{background:rgba(255,255,255,.22)}
+.lb-x{top:16px;right:20px;width:38px;height:38px;font-size:20px;line-height:1}
+.lb-prev,.lb-next{top:50%;transform:translateY(-50%);width:44px;height:64px;font-size:24px}
+.lb-prev{left:12px} .lb-next{right:12px}
+@media(max-width:760px){.lb{padding:16px 12px}.lb-prev,.lb-next{width:36px;height:52px}}
+@media print{.lb{display:none!important}.evbox{display:none}figure.lb-src{display:block}}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* CJK face for the prose; reconstructions are Latin, so they keep Inter */
+body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+.rs,.rs *{font-family:"Inter",system-ui,-apple-system,sans-serif}
+</style>
+</head><body>
+<div class="sheet">
+
+<div class="navbar">
+    <img class="logo" src="../6labs-logo.png" alt="6labs.ai">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">파일럿 리포트</a><span class="sep">/</span><span class="here">채팅 모더레이션</span></nav>
+    <nav class="langs" aria-label="Language"><a href="../chat-moderation.html" hreflang="en">EN</a><a href="../zh/chat-moderation.html" hreflang="zh-Hans">中文</a><a href="../ja/chat-moderation.html" hreflang="ja">日本語</a><span class="on">한국어</span></nav>
+  </div>
+
+  <div class="titleblock">
+    <div class="eyebrow">케이스 스터디 &middot; Game-01 &times; Oracle</div>
+    <h1>녹화로 읽는 채팅 모더레이션 신호</h1>
+    <p class="sub">웨어하우스에는 이런 것이 <b>하나도</b> 없습니다. 월드 채팅을 볼 수 있는 곳은 녹화 세션뿐입니다 &mdash; 필터가 그냥 지나치는 현금거래 스팸, 엉뚱한 것을 막는 단어 필터, 그리고 빠져나가는 괴롭힘.</p>
+  </div>
+
+  <div class="heroes">
+    <div class="hero"><div class="n">89,240</div><div class="l">건의 녹화에 월드 또는 지역 채팅이 화면에 나옵니다 &mdash; 전체 녹화의 19%</div></div>
+  </div>
+
+    <div class="recon-note"><b>화면에 관하여.</b> 이 화면들은 녹화 세션에서 관찰된 장면을 재구성한 것이며, 화면에 표시되는 문구는 약간 바꾸어 적었습니다. 익명성을 지키기 위해 고객사의 실제 영상은 공개하지 않습니다. 재구성 화면과 본문에 인용된 게임 내 메시지는 모두 영어로 표시했습니다.</div>
+
+  <main>
+
+    <section>
+      <div class="kick">렌즈 1</div>
+      <h2>현금거래(RMT) 봇이 네 개 서버에서 같은 광고를 돌린다 &mdash; 그리고 필터는 아무것도 하지 않는다</h2><div class="rule"></div>
+      <p class="lead">템플릿화된 광고 &mdash; 고등급 장비나 <b>&ldquo;300,900 Premium Gems&rdquo;</b> 를 현금으로 판매하며 외부의 <b>&ldquo;Inquiry Website: an external RMT site&rdquo;</b> 로 유도하는 &mdash; 가 저레벨, 길드 미가입, 명성 0의 봇 계정들에 의해 네 개 지역 서버의 월드 / 지역 / 전체 채팅에 반복 게시됩니다. 자동 필터는 아무 반응이 없고, 플레이어가 직접 차단하고 신고합니다.</p>
+<div class="pair"><figure><div class="rs "><div class="rs-chat"><div class="tabs"><span class="tab on">All</span><span class="tab">World</span><span class="tab">Region</span><span class="tab">Whisper</span></div><div class="log"><div class="rs-msg "><b>Player</b> anyone selling weapon mats</div><div class="rs-msg spam"><b>Bot handle A</b> $49.99 = Premium Gem 300,900 &mdash; Inquiry Website: [external RMT site]</div><div class="rs-msg "><b>Player</b> again? third time today</div><div class="rs-msg spam"><b>Bot handle A</b> $49.99 = Premium Gem 300,900 &mdash; Inquiry Website: [external RMT site]</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>전체 / 월드 채팅에 흐르는 광고. 같은 계정이 몇 분 간격으로 다시 올립니다.</figcaption></figure><figure><div class="rs "><div class="rs-dim heavy"></div>
+<div class="rs-dlg"><div class="hd">Report player</div>
+  <div class="bd">Select a reason for reporting this message.</div>
+  <div class="rs-row"><div class="tx"><b>Inappropriate message</b></div><span class="pill blue">Selected</span></div>
+  <div class="rs-row"><div class="tx"><b>Abusive language</b></div></div>
+  <div class="rs-row"><div class="tx"><b>Unfair play</b></div></div>
+  <div class="ft" style="padding-top:12px"><span class="rs-btn">Cancel</span><span class="rs-btn pri">Report</span></div>
+</div><div class="rs-tag">Reconstruction</div></div><figcaption>플레이어가 신고 다이얼로그를 열고 &ldquo;Inappropriate message&rdquo; 를 선택합니다.</figcaption></figure></div><p class='cap'><b>봇 계정 A</b> 가 전체 / 월드 채팅에 현금거래 광고를 게시합니다 &mdash; <b>&ldquo;$49.99 = Premium Gem 300,900 (Inquiry Website: [external RMT site])&rdquo;</b>. 한 플레이어가 신고 다이얼로그를 열고 &ldquo;Inappropriate message&rdquo; 를 선택합니다.</p><div class="pair"><figure><div class="rs "><div class="rs-dim heavy"></div>
+<div class="rs-dlg"><div class="hd">Report &middot; reason</div>
+  <div class="bd">Describe the problem.</div>
+  <div class="rs-form" style="position:static;padding:0 12px 12px;background:transparent">
+    <div class="fl filled" style="min-height:34px">spamming link to spend money on another site</div>
+  </div>
+  <div class="ft"><span class="rs-btn">Cancel</span><span class="rs-btn pri">Submit</span></div>
+</div><div class="rs-tag">Reconstruction</div></div><figcaption>신고자가 자유 입력란에 직접 사유를 적어 넣습니다.</figcaption></figure><figure><div class="rs "><div class="rs-chat" style="top:12%"><div class="tabs"><span class="tab on">All</span><span class="tab">World</span><span class="tab">Region</span><span class="tab">Whisper</span></div><div class="log"><div class="rs-msg spam"><b>Bot handle A</b> $49.99 = Premium Gem 300,900 &mdash; Inquiry Website: [external RMT site]</div><div class="rs-msg muted">&hellip;</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div>
+<div class="rs-dim"></div>
+<div class="rs-panel" style="top:44%"><div class="hd">Player profile</div>
+  <div class="rs-row"><div class="ic"></div><div class="tx"><b>Bot handle A</b><span>Lv.32 &middot; Not in Guild &middot; 0 fame</span></div><span class="pill warn" style="background:#b42318">Reported</span></div>
+</div><div class="rs-tag">Reconstruction</div></div><figcaption>같은 계정에 &ldquo;Reported&rdquo; 표시가 붙었습니다 &mdash; 프로필 카드 뒤로 광고는 여전히 또렷하게 읽힙니다.</figcaption></figure></div><p class='cap'><b>같은 봇 계정</b>이 다른 세션에도 등장합니다. 신고자가 적은 사유는 &ldquo;spamming link to spend money on another site&rdquo; 이고, 프로필은 Lv.32, 길드 없음, 명성 0으로 &ldquo;Reported&rdquo; 표시가 붙어 있으며, 그 뒤로 현금거래 광고가 여전히 또렷하게 보입니다.</p>
+    </section>
+
+    <section>
+      <div class="kick">렌즈 2</div>
+      <h2>금칙어 필터는 &ldquo;palabok&rdquo; 과 &ldquo;Buccees&rdquo; 를 막으면서, 이유는 한 번도 말하지 않는다</h2><div class="rule"></div>
+      <p class="lead">거부된 메시지는 언제나 같은 범용 팝업 하나만 돌려줍니다 &mdash; <b>&ldquo;This text cannot be used.&rdquo;</b> &mdash; 어떤 단어인지도, 왜인지도 알려주지 않습니다. 부분 문자열로 매칭하기 때문에 무해한 문장과 욕설을 함께 막고, 플레이어가 배울 수 있는 것은 회피 방법뿐입니다.</p>
+<div class="pair"><figure><div class="rs "><div class="rs-chat"><div class="tabs"><span class="tab">All</span><span class="tab on">World</span><span class="tab">Region</span><span class="tab">Whisper</span></div><div class="log"><div class="rs-msg "><b>Player</b> what do you all eat over there</div><div class="rs-msg "><b>Player</b> palabok is a type of pan&hellip;</div><div class="rs-msg muted">typing&hellip;</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>월드 채팅에서 오간 무해한 음식 이야기.</figcaption></figure><figure><div class="rs "><div class="rs-chat"><div class="tabs"><span class="tab">All</span><span class="tab on">World</span><span class="tab">Region</span><span class="tab">Whisper</span></div><div class="log"><div class="rs-msg muted">&hellip;</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-dim"></div>
+<div class="rs-dlg"><div class="hd">Notice</div><div class="bd">This text cannot be used.</div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>메시지가 범용 안내로 거부됩니다 &mdash; 어떤 단어인지도, 이유도 없습니다.</figcaption></figure></div><p class='cap'><b>오탐.</b> 무해한 음식 이야기 도중 플레이어가 <b>&ldquo;palabok is a type of pan…&rdquo;</b> 이라고 입력하자, 필터가 범용 &ldquo;This text cannot be used.&rdquo; 안내로 거부했습니다.</p><div class="pair"><figure><div class="rs "><div class="rs-chat"><div class="tabs"><span class="tab">All</span><span class="tab">World</span><span class="tab">Region</span><span class="tab on">Whisper</span></div><div class="log"><div class="rs-msg "><b>You</b> damn lost connecttion :P</div><div class="rs-msg muted">to a friend, 1-to-1</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>친구에게 개인적으로 보낸 가벼운 비속어 한 줄.</figcaption></figure><figure><div class="rs "><div class="rs-chat"><div class="tabs"><span class="tab">All</span><span class="tab">World</span><span class="tab">Region</span><span class="tab on">Whisper</span></div><div class="log"><div class="rs-msg muted">&hellip;</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-dim"></div>
+<div class="rs-dlg"><div class="hd">Notice</div><div class="bd">This text cannot be used.</div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>귓속말에서도 같은 안내로 막힙니다. 1대1 대화도 필터링 대상입니다.</figcaption></figure></div><p class='cap'>친구에게 보낸 가벼운 비속어 &mdash; <b>&ldquo;damn lost connecttion :P&rdquo;</b> &mdash; 가 귓속말에서 같은 범용 안내로 막혔습니다. 1대1 개인 대화조차 필터링됩니다.</p><div class="pair"><figure><div class="rs "><div class="rs-chat"><div class="tabs"><span class="tab">All</span><span class="tab on">World</span><span class="tab">Region</span><span class="tab">Whisper</span></div><div class="log"><div class="rs-msg "><b>Player</b> [crude innuendo &mdash; content described, not reproduced]</div><div class="rs-msg muted">World banter</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>막히는 것이 당연한 경우 &mdash; 월드 채팅의 노골적인 성적 암시.</figcaption></figure><figure><div class="rs "><div class="rs-chat"><div class="tabs"><span class="tab">All</span><span class="tab on">World</span><span class="tab">Region</span><span class="tab">Whisper</span></div><div class="log"><div class="rs-msg muted">&hellip;</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-dim"></div>
+<div class="rs-dlg"><div class="hd">Notice</div><div class="bd">This text cannot be used.</div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>무해한 사례와 똑같이 구분 없는 팝업이 돌아옵니다.</figcaption></figure></div><p class='cap'>막히는 것이 당연한 경우(월드 채팅의 노골적인 성적 암시 &mdash; 내용은 설명만 하고 원문은 재현하지 않습니다). 무해한 사례와 <b>전혀 구분되지 않는 같은 팝업</b>이 돌아옵니다.</p>
+      <h3>필터가 잡아낸 것 &mdash; 대부분 엉뚱한 대상</h3>
+      <div class="tw">
+<table><thead><tr><th>차단된 텍스트</th><th>채널</th><th>판정</th><th></th></tr></thead>
+<tbody><tr><td>&ldquo;damn lost connecttion :P&rdquo;</td><td>귓속말</td><td>애매하지만 타당 &mdash; 개인 대화의 가벼운 비속어</td><td><span class='ok'>타당</span></td></tr><tr><td>&ldquo;palabok is a type of pan…&rdquo;</td><td>월드</td><td>오탐 &mdash; 필리핀 국수 요리</td><td><span class='fp'>오탐</span></td></tr><tr><td>&ldquo;Buccees&rdquo;</td><td>월드</td><td>오탐 &mdash; 미국의 주유소 체인</td><td><span class='fp'>오탐</span></td></tr><tr><td>&ldquo;patrick mccaw&rdquo; (NBA 선수)</td><td>월드</td><td>오탐 &mdash; &ldquo;mccaw&rdquo; 안의 부분 문자열 &ldquo;cock&rdquo;</td><td><span class='fp'>오탐</span></td></tr><tr><td>&ldquo;Not for sale, ask someone else&rdquo; (영어 아님)</td><td>귓속말 (영어 아님)</td><td>오탐 &mdash; 평범한 거래 답변</td><td><span class='fp'>오탐</span></td></tr><tr><td>&ldquo;shit&rdquo; / &ldquo;ass&rdquo; / &ldquo;mf&rdquo;</td><td>월드 / 귓속말</td><td>타당한 차단 (한 플레이어는 5회 시도)</td><td><span class='ok'>타당</span></td></tr></tbody></table>
+      </div>
+      <div class="callout"><b>대가는 두 가지입니다.</b> 정상적인 대화가 막혀 플레이어가 답답해하고, 안내가 범용이기 때문에 플레이어는 그냥 <b>이것저것 시험해 우회</b>합니다 &mdash; 정작 막아야 할 단어에 대해 필터가 무력해집니다.</div>
+    </section>
+
+    <section>
+      <div class="kick">렌즈 3</div>
+      <h2>플레이어가 신고하는 것은 욕설이 아니라 스팸 &mdash; 그리고 띄어 쓴 혐오 표현은 통과했다</h2><div class="rule"></div>
+      <p class="lead">두 가지 결론. 첫째, 신고 / 차단 기능은 끊임없이 사용되지만 대부분 <b>스팸</b>을 향합니다 &mdash; &ldquo;Inappropriate message&rdquo; 로 접수된 것조차 현금거래 광고였습니다. 둘째, 실제 욕설 앞에서는 필터가 약한 고리입니다.</p>
+<div class="pair"><figure><div class="rs "><div class="rs-chat"><div class="tabs"><span class="tab on">All</span><span class="tab">World</span><span class="tab">Region</span><span class="tab">Whisper</span></div><div class="log"><div class="rs-msg spam flag"><b>Bot handle B</b> $49.99 = Premium Gem 300,900 &mdash; Inquiry Website: [external RMT site]</div><div class="rs-msg "><b>Player</b> reporting this one</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>플레이어가 광고를 길게 눌러 신고하려 합니다.</figcaption></figure><figure><div class="rs "><div class="rs-dim heavy"></div>
+<div class="rs-dlg"><div class="hd">Report player</div>
+  <div class="bd">Reported message and category.</div>
+  <div class="rs-row"><div class="tx"><b>Inappropriate message</b><span>selected category</span></div><span class="pill blue">Selected</span></div>
+  <div class="ft" style="padding-top:12px"><span class="rs-btn">Cancel</span><span class="rs-btn pri">Report</span></div>
+</div><div class="rs-tag">Reconstruction</div></div><figcaption>&ldquo;Inappropriate message&rdquo; 로 접수 &mdash; 신고된 내용은 또 다른 현금거래 광고입니다.</figcaption></figure></div><p class='cap'>&ldquo;Inappropriate message&rdquo; 로 접수했지만 &mdash; <b>봇 계정 B</b> 의 신고 내용 역시 <b>같은 현금거래 광고</b>였습니다.</p>
+      <h3>실제 괴롭힘 사례 &mdash; 필터가 놓치는 종류의 욕설</h3>
+<div class="pair" style="grid-template-columns:1fr;max-width:100%"><figure><div class="rs feed"><div class="rs-chat"><div class="tabs"><span class="tab">All</span><span class="tab on">World</span><span class="tab">Region</span><span class="tab">Whisper</span></div><div class="log"><div class="rs-msg flag"><b>One player</b> [racially demeaning message targeting a nationality]</div><div class="rs-msg "><b>Another</b> not this again</div><div class="rs-msg flag"><b>One player</b> [same player, letters spaced out to slip past the word filter]</div><div class="rs-msg "><b>Another</b> just block them</div></div><div class="inbox"><span class="f"></span><span class="s">Send</span></div></div><div class="rs-tag">Reconstruction</div></div><figcaption>월드 / 전체 채팅 피드. 메시지는 채널에 그대로 남고, 시스템의 조치는 뒤따르지 않습니다.</figcaption></figure></div>
+      <p class="cap">이 세션에서 한 플레이어가 월드 채팅에 <b>특정 국적을 겨냥한 인종차별적 메시지</b>를 올리고, 단어 필터를 피하려고 <b>글자 사이를 띄어</b> 씁니다. 시스템의 조치는 아무것도 없고, 다른 플레이어들은 한마디 답하거나 그냥 지나칩니다. 문제의 문구는 여기서 재현하지 않고 설명으로 대신합니다.</p>
+      <h3>필터가 화면에서 실패한 세 가지 방식</h3>
+      <div class="tw">
+<table><thead><tr><th>간극</th><th>화면에서 벌어진 일</th></tr></thead>
+<tbody><tr><td>띄어쓰기로 우회된 혐오 표현</td><td class='muted'>한 플레이어가 밑줄과 공백으로 혐오 표현을 쪼개 넣었고, 그대로 전송됐다</td></tr><tr><td>비속어가 결국 통과됐다</td><td class='muted'>몇 번 막힌 뒤, 흔한 비속어가 월드 채팅에 도달했다</td></tr><tr><td>괴롭힘이 방치됐다</td><td class='muted'>지속적인 적대적 발언에 대해 눈에 보이는 시스템 조치가 없다. 플레이어는 조용히 차단하므로 스튜디오에는 아무것도 전달되지 않는다</td></tr></tbody></table>
+      </div>
+      <div class="callout warn"><b>간극은 여기입니다.</b> 필터는 무해한 부분 문자열에는 엄격하면서도 <b>혐오 표현을 띄어 쓰는 사람이라면 누구에게나 우회당하고</b>, 지속적인 괴롭힘에는 눈에 보이는 조치를 하지 않습니다. 신고 분류 체계는 스팸과 욕설을 구분하지 않고, 많은 플레이어는 그냥 조용히 차단합니다 &mdash; 그래서 진짜 신호는 끝내 스튜디오에 도달하지 않습니다.</div>
+    </section>
+
+  </main>
+
+  <footer>
+  <div class="fgrid">
+    <div>
+      <div class="flab">이 리포트</div>
+      <p><b>채팅 모더레이션</b> &mdash; Game-01 파일럿의 세 개 카테고리 리포트 중 하나.</p>
+      <p class="fmeta">모든 결과는 녹화된 플레이 세션에서 읽어낸 것입니다. 이 익명화 버전에는 클립 링크를 포함하지 않습니다.</p>
+    </div>
+    <div>
+      <div class="flab">다른 리포트</div>
+      <ul class="flinks"><li><a href="index.html"><span class="arrow">&rarr;</span>메인 리포트</a></li><li><a href="retention-churn.html"><span class="arrow">&rarr;</span>리텐션과 이탈</a></li><li><a href="monetization-ux.html"><span class="arrow">&rarr;</span>기술 이슈와 UX 마찰</a></li></ul>
+    </div>
+  </div>
+  <div class="fbot"><span>Game-01 파일럿 &middot; 익명화된 케이스 스터디</span><img src="../6labs-logo.png" alt="6labs.ai"></div>
+</footer>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="../recon.js"></script>
+</body></html>

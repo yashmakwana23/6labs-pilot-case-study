@@ -1,0 +1,385 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Game-01 &mdash; リテンションと離脱</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../recon.css">
+<style>
+:root{
+  --navy:#0b1b3a; --ink:#101828; --body:#475467; --muted:#8593a8;
+  --blue:#1a6dff; --blue-dk:#1450c8; --blue-tint:#eef3fe; --blue-tint2:#f6f9ff;
+  --line:#e4e9f2; --hair:#eef1f6; --white:#fff; --page:#f7f9fc;
+  --good:#0a7d4a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--body);
+  font:16px/1.65 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.sheet{max-width:1060px;margin:26px auto;background:var(--white);border:1px solid var(--line)}
+h1,h2,h3{font-family:Poppins,Inter,sans-serif;color:var(--navy);margin:0;
+  letter-spacing:-.015em}
+p{margin:13px 0}
+strong,b{color:var(--navy);font-weight:600}
+em{font-style:italic}
+a{color:var(--blue-dk);text-decoration:none;font-weight:600}
+a:hover{text-decoration:underline}
+a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+/* ── brand bar ─────────────────────────────────────── */
+.brandbar{display:flex;justify-content:space-between;align-items:center;
+  gap:20px;padding:34px 46px 0}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--blue)}
+.hero .eyebrow{margin-bottom:10px}
+.brandright{display:flex;align-items:center;gap:20px;flex-shrink:0}
+
+
+.logo{display:block;height:30px;width:auto;flex-shrink:0}
+
+/* ── hero ──────────────────────────────────────────── */
+.hero{padding:20px 46px 34px}
+.hero h1{font-size:clamp(32px,4.4vw,44px);font-weight:700;line-height:1.08}
+.hero .lede{margin:16px 0 0;font-size:17px;color:var(--body)}
+
+/* ── page shell / sections ─────────────────────────── */
+main{padding:0 46px}
+.p3sec{padding:56px 0;border-top:1px solid var(--line)}
+.p3sec:first-of-type{border-top:0;padding-top:30px}
+.p3sec .wrap{max-width:none;margin:0;padding:0}
+
+h2{font-size:23px;font-weight:600;margin:0 0 6px;line-height:1.28}
+h3{font-size:17px;font-weight:600;margin:32px 0 0;line-height:1.35}
+h3+p,h3+.tw,h3+ul,h3+ol{margin-top:9px}
+.rule{width:44px;height:3px;background:var(--blue);border-radius:2px;margin:0 0 18px}
+.kick{font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--blue);margin:0 0 8px}
+.p3sec>.wrap>.kick{margin-top:0;padding-top:52px;border-top:1px solid var(--line)}
+.p3sec>.wrap>.kick:first-child{padding-top:0;border-top:0}
+hr{border:0;border-top:1px solid var(--hair);margin:36px 0 0}
+
+/* ── section banner (intro block) ──────────────────── */
+.banner{margin:0 0 6px}
+.banner h1{font-size:27px;font-weight:600;line-height:1.25;margin:0 0 8px}
+.banner .sub{font-size:16.5px;color:var(--body)}
+.banner p{font-size:16.5px;color:var(--body);margin:0}
+.banner .meta{margin-top:20px;padding-top:15px;border-top:1px solid var(--line);
+  font-size:13.5px;color:var(--muted);display:flex;gap:14px 30px;flex-wrap:wrap}
+.banner .meta b{color:var(--navy);font-weight:600}
+.banner .read{margin-top:22px;background:var(--blue-tint);border-radius:8px;
+  padding:18px 22px;font-size:14.5px;color:var(--body)}
+.banner .read b{color:var(--navy);font-weight:600}
+.banner .read ul{margin:10px 0 0;padding-left:20px}
+.banner .read li{margin:6px 0;font-size:14.5px}
+
+/* ── lists ─────────────────────────────────────────── */
+ol,ul{margin:14px 0;padding-left:22px}
+li{margin:9px 0}
+li::marker{color:var(--muted)}
+
+/* ── tables ────────────────────────────────────────── */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:20px 0 0}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:600px}
+th{text-align:left;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);padding:0 16px 11px 0;border-bottom:1.5px solid var(--line)}
+td{padding:13px 16px 13px 0;border-bottom:1px solid var(--hair);vertical-align:top}
+tr>th:last-child,tr>td:last-child{padding-right:0}
+td[style*="right"]{font-variant-numeric:tabular-nums;white-space:normal}
+tbody tr:last-child td{border-bottom:0}
+.tw+p{font-size:13.5px;color:var(--muted);margin-top:14px}
+
+/* ── on-screen evidence ────────────────────────────── */
+.evwrap{margin:26px 0 0}
+.evlabel{font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--blue);margin:0 0 16px}
+.evgrid{margin:24px 0 0}
+figure.ev{margin:0 0 22px;background:var(--white);border:1px solid var(--line);
+  border-radius:10px;overflow:hidden}
+figure.ev:last-child{margin-bottom:0}
+figure.ev .shots{display:flex;gap:3px;background:#000;justify-content:center;
+  align-items:flex-start}
+figure.ev .shots img{display:block;width:100%;height:auto;object-fit:contain;max-width:660px}
+figure.ev.pair .shots img{width:50%;max-width:462px}
+.vidid{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--muted);
+  letter-spacing:.02em;padding:10px 16px 0;word-break:break-all}
+.vidid b{color:var(--navy);font-weight:600}
+figure.ev figcaption{padding:8px 16px 16px;font-size:13px;line-height:1.55}
+figure.ev figcaption br{display:none}
+.moment{display:block;font-family:Poppins,Inter,sans-serif;font-weight:600;font-size:14.5px;
+  color:var(--navy);line-height:1.4;margin-bottom:8px}
+.evtext,.onscreen{display:block;font-size:13px;color:var(--body);background:var(--blue-tint2);
+  border-left:3px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 13px;
+  margin:8px 0 0;line-height:1.55}
+.onscreen b,.evtext b{color:var(--navy);font-weight:600}
+.badge{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;padding:3px 9px;border-radius:20px;vertical-align:middle;
+  line-height:1.35;margin:0 0 4px}
+.badge.weak{background:var(--blue-tint);color:var(--blue-dk)}
+
+/* ── footer ────────────────────────────────────────── */
+.p3foot{padding:26px 46px 40px;color:var(--muted);font-size:13px;
+  border-top:1px solid var(--line)}
+
+@media(max-width:760px){
+  .brandbar,.hero,main,.p3foot{padding-left:22px;padding-right:22px}
+  .brandbar{flex-wrap:wrap;gap:12px}
+  figure.ev.pair .shots{flex-wrap:wrap}
+  figure.ev.pair .shots img{width:100%;max-width:660px}
+  .banner .meta{gap:8px 20px}
+  .sheet{margin:0;border-left:0;border-right:0}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{body{background:#fff}.sheet{border:0;margin:0}figure.ev{break-inside:avoid}}
+
+
+/* navbar */
+.navbar{display:flex;align-items:center;gap:16px;padding:14px 46px;border-bottom:1px solid var(--line);background:var(--white)}
+.navbar .crumbs{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--muted);min-width:0;flex:1}
+.navbar .crumbs a{color:var(--body);font-weight:600;text-decoration:none}
+.navbar .crumbs a:hover{color:var(--blue-dk);text-decoration:underline}
+.navbar .crumbs .sep{color:var(--line)}
+.navbar .crumbs .here{color:var(--navy);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--body);
+  text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:7px 13px;background:var(--white);
+  flex-shrink:0;transition:border-color .14s,color .14s,background .14s}
+.backlink:hover{border-color:var(--blue);color:var(--blue-dk);background:var(--blue-tint);text-decoration:none}
+.navbar .logo{height:26px;width:auto;flex-shrink:0;margin-right:2px}
+@media(max-width:760px){.navbar{padding-left:22px;padding-right:22px;gap:11px}.navbar .crumbs{display:none}}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:34px 46px 44px;background:var(--white)}
+.fgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:start}
+.flab{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.fgrid p{margin:0;font-size:14px;color:var(--body)}
+.fmeta{margin-top:10px!important;font-size:13px!important;color:var(--muted)!important}
+.flinks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.flinks a{font-size:14.5px;color:var(--body);text-decoration:none;font-weight:600;display:inline-flex;gap:8px}
+.flinks a:hover{color:var(--blue-dk);text-decoration:underline}
+.flinks .arrow{color:var(--blue)}
+.fbot{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:30px;padding-top:20px;border-top:1px solid var(--hair);font-size:12.5px;color:var(--muted)}
+.fbot img{height:22px;width:auto}
+@media(max-width:760px){footer{padding-left:22px;padding-right:22px}.fgrid{grid-template-columns:1fr;gap:26px}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ── language switch ───────────────────────────────── */
+
+/* ── evidence strip ────────────────────────────────── */
+.evbox{margin-top:26px}
+.evlab{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.evhint{font-weight:400;letter-spacing:0;text-transform:none;font-size:12.5px;color:var(--muted)}
+.evstrip{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px}
+.evtile{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;
+  cursor:zoom-in;background:#000;aspect-ratio:16/9;
+  transition:border-color .14s,transform .14s,box-shadow .14s}
+.evtile:hover,.evtile:focus-visible{border-color:var(--blue);transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(26,109,255,.18);outline:none}
+.evtile img{width:100%;height:100%;object-fit:cover;display:block}
+.evtile .num{position:absolute;top:6px;left:6px;background:rgba(11,27,58,.86);color:#fff;
+  font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:4px;letter-spacing:.02em}
+figure.lb-src{display:none}
+
+/* ── lightbox ──────────────────────────────────────── */
+.lb{position:fixed;inset:0;z-index:9999;background:rgba(8,14,24,.94);display:none;
+  align-items:center;justify-content:center;flex-direction:column;padding:28px 64px 20px}
+.lb.open{display:flex}
+.lb>img{max-width:100%;max-height:calc(100vh - 160px);object-fit:contain;border-radius:6px;
+  background:#000;box-shadow:0 18px 60px rgba(0,0,0,.5)}
+.lb-cap{color:#e6ebf2;font-size:14px;line-height:1.55;max-width:900px;text-align:center;
+  margin-top:16px}
+.lb-cap a{color:#7ab9ff}
+.lb-cap b:first-child,.lb-cap strong:first-child{display:block;margin-bottom:6px;color:#fff;font-size:15px}
+.lb-count{position:absolute;top:20px;left:26px;color:#9fb0c4;font-size:12.5px;letter-spacing:.06em}
+.lb-x,.lb-prev,.lb-next{position:absolute;background:rgba(255,255,255,.1);border:0;color:#fff;
+  cursor:pointer;border-radius:8px;display:grid;place-items:center;transition:background .14s}
+.lb-x:hover,.lb-prev:hover,.lb-next:hover{background:rgba(255,255,255,.22)}
+.lb-x{top:16px;right:20px;width:38px;height:38px;font-size:20px;line-height:1}
+.lb-prev,.lb-next{top:50%;transform:translateY(-50%);width:44px;height:64px;font-size:24px}
+.lb-prev{left:12px} .lb-next{right:12px}
+@media(max-width:760px){.lb{padding:16px 12px}.lb-prev,.lb-next{width:36px;height:52px}}
+@media print{.lb{display:none!important}.evbox{display:none}figure.lb-src{display:block}}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+/* CJK face for the prose; reconstructions are Latin, so they keep Inter */
+body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",Meiryo,sans-serif}
+.rs,.rs *{font-family:"Inter",system-ui,-apple-system,sans-serif}
+</style>
+</head><body>
+<div class="sheet">
+
+<div class="navbar">
+    <img class="logo" src="../6labs-logo.png" alt="6labs.ai">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">パイロットレポート</a><span class="sep">/</span><span class="here">リテンションと離脱</span></nav>
+    <nav class="langs" aria-label="Language"><a href="../retention-churn.html" hreflang="en">EN</a><a href="../zh/retention-churn.html" hreflang="zh-Hans">中文</a><span class="on">日本語</span><a href="../ko/retention-churn.html" hreflang="ko">한국어</a></nav>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">ケーススタディ &middot; Game-01 &times; Oracle</div>
+    <h1>リテンションと離脱</h1>
+    <p class="lede">新規プレイヤーがどこで離れ、やめる前にどう振る舞うか &mdash; いずれも実際の録画で裏付けています。</p>
+    <div class="recon-note"><b>画面について。</b> 掲載画面は、録画セッションで観察された場面の再構成であり、画面上の文言は軽微に言い換えています。匿名性を守るため、クライアントの実映像は公開していません。再構成画面と、本文中で引用しているゲーム内メッセージは、いずれも英語で表示しています。</div>
+  </div>
+
+  <main>
+  <section class="p3s1 p3sec"><div class="wrap">
+<div class="banner"><div class="kick">セクション 1</div>
+<h1>新規プレイヤーはどこで止まり、何に足を取られるのか</h1>
+<div class="rule"></div>
+</div>
+
+<h2 id="what-this-is">これは何か</h2>
+<div class="rule"></div>
+<p>361 名を、Game-01 を初めてインストールした瞬間から録画しました。全セッションを、最初の 100 個のガイドクエストにわたってクエスト単位で追跡しています。</p>
+<p>この上限が比較ウィンドウです。すべてのプレイヤーをゲームの同じ区間に揃えるため、各ステップに費やした時間、どこで詰まったか、どう対処したかを 1 人ずつ比較できます。</p>
+<p>録画が途切れて二度と再開しなかったプレイヤーを<strong>離脱</strong>とし、281 名。収録ウィンドウ終了時点でまだ録画が続いていたプレイヤーを<strong>継続</strong>とし、41 名。さらに 39 名はインストールがウィンドウ末尾に近すぎて判定できないため、比較から除外しています。</p>
+<p>すべての数値は母数を明記しています。すべての主張は、映像の特定の 1 秒に根拠があります。</p>
+<div class="kick">1.1</div>
+<h2 id="where-new-players-stop-first">新規プレイヤーが最初に止まる場所</h2>
+<div class="rule"></div>
+<p><strong>プレイヤーの減少は序盤全体に分散していますが、離脱者と継続者の差は最初の 10 クエストで急激に開き、クエスト 51 から 100 の間で再び広がります。</strong></p>
+<p>この表は信頼できる短尺録画が存在する位置のみを数えており、離脱者 253 名・継続者 34 名を対象としています。</p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:34%"><col style="width:33%"><col style="width:33%"></colgroup><thead><tr><th>クエスト帯</th><th>離脱プレイヤー</th><th>継続プレイヤー</th></tr></thead><tbody><tr><td>クエストを特定できず</td><td>253中 29（11%）</td><td>34中 0（0%）</td></tr><tr><td>クエスト 1 〜 10</td><td>253中 56（22%）</td><td>34中 0（0%）</td></tr><tr><td>クエスト 11 〜 25</td><td>253中 18（7%）</td><td>34中 2（6%）</td></tr><tr><td>クエスト 26 〜 50</td><td>253中 44（17%）</td><td>34中 7（21%）</td></tr><tr><td>クエスト 51 〜 100</td><td>253中 100（40%）</td><td>34中 19（56%）</td></tr><tr><td>クエスト 100 以降</td><td>253中 6（2%）</td><td>34中 6（18%）</td></tr></tbody></table></div>
+<ul><li>継続プレイヤーはより長く撮影されているため、仕組み上どうしてもクエスト到達帯が高く出ます。</li><li>序盤の特定の 1 クエストが即座に大量離脱を引き起こしている、という事実はありません。</li><li>離脱者 253 名のうち合計 85 名がクエスト 11 に到達する前に止まる一方、継続者 34 名のうちこの区間で離れた者は 0 名です。</li><li>クエスト開始前の段階では離脱者 267 名中 48 名が止まり、クエスト 1 では離脱者 165 名中 33 名が離れています。</li><li>クエスト 51 から 100 で減少が再び集中し、離脱者 253 名中 100 名、継続者 34 名中 19 名を占めます。</li><li>終盤のボトルネックはボスの節目に現れます。たとえばクエスト 95 では、中央値 1680 秒の挑戦の間に離脱者 31 名中 14 名が止まっています。</li></ul>
+<p>スタジオは序盤の戦闘タイマーを緩め、クエスト 51 〜 100 のボス HP の壁を下げることで進行の壁をならせます。</p>
+<div class="kick">1.2</div>
+<h2 id="which-steps-players-struggle-with-most">プレイヤーが最も苦戦するステップ</h2>
+<div class="rule"></div>
+<p><strong>チュートリアルの大半は問題ありませんが、突破ゾーン B - 10: 0/1 と突破ゾーン B - 9: 0/1 が深刻な周回を引き起こしています。</strong></p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"></colgroup><thead><tr><th>目標テキスト</th><th>このステップにいたプレイヤー</th><th>長時間の周回</th><th>最後まで突破できず</th><th>ここで止まった離脱プレイヤー</th></tr></thead><tbody><tr><td>突破ゾーン B - 10: 0/1</td><td>361人の記録対象中 49人</td><td>49人中 17人</td><td>49人中 3人</td><td>281人の離脱者中 14人</td></tr><tr><td>突破ゾーン B - 9: 0/1</td><td>361人の記録対象中 35人</td><td>35人中 14人</td><td>35人中 0人</td><td>281人の離脱者中 4人</td></tr><tr><td>第 2 章のボスを倒す: 0/1</td><td>361人の記録対象中 45人</td><td>45人中 5人</td><td>45人中 0人</td><td>281人の離脱者中 2人</td></tr><tr><td>突破ゾーン A - 6</td><td>361人の記録対象中 43人</td><td>43人中 4人</td><td>43人中 1人</td><td>281人の離脱者中 3人</td></tr><tr><td>突破ゾーン B - 4</td><td>361人の記録対象中 30人</td><td>30人中 6人</td><td>30人中 0人</td><td>281人の離脱者中 1人</td></tr></tbody></table></div>
+<ul><li>録画対象 361 名のうち、361 名中 281 名が離脱し、361 名中 41 名が継続しました。序盤の大半のステップは問題なく、たとえば「敵を倒す: 0/3」では 212 名中 188 名がそのまま通過しています。</li><li>突破ゾーン B - 10: 0/1 が最悪のボトルネックとなり、49 名中 17 名を長時間の周回に追い込みました。同じステップで、離脱者 281 名中 14 名がそのままプレイをやめています。</li><li>突破ゾーン B - 9: 0/1 は、ボス A に挑んだ 35 名中 14 名を長時間の周回に追い込みました。このボス戦は戦闘タイマー切れで繰り返し終わっています。</li><li>第 2 章のボスを倒す: 0/1 は、戦闘タイマー切れでプレイヤーを止めました。このボス戦は 45 名中 5 名にとって長時間の周回になっています。</li><li>突破ゾーン A - 6 は、装備を強化する前のプレイヤーに即座の戦闘敗北をもたらしました。このステップは 43 名中 4 名にとって長時間の周回でした。</li></ul>
+<p>スタジオは突破ゾーン B - 9 と突破ゾーン B - 10 のボス HP を下げ、戦闘タイマーを延ばすことができます。</p>
+<div class="kick">1.3</div>
+<h2 id="how-long-each-step-takes">各ステップにかかる時間</h2>
+<div class="rule"></div>
+<p><strong>序盤のステップは中央値 15 秒ですが、クエスト 95 は 361 名中 49 名において中央値 1680 秒を要します。</strong></p>
+<p>母数は録画対象の合計 361 名です。その内訳は 361 名中 281 名の離脱者、361 名中 41 名の継続者、361 名中 39 名の未分類です。</p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:20%"><col style="width:16%"><col style="width:16%"><col style="width:16%"><col style="width:16%"><col style="width:16%"></colgroup><thead><tr><th>クエスト</th><th>目標</th><th>プレイヤー</th><th>所要時間の中央値（秒）</th><th>アイドル時間の中央値（秒）</th><th>ここで止まった離脱者</th></tr></thead><tbody><tr><td>2</td><td>ステータスを強化する: 0/1</td><td>361人中 119人</td><td>15</td><td>15秒中 0秒</td><td>281人の離脱者中 10人</td></tr><tr><td>3</td><td>エリートモンスターを召喚する: 0/1</td><td>361人中 125人</td><td>15</td><td>15秒中 0秒</td><td>281人の離脱者中 6人</td></tr><tr><td>1</td><td>敵を倒す: 0/3</td><td>361人中 212人</td><td>34</td><td>34秒中 0秒</td><td>281人の離脱者中 33人</td></tr><tr><td>0</td><td>（クエスト開始前）</td><td>361人中 347人</td><td>353</td><td>353秒中 190秒</td><td>281人の離脱者中 48人</td></tr><tr><td>71</td><td>突破ゾーン B - 4</td><td>361人中 30人</td><td>373</td><td>373秒中 0秒</td><td>281人の離脱者中 1人</td></tr><tr><td>75</td><td>突破ゾーン B - 5</td><td>361人中 27人</td><td>507</td><td>507秒中 0秒</td><td>281人の離脱者中 0人</td></tr><tr><td>91</td><td>突破ゾーン B - 9: 0/1</td><td>361人中 35人</td><td>1196</td><td>1196秒中 0秒</td><td>281人の離脱者中 4人</td></tr><tr><td>95</td><td>突破ゾーン B - 10: 0/1</td><td>361人中 49人</td><td>1680</td><td>1680秒中 81秒</td><td>281人の離脱者中 14人</td></tr></tbody></table></div>
+<ul><li>序盤のチュートリアルはすぐ終わります。クエスト 2 と 3 はそれぞれ 361 名中 119 名、361 名中 125 名において中央値 15 秒。クエスト 1 は 361 名中 212 名において中央値 34 秒です。</li><li>アイドル時間はほぼすべて開始時のセットアップに集中しています。クエスト 0 は 361 名中 347 名において、中央値 353 秒のうち 190 秒がアイドルでした。初期ゲームパッケージのダウンロード中、7 秒目から 190 秒目までプレイヤーはただ待っています。対照的にクエスト 91 は 361 名中 35 名において、中央値 1196 秒のうちアイドルは 0 秒です。</li><li>最も遅いステップはすべて第 3 章の突破ゾーン B のボス戦です。クエスト 67、71、75、79、83、87、91、95 はいずれも突破ステージのクリアを要求します。プレイヤーの時間は実戦に費やされ、ボスのタイマーに繰り返し敗れています。</li><li>これらのステップの突破は、プレイヤーを長い周回に追い込みます。クエスト 91 では 35 名中 14 名が長時間の周回に入り、突破のための装備強化中に通貨が尽きています。クエスト 95 では 49 名中 17 名が長時間の周回に直面し、49 名中 3 名は最後まで突破できませんでした。</li><li>この遅い戦闘の壁が恒久的な離脱を生んでいます。クエスト 95 は離脱者 281 名中 14 名を止めました。クエスト 0 は番号付きクエストが始まる前に離脱者 281 名中 48 名を止めています。対照的に、クエスト 75 が止めた離脱者は 281 名中 0 名です。</li></ul>
+<p>スタジオは第 3 章ゾーン B の各突破ステージで、ボスの HP を下げるか戦闘タイマーを延ばすことができます。</p>
+</div></section>
+
+<section class="p3s2 p3sec"><div class="wrap">
+<div class="banner">
+<div class="kick">セクション 2</div>
+<h1>プレイヤーは実際どう遊び、どう去るのか</h1>
+<div class="rule"></div>
+
+</div>
+<div class="kick">2.1</div>
+<h2 id="how-the-two-groups-play">2 つのグループの遊び方</h2>
+<div class="rule"></div>
+<p><strong>録画対象 361 名のうち離脱者 281 名と継続者 41 名を比べると、両グループは共通するすべてのクエストでほぼ見分けがつきません。</strong></p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:10%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"></colgroup><thead><tr><th>クエスト</th><th>離脱プレイヤー</th><th>継続プレイヤー</th><th>離脱者レベル</th><th>継続者レベル</th><th>離脱者戦闘力</th><th>継続者戦闘力</th><th>離脱者プレイ分数</th><th>継続者プレイ分数</th><th>離脱者敗北数</th><th>継続者敗北数</th></tr></thead><tbody><tr><td>1</td><td>281中 176</td><td>41中 28</td><td>1</td><td>1</td><td>167</td><td>167</td><td>4</td><td>3</td><td>0</td><td>0</td></tr><tr><td>5</td><td>281中 84</td><td>41中 15</td><td>3</td><td>3</td><td>209</td><td>202</td><td>5</td><td>4</td><td>0</td><td>0</td></tr><tr><td>10</td><td>281中 31</td><td>41中 6</td><td>6</td><td>6</td><td>329</td><td>315</td><td>10</td><td>9</td><td>0</td><td>0</td></tr><tr><td>20</td><td>281中 50</td><td>41中 13</td><td>9</td><td>10</td><td>727</td><td>675</td><td>18</td><td>15</td><td>0</td><td>0</td></tr><tr><td>35</td><td>281中 65</td><td>41中 19</td><td>14</td><td>14</td><td>1845</td><td>1780</td><td>25</td><td>23</td><td>0</td><td>1</td></tr><tr><td>50</td><td>281中 38</td><td>41中 9</td><td>19</td><td>19</td><td>6091</td><td>5789</td><td>46</td><td>44</td><td>3</td><td>4</td></tr><tr><td>75</td><td>281中 32</td><td>41中 9</td><td>24</td><td>24</td><td>23412</td><td>19451</td><td>85</td><td>68</td><td>6</td><td>5</td></tr><tr><td>100</td><td>281中 11</td><td>41中 8</td><td>30</td><td>30</td><td>131277</td><td>161761</td><td>141</td><td>116</td><td>10</td><td>11</td></tr></tbody></table></div>
+<ul><li>どちらのグループも、オート戦闘にステージのウェーブとボス戦をそのまま進行させる形でクエストを始めます。継続プレイヤー A はステージを自動で進めました。離脱プレイヤー B はステージのウェーブでオート戦闘を使いました。</li><li>戦闘に負けたとき、どちらのグループもメニューを読むより先にすぐ再挑戦します。継続プレイヤー A は敗北直後に第 3 章ステージ 07 を再挑戦。離脱プレイヤー C は失敗直後に第 2 章ステージ 04 を再挑戦しました。</li><li>再挑戦も失敗すると、どちらのグループもメニューを開いて装備・武器・ステータスを強化します。継続プレイヤー A はステージ 2-06 での敗北後に武器を召喚し弓のレベルを上げました。離脱プレイヤー B はステージ 2-4 の失敗後に武器を強化し、スキルを習得し、属性を強化しました。</li><li>手強いボスの壁に当たると、どちらのグループも資源ダンジョン周回やストアパックの購入に切り替えます。継続プレイヤー D はボス戦に負けたあと武器オファーを購入しダンジョンに入りました。離脱プレイヤー E はステージ 2-8 でタイムアウトしたあとエピック武器パックを購入しています。</li><li>機能の利用率は両グループでほぼ同一です。ステータス強化は離脱者 281 名中 253 名、継続者 41 名中 37 名が利用。装備管理は 281 名中 235 名と 41 名中 39 名。ボス戦は 281 名中 219 名と 41 名中 40 名が利用しています。</li></ul>
+<p>スタジオは序盤のクエスト導線や戦闘システムを変えるべきではありません。ここで測ったすべての指標において、離脱者は継続者と同じ遊び方をしています。</p>
+<div class="kick">2.2</div>
+<h2 id="what-the-last-recorded-minutes-look-like">録画された最後の数分はどう見えるか</h2>
+<div class="rule"></div>
+<p><strong>大半の録画は収録終了により進行の途中で切れますが、アイドルによる離脱と意図的な終了は本物の離脱を示します。</strong></p>
+<p>母数は離脱者 281 名と継続者 41 名です。</p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:34%"><col style="width:33%"><col style="width:33%"></colgroup><thead><tr><th>最終状態</th><th>離脱プレイヤー</th><th>継続プレイヤー</th></tr></thead><tbody><tr><td>まだ前に進んでいる</td><td>281人の離脱者中 196人（70%）</td><td>41人の継続者中 39人（95%）</td></tr><tr><td>アイドルまたはスリープ状態</td><td>281人の離脱者中 34人（12%）</td><td>41人の継続者中 2人（5%）</td></tr><tr><td>短すぎてジャーニーが見えない</td><td>281人の離脱者中 23人（8%）</td><td>41人の継続者中 0人（0%）</td></tr><tr><td>ログアウトまたは終了でゲームを閉じた</td><td>281人の離脱者中 17人（6%）</td><td>41人の継続者中 0人（0%）</td></tr><tr><td>画面上の何かで詰まっている</td><td>281人の離脱者中 7人（2%）</td><td>41人の継続者中 0人（0%）</td></tr><tr><td>プレイしているが前進していない</td><td>281人の離脱者中 4人（1%）</td><td>41人の継続者中 0人（0%）</td></tr></tbody></table></div>
+<ul><li>離脱者 281 名中 196 名、継続者 41 名中 39 名で、映像はプレイ中に終わっています。収録ツールは 15 分ごとに自動でクリップを打ち切ります。継続者はより長く撮影されているため、その比率が高くなります。</li><li>端末を起動したまま放置することが、本当の分かれ目です。このアイドル状態は離脱者 281 名中 34 名、継続者 41 名中 2 名に現れます。彼らはアプリをスリープに任せ、そのまま戻りません。</li><li>早期の直帰は離脱者 281 名中 23 名、継続者 41 名中 0 名です。セッションが短すぎて、プレイのジャーニーを何も記録できていません。</li><li>意図的な終了は離脱グループにしか現れません。この行動は離脱者 281 名中 17 名、継続者 41 名中 0 名に該当します。たとえば、あるプレイヤーは戦闘に繰り返し敗れたあと、設定を開いてログアウトを確定しました。</li><li>画面のブロックや行き止まりは離脱グループにのみ影響します。画面上で詰まっていた離脱者が 281 名中 7 名、前進しないままプレイしていた離脱者が 281 名中 4 名。どちらのパターンも継続グループには現れず、いずれも 41 名中 0 名でした。</li></ul>
+<p>スタジオはスリープに入る前の通知を追加し、序盤オンボーディングを簡素化することで、すぐ離れるプレイヤーを引き留められます。</p>
+<div class="kick">2.3</div>
+<h2 id="what-players-do-after-the-game-does-something">ゲームが何かをしたあと、プレイヤーは何をするか</h2>
+<div class="rule"></div>
+<p><strong>プレイヤーが最も脱落するのは、戦闘に止められたとき、そしてストアのポップアップが課金を求めたときです。</strong></p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:16%"><col style="width:12%"><col style="width:12%"><col style="width:12%"><col style="width:12%"><col style="width:12%"><col style="width:12%"><col style="width:12%"></colgroup><thead><tr><th>設計上のループ</th><th>閉じた</th><th>閉じなかった</th><th>閉じた割合</th><th>離脱者の遭遇</th><th>継続者の遭遇</th><th>離脱者の断絶</th><th>継続者の断絶</th></tr></thead><tbody><tr><td>戦闘に負け、その後そのコンテンツを攻略した</td><td>966</td><td>314</td><td>75%</td><td>281中 171</td><td>41中 36</td><td>281中 106</td><td>41中 21</td></tr><tr><td>価格を見て、その後購入を完了した</td><td>391</td><td>68</td><td>85%</td><td>281中 166</td><td>41中 33</td><td>281中 32</td><td>41中 7</td></tr><tr><td>エラーに遭い、その後復帰した</td><td>156</td><td>26</td><td>86%</td><td>281中 89</td><td>41中 23</td><td>281中 15</td><td>41中 3</td></tr><tr><td>何かが足りなくなり、その後乗り越えた</td><td>80</td><td>13</td><td>86%</td><td>281中 57</td><td>41中 13</td><td>281中 5</td><td>41中 4</td></tr><tr><td>ゲームが提案し、その後それを実行した</td><td>123</td><td>6</td><td>95%</td><td>281中 60</td><td>41中 14</td><td>281中 5</td><td>41中 1</td></tr><tr><td>機能を解放し、その後それを使った</td><td>1649</td><td>15</td><td>99%</td><td>281中 236</td><td>41中 36</td><td>281中 12</td><td>41中 1</td></tr><tr><td>何かを召喚し、その後それを装備した</td><td>581</td><td>6</td><td>99%</td><td>281中 190</td><td>41中 34</td><td>281中 4</td><td>41中 0</td></tr><tr><td>レベルや通貨を得て、その後それを使った</td><td>1696</td><td>2</td><td>100%</td><td>281中 220</td><td>41中 34</td><td>281中 1</td><td>41中 0</td></tr></tbody></table></div>
+<ul><li>継続プレイヤーはより長く録画されているため、各イベントに遭遇する機会も多くなります。</li><li>戦闘の敗北が最も漏れの大きいループで、1280 回の遭遇のうち 314 回が未解決のままです。</li><li>ボス戦は、プレイヤーが時間切れでそのまま去ることで戦闘復帰のループを断ち切ります &mdash; ボス A とボス B で確認されています。</li><li>敗北した戦闘からそのまま出て戻らないケースもあり、武器ダンジョン フェーズ 6 と第 3 章ステージ 05 が放棄されています。</li><li>価格のプロンプトは 459 回中 68 回で閉じず、プレイヤーは有料オファーを閉じるか購入フローを放棄しています。</li><li>クラッシュが画面を完全に固めたり、アカウント連携を塞いだりすると、技術的エラーがプレイヤーを取りこぼします。</li></ul>
+<p>スタジオは序盤チャプターのボスで最も急な難易度の跳ね上がりをならし、強制的な購入ポップアップを邪魔にならないストア導線に置き換えられます。</p>
+</div></section>
+
+<section class="p3s3 p3sec"><div class="wrap">
+<div class="banner"><div class="kick">セクション 3</div>
+<h1>開発チーム向けの課題</h1>
+<div class="rule"></div>
+</div>
+<div class="kick">3.1</div>
+<h2 id="problems-worth-fixing">直す価値のある問題</h2>
+<div class="rule"></div>
+<p><strong>ストアのエラーが実際の課金を塞ぎ、セッション切断がプレイヤーを戦闘から追い出し、序盤の機能ロックが当たり前の操作を苛立たせています。</strong></p>
+<p>母数は録画対象 361 名のうち離脱者 281 名、および録画対象 361 名のうち継続者 41 名です。</p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"></colgroup><thead><tr><th>カテゴリ</th><th>問題</th><th>離脱プレイヤー</th><th>継続プレイヤー</th><th>根拠</th></tr></thead><tbody><tr><td>失敗する購入経路</td><td>アプリ内課金のチェックアウトエラー</td><td>281人の離脱者中 3人</td><td>41人の継続者中 1人</td><td>録画セッション</td></tr><tr><td>失敗する購入経路</td><td>ベンダー初期化エラー</td><td>281人の離脱者中 2人</td><td>41人の継続者中 0人</td><td>録画セッション</td></tr><tr><td>失敗する購入経路</td><td>リワード動画広告の読み込み失敗</td><td>281人の離脱者中 4人</td><td>41人の継続者中 1人</td><td>録画セッション</td></tr><tr><td>セッションを壊すもの</td><td>セッション期限切れによる切断</td><td>281人の離脱者中 9人</td><td>41人の継続者中 1人</td><td>録画セッション</td></tr><tr><td>セッションを壊すもの</td><td>戦闘検証の不整合によるキック</td><td>281人の離脱者中 2人</td><td>41人の継続者中 0人</td><td>録画セッション</td></tr><tr><td>セッションを壊すもの</td><td>無期限の画面フリーズ</td><td>281人の離脱者中 2人</td><td>41人の継続者中 0人</td><td>録画セッション</td></tr><tr><td>知っておく価値のある挙動</td><td>クエストによってロックされた改名</td><td>281人の離脱者中 7人</td><td>41人の継続者中 2人</td><td>録画セッション</td></tr><tr><td>知っておく価値のある挙動</td><td>HP 上限で塞がれたポーション強化</td><td>281人の離脱者中 1人</td><td>41人の継続者中 1人</td><td>録画セッション</td></tr><tr><td>知っておく価値のある挙動</td><td>インベントリ満杯でオート戦闘が停止</td><td>281人の離脱者中 1人</td><td>41人の継続者中 0人</td><td>録画セッション</td></tr></tbody></table></div>
+<ul><li>ストアのエラーは、プレイヤーの実課金の完了を直接妨げました。決済チェックアウトのエラーは離脱者 281 名中 3 名、継続者 41 名中 1 名の購入を塞ぎました。ベンダー初期化エラーは離脱者 281 名中 2 名のチェックアウトを止めました。広告の読み込み失敗は離脱者 281 名中 4 名、継続者 41 名中 1 名の無料報酬を塞ぎました。</li><li>突然のセッション期限切れポップアップが、戦闘中のプレイヤーを弾き出しました。この切断は離脱者 281 名中 9 名、継続者 41 名中 1 名を襲っています。戦闘検証の不一致は離脱者 281 名中 2 名をプレイから強制的に追い出しました。無期限の画面ハングは離脱者 281 名中 2 名のクライアントを固めました。</li><li>継続プレイヤーはより長く録画されているため、エラーに当たる時間も長くなります。</li><li>プレイヤーは、チュートリアルが許可する前に独自の名前を付けようとしました。ガイドクエストのロックは離脱者 281 名中 7 名、継続者 41 名中 2 名の改名を塞ぎました。名前の重複により、離脱者 281 名中 1 名が何度も拒否される候補を試す羽目になっています。</li><li>バックグラウンドの上限に達すると自動プレイが止まりました。装備バッグ満杯により離脱者 281 名中 1 名のオート戦闘が停止。HP の上限により離脱者 281 名中 1 名、継続者 41 名中 1 名のポーション強化が塞がれました。</li></ul>
+<p>スタジオは決済ゲートウェイのタイムアウトを修正し、放置戦闘中にあふれたアイテムを自動分解し、改名を最初から解放すべきです。</p>
+</div></section>
+
+
+
+
+  </main>
+
+  <footer>
+  <div class="fgrid">
+    <div>
+      <div class="flab">このレポート</div>
+      <p><b>リテンションと離脱</b> &mdash; Game-01 パイロットの 3 本のカテゴリ別レポートのうちの 1 本。</p>
+      <p class="fmeta">すべての所見は録画されたプレイセッションから読み取ったものです。この匿名版ではクリップへのリンクを掲載していません。</p>
+    </div>
+    <div>
+      <div class="flab">他のレポート</div>
+      <ul class="flinks"><li><a href="index.html"><span class="arrow">&rarr;</span>メインレポート</a></li><li><a href="chat-moderation.html"><span class="arrow">&rarr;</span>チャットモデレーション</a></li><li><a href="monetization-ux.html"><span class="arrow">&rarr;</span>技術的問題と UX の摩擦</a></li></ul>
+    </div>
+  </div>
+  <div class="fbot"><span>Game-01 パイロット &middot; 匿名化されたケーススタディ</span><img src="../6labs-logo.png" alt="6labs.ai"></div>
+</footer>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>

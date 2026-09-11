@@ -1,0 +1,385 @@
+<!doctype html><html lang="zh-Hans"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Game-01 &mdash; 留存与流失</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../recon.css">
+<style>
+:root{
+  --navy:#0b1b3a; --ink:#101828; --body:#475467; --muted:#8593a8;
+  --blue:#1a6dff; --blue-dk:#1450c8; --blue-tint:#eef3fe; --blue-tint2:#f6f9ff;
+  --line:#e4e9f2; --hair:#eef1f6; --white:#fff; --page:#f7f9fc;
+  --good:#0a7d4a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--body);
+  font:16px/1.65 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.sheet{max-width:1060px;margin:26px auto;background:var(--white);border:1px solid var(--line)}
+h1,h2,h3{font-family:Poppins,Inter,sans-serif;color:var(--navy);margin:0;
+  letter-spacing:-.015em}
+p{margin:13px 0}
+strong,b{color:var(--navy);font-weight:600}
+em{font-style:italic}
+a{color:var(--blue-dk);text-decoration:none;font-weight:600}
+a:hover{text-decoration:underline}
+a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+/* ── brand bar ─────────────────────────────────────── */
+.brandbar{display:flex;justify-content:space-between;align-items:center;
+  gap:20px;padding:34px 46px 0}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--blue)}
+.hero .eyebrow{margin-bottom:10px}
+.brandright{display:flex;align-items:center;gap:20px;flex-shrink:0}
+
+
+.logo{display:block;height:30px;width:auto;flex-shrink:0}
+
+/* ── hero ──────────────────────────────────────────── */
+.hero{padding:20px 46px 34px}
+.hero h1{font-size:clamp(32px,4.4vw,44px);font-weight:700;line-height:1.08}
+.hero .lede{margin:16px 0 0;font-size:17px;color:var(--body)}
+
+/* ── page shell / sections ─────────────────────────── */
+main{padding:0 46px}
+.p3sec{padding:56px 0;border-top:1px solid var(--line)}
+.p3sec:first-of-type{border-top:0;padding-top:30px}
+.p3sec .wrap{max-width:none;margin:0;padding:0}
+
+h2{font-size:23px;font-weight:600;margin:0 0 6px;line-height:1.28}
+h3{font-size:17px;font-weight:600;margin:32px 0 0;line-height:1.35}
+h3+p,h3+.tw,h3+ul,h3+ol{margin-top:9px}
+.rule{width:44px;height:3px;background:var(--blue);border-radius:2px;margin:0 0 18px}
+.kick{font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--blue);margin:0 0 8px}
+.p3sec>.wrap>.kick{margin-top:0;padding-top:52px;border-top:1px solid var(--line)}
+.p3sec>.wrap>.kick:first-child{padding-top:0;border-top:0}
+hr{border:0;border-top:1px solid var(--hair);margin:36px 0 0}
+
+/* ── section banner (intro block) ──────────────────── */
+.banner{margin:0 0 6px}
+.banner h1{font-size:27px;font-weight:600;line-height:1.25;margin:0 0 8px}
+.banner .sub{font-size:16.5px;color:var(--body)}
+.banner p{font-size:16.5px;color:var(--body);margin:0}
+.banner .meta{margin-top:20px;padding-top:15px;border-top:1px solid var(--line);
+  font-size:13.5px;color:var(--muted);display:flex;gap:14px 30px;flex-wrap:wrap}
+.banner .meta b{color:var(--navy);font-weight:600}
+.banner .read{margin-top:22px;background:var(--blue-tint);border-radius:8px;
+  padding:18px 22px;font-size:14.5px;color:var(--body)}
+.banner .read b{color:var(--navy);font-weight:600}
+.banner .read ul{margin:10px 0 0;padding-left:20px}
+.banner .read li{margin:6px 0;font-size:14.5px}
+
+/* ── lists ─────────────────────────────────────────── */
+ol,ul{margin:14px 0;padding-left:22px}
+li{margin:9px 0}
+li::marker{color:var(--muted)}
+
+/* ── tables ────────────────────────────────────────── */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:20px 0 0}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:600px}
+th{text-align:left;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);padding:0 16px 11px 0;border-bottom:1.5px solid var(--line)}
+td{padding:13px 16px 13px 0;border-bottom:1px solid var(--hair);vertical-align:top}
+tr>th:last-child,tr>td:last-child{padding-right:0}
+td[style*="right"]{font-variant-numeric:tabular-nums;white-space:normal}
+tbody tr:last-child td{border-bottom:0}
+.tw+p{font-size:13.5px;color:var(--muted);margin-top:14px}
+
+/* ── on-screen evidence ────────────────────────────── */
+.evwrap{margin:26px 0 0}
+.evlabel{font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--blue);margin:0 0 16px}
+.evgrid{margin:24px 0 0}
+figure.ev{margin:0 0 22px;background:var(--white);border:1px solid var(--line);
+  border-radius:10px;overflow:hidden}
+figure.ev:last-child{margin-bottom:0}
+figure.ev .shots{display:flex;gap:3px;background:#000;justify-content:center;
+  align-items:flex-start}
+figure.ev .shots img{display:block;width:100%;height:auto;object-fit:contain;max-width:660px}
+figure.ev.pair .shots img{width:50%;max-width:462px}
+.vidid{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--muted);
+  letter-spacing:.02em;padding:10px 16px 0;word-break:break-all}
+.vidid b{color:var(--navy);font-weight:600}
+figure.ev figcaption{padding:8px 16px 16px;font-size:13px;line-height:1.55}
+figure.ev figcaption br{display:none}
+.moment{display:block;font-family:Poppins,Inter,sans-serif;font-weight:600;font-size:14.5px;
+  color:var(--navy);line-height:1.4;margin-bottom:8px}
+.evtext,.onscreen{display:block;font-size:13px;color:var(--body);background:var(--blue-tint2);
+  border-left:3px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 13px;
+  margin:8px 0 0;line-height:1.55}
+.onscreen b,.evtext b{color:var(--navy);font-weight:600}
+.badge{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;padding:3px 9px;border-radius:20px;vertical-align:middle;
+  line-height:1.35;margin:0 0 4px}
+.badge.weak{background:var(--blue-tint);color:var(--blue-dk)}
+
+/* ── footer ────────────────────────────────────────── */
+.p3foot{padding:26px 46px 40px;color:var(--muted);font-size:13px;
+  border-top:1px solid var(--line)}
+
+@media(max-width:760px){
+  .brandbar,.hero,main,.p3foot{padding-left:22px;padding-right:22px}
+  .brandbar{flex-wrap:wrap;gap:12px}
+  figure.ev.pair .shots{flex-wrap:wrap}
+  figure.ev.pair .shots img{width:100%;max-width:660px}
+  .banner .meta{gap:8px 20px}
+  .sheet{margin:0;border-left:0;border-right:0}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{body{background:#fff}.sheet{border:0;margin:0}figure.ev{break-inside:avoid}}
+
+
+/* navbar */
+.navbar{display:flex;align-items:center;gap:16px;padding:14px 46px;border-bottom:1px solid var(--line);background:var(--white)}
+.navbar .crumbs{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--muted);min-width:0;flex:1}
+.navbar .crumbs a{color:var(--body);font-weight:600;text-decoration:none}
+.navbar .crumbs a:hover{color:var(--blue-dk);text-decoration:underline}
+.navbar .crumbs .sep{color:var(--line)}
+.navbar .crumbs .here{color:var(--navy);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--body);
+  text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:7px 13px;background:var(--white);
+  flex-shrink:0;transition:border-color .14s,color .14s,background .14s}
+.backlink:hover{border-color:var(--blue);color:var(--blue-dk);background:var(--blue-tint);text-decoration:none}
+.navbar .logo{height:26px;width:auto;flex-shrink:0;margin-right:2px}
+@media(max-width:760px){.navbar{padding-left:22px;padding-right:22px;gap:11px}.navbar .crumbs{display:none}}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:34px 46px 44px;background:var(--white)}
+.fgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:start}
+.flab{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.fgrid p{margin:0;font-size:14px;color:var(--body)}
+.fmeta{margin-top:10px!important;font-size:13px!important;color:var(--muted)!important}
+.flinks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.flinks a{font-size:14.5px;color:var(--body);text-decoration:none;font-weight:600;display:inline-flex;gap:8px}
+.flinks a:hover{color:var(--blue-dk);text-decoration:underline}
+.flinks .arrow{color:var(--blue)}
+.fbot{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:30px;padding-top:20px;border-top:1px solid var(--hair);font-size:12.5px;color:var(--muted)}
+.fbot img{height:22px;width:auto}
+@media(max-width:760px){footer{padding-left:22px;padding-right:22px}.fgrid{grid-template-columns:1fr;gap:26px}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ── language switch ───────────────────────────────── */
+
+/* ── evidence strip ────────────────────────────────── */
+.evbox{margin-top:26px}
+.evlab{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.evhint{font-weight:400;letter-spacing:0;text-transform:none;font-size:12.5px;color:var(--muted)}
+.evstrip{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px}
+.evtile{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;
+  cursor:zoom-in;background:#000;aspect-ratio:16/9;
+  transition:border-color .14s,transform .14s,box-shadow .14s}
+.evtile:hover,.evtile:focus-visible{border-color:var(--blue);transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(26,109,255,.18);outline:none}
+.evtile img{width:100%;height:100%;object-fit:cover;display:block}
+.evtile .num{position:absolute;top:6px;left:6px;background:rgba(11,27,58,.86);color:#fff;
+  font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:4px;letter-spacing:.02em}
+figure.lb-src{display:none}
+
+/* ── lightbox ──────────────────────────────────────── */
+.lb{position:fixed;inset:0;z-index:9999;background:rgba(8,14,24,.94);display:none;
+  align-items:center;justify-content:center;flex-direction:column;padding:28px 64px 20px}
+.lb.open{display:flex}
+.lb>img{max-width:100%;max-height:calc(100vh - 160px);object-fit:contain;border-radius:6px;
+  background:#000;box-shadow:0 18px 60px rgba(0,0,0,.5)}
+.lb-cap{color:#e6ebf2;font-size:14px;line-height:1.55;max-width:900px;text-align:center;
+  margin-top:16px}
+.lb-cap a{color:#7ab9ff}
+.lb-cap b:first-child,.lb-cap strong:first-child{display:block;margin-bottom:6px;color:#fff;font-size:15px}
+.lb-count{position:absolute;top:20px;left:26px;color:#9fb0c4;font-size:12.5px;letter-spacing:.06em}
+.lb-x,.lb-prev,.lb-next{position:absolute;background:rgba(255,255,255,.1);border:0;color:#fff;
+  cursor:pointer;border-radius:8px;display:grid;place-items:center;transition:background .14s}
+.lb-x:hover,.lb-prev:hover,.lb-next:hover{background:rgba(255,255,255,.22)}
+.lb-x{top:16px;right:20px;width:38px;height:38px;font-size:20px;line-height:1}
+.lb-prev,.lb-next{top:50%;transform:translateY(-50%);width:44px;height:64px;font-size:24px}
+.lb-prev{left:12px} .lb-next{right:12px}
+@media(max-width:760px){.lb{padding:16px 12px}.lb-prev,.lb-next{width:36px;height:52px}}
+@media print{.lb{display:none!important}.evbox{display:none}figure.lb-src{display:block}}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+/* CJK face for the prose; reconstructions are Latin, so they keep Inter */
+body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+.rs,.rs *{font-family:"Inter",system-ui,-apple-system,sans-serif}
+</style>
+</head><body>
+<div class="sheet">
+
+<div class="navbar">
+    <img class="logo" src="../6labs-logo.png" alt="6labs.ai">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">试点报告</a><span class="sep">/</span><span class="here">留存与流失</span></nav>
+    <nav class="langs" aria-label="Language"><a href="../retention-churn.html" hreflang="en">EN</a><span class="on">中文</span><a href="../ja/retention-churn.html" hreflang="ja">日本語</a><a href="../ko/retention-churn.html" hreflang="ko">한국어</a></nav>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">案例研究 &middot; Game-01 &times; Oracle</div>
+    <h1>留存与流失</h1>
+    <p class="lede">新玩家在哪里掉队，他们退出之前是怎么玩的 &mdash; 每一条都在真实录像中得到验证。</p>
+    <div class="recon-note"><b>关于这些画面。</b> 画面是对录像中所观察到的时刻的复原图，屏幕上的文案经过轻微改写。为保护匿名性，客户的真实录像不予公开。复原画面及正文中引用的游戏内提示，一律以英文呈现。</div>
+  </div>
+
+  <main>
+  <section class="p3s1 p3sec"><div class="wrap">
+<div class="banner"><div class="kick">第 1 节</div>
+<h1>新玩家停在哪里，又是被什么拖住</h1>
+<div class="rule"></div>
+</div>
+
+<h2 id="what-this-is">这是什么</h2>
+<div class="rule"></div>
+<p>361 人从首次安装 Game-01 的那一刻起被录制。每次会话都按任务逐个跟踪，覆盖他们最初的一百个引导任务。</p>
+<p>这个上限就是对比窗口。它把每位玩家放在游戏的同一段路程上，于是每一步花了多少时间、谁卡在哪里、他们是怎么处理的，都可以逐人对比。</p>
+<p>录像停止且再未恢复的玩家计为<strong>流失</strong>：281 人。在采集窗口结束时仍在被录制的玩家计为<strong>活跃</strong>：41 人。另有 39 人安装时间太接近窗口末尾，无法判定，已排除在对比之外。</p>
+<p>每个数字都标明了它的分母。每一条结论都落在某一秒具体的画面上。</p>
+<div class="kick">1.1</div>
+<h2 id="where-new-players-stop-first">新玩家最先停在哪里</h2>
+<div class="rule"></div>
+<p><strong>玩家流失分散在整个早期体验中，但流失与活跃之间的差距在最初十个任务里急剧拉开，并在任务 51 到 100 之间再次扩大。</strong></p>
+<p>此视图只统计有可信短录像的位置，覆盖 253 名流失玩家与 34 名活跃玩家。</p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:34%"><col style="width:33%"><col style="width:33%"></colgroup><thead><tr><th>任务区间</th><th>流失玩家</th><th>活跃玩家</th></tr></thead><tbody><tr><td>无法识别任务</td><td>253 中 29（11%）</td><td>34 中 0（0%）</td></tr><tr><td>任务 1 至 10</td><td>253 中 56（22%）</td><td>34 中 0（0%）</td></tr><tr><td>任务 11 至 25</td><td>253 中 18（7%）</td><td>34 中 2（6%）</td></tr><tr><td>任务 26 至 50</td><td>253 中 44（17%）</td><td>34 中 7（21%）</td></tr><tr><td>任务 51 至 100</td><td>253 中 100（40%）</td><td>34 中 19（56%）</td></tr><tr><td>任务 100 之后</td><td>253 中 6（2%）</td><td>34 中 6（18%）</td></tr></tbody></table></div>
+<ul><li>活跃玩家被拍摄的时间更长，这在机制上让他们落在更高的任务完成区间。</li><li>没有任何单一的早期任务造成立即的大规模流失。</li><li>合计 253 名流失玩家中有 85 名在到达任务 11 之前就停下，而 34 名活跃玩家中在这一段里退出的为 0 名。</li><li>任务开始前的阶段有 267 名流失玩家中的 48 名停下，任务 1 有 165 名流失玩家中的 33 名离开。</li><li>从任务 51 到 100 流失再次大量聚集，占 253 名流失玩家中的 100 名，同时还有 34 名活跃玩家中的 19 名。</li><li>后期瓶颈出现在 Boss 节点，例如任务 95，253 名流失玩家统计口径下有 31 名中的 14 名在中位时长 1680 秒的过程中停下。</li></ul>
+<p>研发方可以放宽早期战斗计时，并降低任务 51 至 100 之间的 Boss 血量壁垒，以削平进度墙。</p>
+<div class="kick">1.2</div>
+<h2 id="which-steps-players-struggle-with-most">玩家最难通过的是哪些步骤</h2>
+<div class="rule"></div>
+<p><strong>大多数新手步骤都很顺畅，但突破区域 B - 10: 0/1 与突破区域 B - 9: 0/1 造成了严重的重复刷关。</strong></p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"></colgroup><thead><tr><th>目标文本</th><th>处于该步骤的玩家</th><th>长时间刷关</th><th>始终未通过</th><th>在此停下的流失玩家</th></tr></thead><tbody><tr><td>突破区域 B - 10: 0/1</td><td>361名受录玩家中 49名</td><td>49名玩家中 17名</td><td>49名玩家中 3名</td><td>281名流失玩家中 14名</td></tr><tr><td>突破区域 B - 9: 0/1</td><td>361名受录玩家中 35名</td><td>35名玩家中 14名</td><td>35名玩家中 0名</td><td>281名流失玩家中 4名</td></tr><tr><td>击败第 2 章 Boss: 0/1</td><td>361名受录玩家中 45名</td><td>45名玩家中 5名</td><td>45名玩家中 0名</td><td>281名流失玩家中 2名</td></tr><tr><td>突破区域 A - 6</td><td>361名受录玩家中 43名</td><td>43名玩家中 4名</td><td>43名玩家中 1名</td><td>281名流失玩家中 3名</td></tr><tr><td>突破区域 B - 4</td><td>361名受录玩家中 30名</td><td>30名玩家中 6名</td><td>30名玩家中 0名</td><td>281名流失玩家中 1名</td></tr></tbody></table></div>
+<ul><li>在 361 名受录玩家中，361 名中的 281 名流失，361 名中的 41 名保持活跃。大多数早期步骤很顺畅，例如击败敌人: 0/3，212 名中的 188 名直接通过。</li><li>突破区域 B - 10: 0/1 造成了最严重的瓶颈，使 49 名中的 17 名陷入长时间刷关。在同一步骤上，281 名流失玩家中的 14 名从此不再游玩。</li><li>突破区域 B - 9: 0/1 让面对 Boss A 的 35 名中的 14 名陷入长时间刷关。这场 Boss 战反复因战斗计时结束而告终。</li><li>击败第 2 章 Boss: 0/1 因战斗计时耗尽而挡住玩家。这场 Boss 战对 45 名中的 5 名变成了长时间刷关。</li><li>突破区域 A - 6 在玩家升级装备之前会立刻造成战斗失败。该步骤对 43 名中的 4 名构成长时间刷关。</li></ul>
+<p>研发方可以降低突破区域 B - 9 与突破区域 B - 10 的 Boss 血量，并延长战斗计时。</p>
+<div class="kick">1.3</div>
+<h2 id="how-long-each-step-takes">每个步骤各花多长时间</h2>
+<div class="rule"></div>
+<p><strong>早期步骤中位耗时 15 秒，而任务 95 在 361 名中的 49 名玩家上需要中位 1680 秒。</strong></p>
+<p>基数为 361 名受录玩家总数，其中包含 361 名中的 281 名流失玩家、361 名中的 41 名活跃玩家，以及 361 名中的 39 名未标注玩家。</p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:20%"><col style="width:16%"><col style="width:16%"><col style="width:16%"><col style="width:16%"><col style="width:16%"></colgroup><thead><tr><th>任务</th><th>目标</th><th>玩家</th><th>中位秒数</th><th>中位挂机秒数</th><th>在此停下的流失玩家</th></tr></thead><tbody><tr><td>2</td><td>强化属性: 0/1</td><td>361名玩家中 119名</td><td>15</td><td>15秒中 0秒</td><td>281名流失玩家中 10名</td></tr><tr><td>3</td><td>召唤一只精英怪: 0/1</td><td>361名玩家中 125名</td><td>15</td><td>15秒中 0秒</td><td>281名流失玩家中 6名</td></tr><tr><td>1</td><td>击败敌人: 0/3</td><td>361名玩家中 212名</td><td>34</td><td>34秒中 0秒</td><td>281名流失玩家中 33名</td></tr><tr><td>0</td><td>（任务开始前）</td><td>361名玩家中 347名</td><td>353</td><td>353秒中 190秒</td><td>281名流失玩家中 48名</td></tr><tr><td>71</td><td>突破区域 B - 4</td><td>361名玩家中 30名</td><td>373</td><td>373秒中 0秒</td><td>281名流失玩家中 1名</td></tr><tr><td>75</td><td>突破区域 B - 5</td><td>361名玩家中 27名</td><td>507</td><td>507秒中 0秒</td><td>281名流失玩家中 0名</td></tr><tr><td>91</td><td>突破区域 B - 9: 0/1</td><td>361名玩家中 35名</td><td>1196</td><td>1196秒中 0秒</td><td>281名流失玩家中 4名</td></tr><tr><td>95</td><td>突破区域 B - 10: 0/1</td><td>361名玩家中 49名</td><td>1680</td><td>1680秒中 81秒</td><td>281名流失玩家中 14名</td></tr></tbody></table></div>
+<ul><li>早期新手步骤完成得很快。任务 2 与任务 3 各自在 361 名中的 119 名与 361 名中的 125 名玩家上中位耗时 15 秒。任务 1 对 361 名中的 212 名玩家中位耗时 34 秒。</li><li>挂机时间几乎全部出现在开局准备阶段。任务 0 在 361 名中的 347 名玩家上录得中位 353 秒里有中位 190 秒挂机。玩家在下载初始游戏包时干等，从第 7 秒一直到第 190 秒。相比之下，任务 91 在 361 名中的 35 名玩家上录得中位 1196 秒里挂机 0 秒。</li><li>最慢的步骤全部是第 3 章突破区域 B 的 Boss 战。任务 67、71、75、79、83、87、91 和 95 都要求通过突破关卡。玩家的时间都花在实际战斗上，反复输给 Boss 计时。</li><li>通过这些步骤迫使玩家进入长时间刷关。在任务 91 上，35 名中的 14 名进入长时间刷关，玩家在升级装备以求通关时耗尽了货币。在任务 95 上，49 名中的 17 名面临长时间刷关，49 名中的 3 名始终未能通过。</li><li>这些缓慢的战斗墙造成了永久流失。任务 95 让 281 名流失玩家中的 14 名停下。任务 0 在编号任务开始之前就让 281 名流失玩家中的 48 名停下。相比之下，任务 75 让 281 名流失玩家中的 0 名停下。</li></ul>
+<p>研发方可以在第 3 章区域 B 的各个突破关卡上降低 Boss 血量池，或延长战斗计时。</p>
+</div></section>
+
+<section class="p3s2 p3sec"><div class="wrap">
+<div class="banner">
+<div class="kick">第 2 节</div>
+<h1>玩家实际怎么玩，又是怎么离开的</h1>
+<div class="rule"></div>
+
+</div>
+<div class="kick">2.1</div>
+<h2 id="how-the-two-groups-play">两组玩家怎么玩</h2>
+<div class="rule"></div>
+<p><strong>在 361 名受录玩家中的 281 名流失玩家与 41 名活跃玩家之间，两组在每一个共同任务上几乎无法区分。</strong></p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:10%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"></colgroup><thead><tr><th>任务</th><th>流失玩家</th><th>活跃玩家</th><th>流失方等级</th><th>活跃方等级</th><th>流失方战力</th><th>活跃方战力</th><th>流失方分钟数</th><th>活跃方分钟数</th><th>流失方败场</th><th>活跃方败场</th></tr></thead><tbody><tr><td>1</td><td>281 中 176</td><td>41 中 28</td><td>1</td><td>1</td><td>167</td><td>167</td><td>4</td><td>3</td><td>0</td><td>0</td></tr><tr><td>5</td><td>281 中 84</td><td>41 中 15</td><td>3</td><td>3</td><td>209</td><td>202</td><td>5</td><td>4</td><td>0</td><td>0</td></tr><tr><td>10</td><td>281 中 31</td><td>41 中 6</td><td>6</td><td>6</td><td>329</td><td>315</td><td>10</td><td>9</td><td>0</td><td>0</td></tr><tr><td>20</td><td>281 中 50</td><td>41 中 13</td><td>9</td><td>10</td><td>727</td><td>675</td><td>18</td><td>15</td><td>0</td><td>0</td></tr><tr><td>35</td><td>281 中 65</td><td>41 中 19</td><td>14</td><td>14</td><td>1845</td><td>1780</td><td>25</td><td>23</td><td>0</td><td>1</td></tr><tr><td>50</td><td>281 中 38</td><td>41 中 9</td><td>19</td><td>19</td><td>6091</td><td>5789</td><td>46</td><td>44</td><td>3</td><td>4</td></tr><tr><td>75</td><td>281 中 32</td><td>41 中 9</td><td>24</td><td>24</td><td>23412</td><td>19451</td><td>85</td><td>68</td><td>6</td><td>5</td></tr><tr><td>100</td><td>281 中 11</td><td>41 中 8</td><td>30</td><td>30</td><td>131277</td><td>161761</td><td>141</td><td>116</td><td>10</td><td>11</td></tr></tbody></table></div>
+<ul><li>两组都以让自动战斗直接推进关卡波次与 Boss 战的方式开始任务步骤。活跃玩家 A 自动推关。流失玩家 B 在关卡波次中使用自动战斗。</li><li>战斗失败时，两组玩家通常都是立刻重试，而不是去翻菜单。活跃玩家 A 在第 3 章第 07 关失败后立刻重试。流失玩家 C 在第 2 章第 04 关失败后立刻重试。</li><li>重试仍然失败时，两组玩家都会打开菜单升级装备、武器与属性。活跃玩家 A 在 2-06 关失败后召唤武器并提升了弓的等级。流失玩家 B 在 2-4 关失败后升级武器、学习技能并强化属性。</li><li>面对顽固的 Boss 墙时，两组都会转向刷资源副本或购买商店礼包。活跃玩家 D 在 Boss 战失败后买了一份武器礼包并进入副本。流失玩家 E 在 2-8 关超时后买了一个史诗武器包。</li><li>两组的功能使用率几乎相同。属性升级被 281 名流失玩家中的 253 名和 41 名活跃玩家中的 37 名使用。装备管理被 281 名中的 235 名与 41 名中的 39 名使用。Boss 战被 281 名中的 219 名与 41 名中的 40 名使用。</li></ul>
+<p>研发方不应改动早期任务流程或战斗系统：在这里的每一项指标上，流失玩家的玩法都和活跃玩家一样。</p>
+<div class="kick">2.2</div>
+<h2 id="what-the-last-recorded-minutes-look-like">录到的最后几分钟是什么样</h2>
+<div class="rule"></div>
+<p><strong>大多数录像是在采集停止时中途结束的，但挂机掉线与主动退出标记出了真实的流失。</strong></p>
+<p>基数为 281 名流失玩家与 41 名活跃玩家。</p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:34%"><col style="width:33%"><col style="width:33%"></colgroup><thead><tr><th>最终状态</th><th>流失玩家</th><th>活跃玩家</th></tr></thead><tbody><tr><td>仍在向前推进</td><td>281名流失玩家中 196名（70%）</td><td>41名活跃玩家中 39名（95%）</td></tr><tr><td>挂机或进入休眠</td><td>281名流失玩家中 34名（12%）</td><td>41名活跃玩家中 2名（5%）</td></tr><tr><td>太短，看不出任何旅程</td><td>281名流失玩家中 23名（8%）</td><td>41名活跃玩家中 0名（0%）</td></tr><tr><td>通过登出或退出关闭了游戏</td><td>281名流失玩家中 17名（6%）</td><td>41名活跃玩家中 0名（0%）</td></tr><tr><td>被屏幕上的某个东西卡住</td><td>281名流失玩家中 7名（2%）</td><td>41名活跃玩家中 0名（0%）</td></tr><tr><td>在玩但没有推进</td><td>281名流失玩家中 4名（1%）</td><td>41名活跃玩家中 0名（0%）</td></tr></tbody></table></div>
+<ul><li>281 名流失玩家中的 196 名与 41 名活跃玩家中的 39 名，录像在正常游玩中结束。采集工具每十五分钟自动切断一次片段。活跃玩家被拍摄的时间更长，这解释了他们更高的占比。</li><li>让设备一直开着是一个真实的分水岭。这种挂机状态出现在 281 名流失玩家中的 34 名和 41 名活跃玩家中的 2 名身上。这些玩家任由应用飘进休眠，再也没有回来。</li><li>早期跳出占 281 名流失玩家中的 23 名，以及 41 名活跃玩家中的 0 名。他们的会话太短，录不到任何游玩旅程。</li><li>主动退出只出现在流失组。该行为覆盖 281 名流失玩家中的 17 名和 41 名活跃玩家中的 0 名。例如，有一名玩家在反复战败之后打开设置确认登出。</li><li>屏幕阻塞与死路只影响流失组。有 281 名流失玩家中的 7 名卡在屏幕上，281 名中的 4 名在玩但没有推进。这两种模式在活跃组中都没有出现，两者均为 41 名中的 0 名。</li></ul>
+<p>研发方可以在休眠触发前加一个提示，并精简早期新手引导，以留住那些立刻离开的玩家。</p>
+<div class="kick">2.3</div>
+<h2 id="what-players-do-after-the-game-does-something">游戏做了某件事之后，玩家会做什么</h2>
+<div class="rule"></div>
+<p><strong>玩家掉队最多的时刻，是战斗把他们挡住时，或商店弹窗向他们要钱时。</strong></p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:16%"><col style="width:12%"><col style="width:12%"><col style="width:12%"><col style="width:12%"><col style="width:12%"><col style="width:12%"><col style="width:12%"></colgroup><thead><tr><th>设计中的闭环</th><th>闭合</th><th>未闭合</th><th>闭合比例</th><th>流失方触发</th><th>活跃方触发</th><th>流失方断裂</th><th>活跃方断裂</th></tr></thead><tbody><tr><td>输掉一场战斗，随后通关了那段内容</td><td>966</td><td>314</td><td>75%</td><td>281 中 171</td><td>41 中 36</td><td>281 中 106</td><td>41 中 21</td></tr><tr><td>看到价格，随后完成了购买</td><td>391</td><td>68</td><td>85%</td><td>281 中 166</td><td>41 中 33</td><td>281 中 32</td><td>41 中 7</td></tr><tr><td>遇到报错，随后恢复了</td><td>156</td><td>26</td><td>86%</td><td>281 中 89</td><td>41 中 23</td><td>281 中 15</td><td>41 中 3</td></tr><tr><td>某种资源不够，随后解决了</td><td>80</td><td>13</td><td>86%</td><td>281 中 57</td><td>41 中 13</td><td>281 中 5</td><td>41 中 4</td></tr><tr><td>游戏做出建议，随后照做了</td><td>123</td><td>6</td><td>95%</td><td>281 中 60</td><td>41 中 14</td><td>281 中 5</td><td>41 中 1</td></tr><tr><td>解锁一个功能，随后用了它</td><td>1649</td><td>15</td><td>99%</td><td>281 中 236</td><td>41 中 36</td><td>281 中 12</td><td>41 中 1</td></tr><tr><td>召唤到某件东西，随后装备了它</td><td>581</td><td>6</td><td>99%</td><td>281 中 190</td><td>41 中 34</td><td>281 中 4</td><td>41 中 0</td></tr><tr><td>获得等级或货币，随后花掉了</td><td>1696</td><td>2</td><td>100%</td><td>281 中 220</td><td>41 中 34</td><td>281 中 1</td><td>41 中 0</td></tr></tbody></table></div>
+<ul><li>活跃玩家被录制的时间更长，因此遇到每类事件的机会也更多。</li><li>战斗失败是最容易漏的闭环，1280 次遭遇中有 314 次未得到解决。</li><li>当玩家耗尽时间并就此走开时，Boss 遭遇会打断战斗恢复闭环 &mdash; 在 Boss A 与 Boss B 身上都能看到。</li><li>玩家也会在战败后直接退出且不再回来，放弃了武器副本第 6 阶段与第 3 章第 05 关。</li><li>价格弹窗有 459 次中的 68 次未能闭合，导致玩家关掉付费优惠或放弃购买流程。</li><li>当崩溃把屏幕彻底冻住，或挡住账号绑定时，技术错误会漏掉玩家。</li></ul>
+<p>研发方可以削平早期章节 Boss 最陡的难度尖峰，并把强制购买弹窗换成不打断游玩的商店提示。</p>
+</div></section>
+
+<section class="p3s3 p3sec"><div class="wrap">
+<div class="banner"><div class="kick">第 3 节</div>
+<h1>给研发团队的问题清单</h1>
+<div class="rule"></div>
+</div>
+<div class="kick">3.1</div>
+<h2 id="problems-worth-fixing">值得修的问题</h2>
+<div class="rule"></div>
+<p><strong>商店错误挡住真实付费，会话掉线把玩家踢出战斗，早期功能锁让常规操作变得令人沮丧。</strong></p>
+<p>基数为 361 名受录玩家中的 281 名流失玩家，以及 361 名受录玩家中的 41 名活跃玩家。</p>
+<div class="tw"><table style="display:table;width:100%;table-layout:fixed"><colgroup><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"></colgroup><thead><tr><th>类别</th><th>问题</th><th>流失玩家</th><th>活跃玩家</th><th>证据</th></tr></thead><tbody><tr><td>会失败的购买路径</td><td>应用内购买结算错误</td><td>281名流失玩家中 3名</td><td>41名活跃玩家中 1名</td><td>录制会话</td></tr><tr><td>会失败的购买路径</td><td>供应商初始化错误</td><td>281名流失玩家中 2名</td><td>41名活跃玩家中 0名</td><td>录制会话</td></tr><tr><td>会失败的购买路径</td><td>激励视频广告加载失败</td><td>281名流失玩家中 4名</td><td>41名活跃玩家中 1名</td><td>录制会话</td></tr><tr><td>会打断会话的问题</td><td>会话过期导致断开</td><td>281名流失玩家中 9名</td><td>41名活跃玩家中 1名</td><td>录制会话</td></tr><tr><td>会打断会话的问题</td><td>战斗校验不同步被踢出</td><td>281名流失玩家中 2名</td><td>41名活跃玩家中 0名</td><td>录制会话</td></tr><tr><td>会打断会话的问题</td><td>无限期的屏幕冻结</td><td>281名流失玩家中 2名</td><td>41名活跃玩家中 0名</td><td>录制会话</td></tr><tr><td>值得知道的行为</td><td>改名被任务锁住</td><td>281名流失玩家中 7名</td><td>41名活跃玩家中 2名</td><td>录制会话</td></tr><tr><td>值得知道的行为</td><td>药水升级被生命上限挡住</td><td>281名流失玩家中 1名</td><td>41名活跃玩家中 1名</td><td>录制会话</td></tr><tr><td>值得知道的行为</td><td>背包已满导致自动战斗停止</td><td>281名流失玩家中 1名</td><td>41名活跃玩家中 0名</td><td>录制会话</td></tr></tbody></table></div>
+<ul><li>商店错误直接阻止玩家完成真实付费交易。支付结算错误挡住了 281 名流失玩家中的 3 名和 41 名活跃玩家中的 1 名的购买。供应商初始化错误让 281 名流失玩家中的 2 名无法结算。广告加载失败挡住了 281 名流失玩家中的 4 名和 41 名活跃玩家中的 1 名的免费奖励。</li><li>突然弹出的会话过期提示把玩家从实时战斗中踢了出去。这种断开影响了 281 名流失玩家中的 9 名和 41 名活跃玩家中的 1 名。战斗校验不匹配把 281 名流失玩家中的 2 名强行挤出了游玩。无限期的屏幕卡死冻住了 281 名流失玩家中 2 名的客户端。</li><li>活跃玩家被录制的时间更长，因此遇到报错的时间窗口也更大。</li><li>玩家在新手引导允许之前就试图设置自定义名字。引导任务锁挡住了 281 名流失玩家中的 7 名和 41 名活跃玩家中的 2 名的改名。名称重复迫使 281 名流失玩家中的 1 名反复尝试多个被拒绝的名字。</li><li>达到后台上限时自动游玩会停下。装备背包已满让 281 名流失玩家中的 1 名的自动战斗停止。生命值上限挡住了 281 名流失玩家中的 1 名和 41 名活跃玩家中的 1 名的药水升级。</li></ul>
+<p>研发方应修复支付网关超时、在挂机战斗期间自动分解溢出物品，并从一开始就开放改名。</p>
+</div></section>
+
+
+
+
+  </main>
+
+  <footer>
+  <div class="fgrid">
+    <div>
+      <div class="flab">本报告</div>
+      <p><b>留存与流失</b> &mdash; Game-01 试点三份分类报告之一。</p>
+      <p class="fmeta">结论均读自录制的玩家会话。本匿名版本不含录像链接。</p>
+    </div>
+    <div>
+      <div class="flab">其他报告</div>
+      <ul class="flinks"><li><a href="index.html"><span class="arrow">&rarr;</span>主报告</a></li><li><a href="chat-moderation.html"><span class="arrow">&rarr;</span>聊天治理</a></li><li><a href="monetization-ux.html"><span class="arrow">&rarr;</span>技术问题与体验阻力</a></li></ul>
+    </div>
+  </div>
+  <div class="fbot"><span>Game-01 试点 &middot; 匿名案例研究</span><img src="../6labs-logo.png" alt="6labs.ai"></div>
+</footer>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>

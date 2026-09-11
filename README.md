@@ -12,6 +12,22 @@ answer confirmed against recorded gameplay sessions.
 | Retention and churn | Where new players stall across their first 100 guide quests, and what fills the last minutes before they stop |
 | Technical issues and UX friction | Eight named defects: a live store bug, purchases that succeed while reporting failure, ad errors that misreport, a crash landing on boss failure |
 
+## Languages
+
+English is the default, at the repo root. Every page also exists in Simplified
+Chinese, Japanese and Korean, and each one carries a switcher in the header.
+
+```
+/            English      /ja/    日本語
+/zh/         中文          /ko/    한국어
+```
+
+The **reconstruction screens stay in English in every language**, and so do the
+in-game messages quoted in the prose. Rendering those strings back into the
+client's own languages would reproduce the real in-game copy closely enough to be
+searchable, which is exactly what the anonymisation is for. Each translated page
+says so in its own language.
+
 ## Anonymisation
 
 **Game-01** is a live mobile idle RPG from a mobile game publisher. The name is a
@@ -23,8 +39,8 @@ unchanged.
 
 Screens are **stylized reconstructions** of moments observed in recorded sessions —
 drawn from scratch in CSS, carrying no client art, UI or footage. Each one is labelled
-as a reconstruction. Actual footage is withheld to preserve anonymity; in a live pilot,
-findings ship with the real clips attached.
+as a reconstruction, and the wording on them is lightly reworded. Actual footage is
+withheld to preserve anonymity.
 
 Engineering causes inferred from video observation are hedged as such. Individual
 player spend figures appear as anonymous evidence only, with no session link or
@@ -38,6 +54,9 @@ chat-moderation.html    report 01
 retention-churn.html    report 02
 monetization-ux.html    report 03
 recon.css               the screen-reconstruction component library
+recon.js                click a reconstruction to open it enlarged in a carousel
+zh/ ja/ ko/             the same four pages, translated
 ```
 
-Static HTML and CSS. No build step, no JavaScript, no external requests beyond Google Fonts.
+Static HTML, CSS and one small script. No build step, no framework, no external
+requests beyond Google Fonts.
