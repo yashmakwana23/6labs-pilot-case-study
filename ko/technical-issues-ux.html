@@ -78,15 +78,8 @@ th:last-child,td:last-child{padding-right:0}
 tbody tr:last-child td{border-bottom:0}
 
 /* -- evidence figures ------------------------------- */
-/* Contact sheet: thumbnails only. The caption stays in the DOM and the
-   carousel shows it on click, so nothing is lost - it moves behind the tap. */
 .evgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(176px,1fr));gap:12px;
   margin:22px 0 0}
-figure.ev{border:0;background:transparent;border-radius:6px;overflow:visible}
-figure.ev.pair{grid-column:span 2}
-figure.ev .shots{padding:0;gap:12px;background:transparent;align-items:start}
-figure.ev .shots .rs{flex:1 1 0;width:auto;max-width:none;border-radius:6px;border:0;cursor:pointer}
-figure.ev figcaption,figure.ev .vidid{display:none}
 figure.ev{margin:0;background:var(--white);border:1px solid var(--line);border-radius:8px;
   overflow:hidden;display:flex;flex-direction:column}
 figure.ev.pair{grid-column:1/-1}
@@ -224,6 +217,17 @@ figure.lb-src{display:none}
 .lb-prev{left:12px} .lb-next{right:12px}
 @media(max-width:760px){.lb{padding:16px 12px}.lb-prev,.lb-next{width:36px;height:52px}}
 @media print{.lb{display:none!important}.evbox{display:none}figure.lb-src{display:block}}
+
+/* ---- contact sheet -------------------------------------------------------
+   Every screen is just a tile. figure.ev and .shots are display:contents, so
+   each .rs becomes a grid item directly - that dissolves the "pair" figures
+   too, and all 26 screens line up uniformly with no card and no navy band.
+   The figcaption stays in the DOM (hidden) because recon.js clones it into
+   the carousel, so the description arrives on click. Declared last so it wins
+   over the card styling above. */
+figure.ev,figure.ev .shots{display:contents}
+figure.ev figcaption,figure.ev .vidid{display:none}
+.evgrid > .rs,.evgrid .shots > .rs{width:100%;max-width:none;margin:0;border-radius:8px;cursor:pointer}
 </style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
