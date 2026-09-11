@@ -1,8 +1,8 @@
-# Oracle pilot case study — Game A
+# Oracle pilot case study
 
-A two-week paid pilot of **Oracle** by [6labs.ai](https://6labs.ai): full-population
-analysis on the client's own data warehouse, with every answer confirmed against
-recorded gameplay sessions.
+A two-week paid pilot of **Oracle** by [6labs.ai](https://6labs.ai) on a live mobile
+idle RPG: full-population analysis on the client's own data warehouse, with every
+answer confirmed against recorded gameplay sessions.
 
 **[Read the case study →](https://yashmakwana23.github.io/6labs-pilot-case-study/)**
 
@@ -14,11 +14,12 @@ recorded gameplay sessions.
 
 ## Anonymisation
 
-Game A is a mobile idle RPG run by a mobile game publisher. The game, the publisher,
-their region and their vendors are not named anywhere in this repository.
+The subject is a live mobile idle RPG from a mobile game publisher. We are not naming
+the game, the publisher, their region or their vendors — there is no stand-in title
+either, because a plausible fake name invites the wrong guess.
 
-Every metric, denominator, percentage, error code, currency amount and pilot date is
-the real one, unchanged.
+Every metric, denominator, percentage, error code and currency amount is the real one,
+unchanged.
 
 Screens are **stylized reconstructions** of moments observed in recorded sessions —
 drawn from scratch in CSS, carrying no client art, UI or footage. Each one is labelled
