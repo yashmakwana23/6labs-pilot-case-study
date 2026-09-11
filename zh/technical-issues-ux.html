@@ -78,11 +78,15 @@ th:last-child,td:last-child{padding-right:0}
 tbody tr:last-child td{border-bottom:0}
 
 /* -- evidence figures ------------------------------- */
-.evgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;
-  margin:24px 0 0}
-/* thumbnails: click one to open it enlarged in the carousel */
-figure.ev .shots .rs{max-width:184px}
-figure.ev figcaption{padding:8px 12px 12px;font-size:12px;line-height:1.45}
+/* Contact sheet: thumbnails only. The caption stays in the DOM and the
+   carousel shows it on click, so nothing is lost - it moves behind the tap. */
+.evgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(116px,1fr));gap:10px;
+  margin:22px 0 0}
+figure.ev{border:0;background:transparent;border-radius:6px;overflow:hidden}
+figure.ev.pair{grid-column:span 2}
+figure.ev .shots{padding:0;border-radius:6px;overflow:hidden}
+figure.ev .shots .rs{max-width:none;width:100%;border-radius:0;border:0;cursor:pointer}
+figure.ev figcaption,figure.ev .vidid{display:none}
 figure.ev{margin:0;background:var(--white);border:1px solid var(--line);border-radius:8px;
   overflow:hidden;display:flex;flex-direction:column}
 figure.ev.pair{grid-column:1/-1}
@@ -105,7 +109,7 @@ footer b{color:var(--navy);font-weight:600}
   .brandbar,.hero,main,footer{padding-left:22px;padding-right:22px}
   .sheet{margin:0;border-left:0;border-right:0}
   section{padding:40px 0}
-  .evgrid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+  .evgrid{grid-template-columns:repeat(auto-fill,minmax(92px,1fr))}
   figure.ev.pair .shots{flex-wrap:wrap}
   figure.ev.pair .shots img{width:100%}
   .sechd{grid-template-columns:1fr;gap:10px}
