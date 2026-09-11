@@ -82,10 +82,10 @@ tbody tr:last-child td{border-bottom:0}
    carousel shows it on click, so nothing is lost - it moves behind the tap. */
 .evgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(176px,1fr));gap:12px;
   margin:22px 0 0}
-figure.ev{border:0;background:transparent;border-radius:6px;overflow:hidden}
+figure.ev{border:0;background:transparent;border-radius:6px;overflow:visible}
 figure.ev.pair{grid-column:span 2}
-figure.ev .shots{padding:0;border-radius:6px;overflow:hidden}
-figure.ev .shots .rs{width:100%;max-width:200px;border-radius:0;border:0;cursor:pointer}
+figure.ev .shots{padding:0;gap:12px;background:transparent;align-items:start}
+figure.ev .shots .rs{flex:1 1 0;width:auto;max-width:none;border-radius:6px;border:0;cursor:pointer}
 figure.ev figcaption,figure.ev .vidid{display:none}
 figure.ev{margin:0;background:var(--white);border:1px solid var(--line);border-radius:8px;
   overflow:hidden;display:flex;flex-direction:column}
@@ -227,9 +227,18 @@ figure.lb-src{display:none}
 </style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap">
 <style>
-/* CJK face for the prose; reconstructions are Latin, so they keep Inter */
 body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
-.rs,.rs *{font-family:"Inter",system-ui,-apple-system,sans-serif}
+.rs,.rs *{font-family:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+.rs .rs-row{padding:7px 8px;gap:6px}
+.rs .rs-row .ic{width:18px;height:18px}
+.rs .rs-row .tx b{font-size:9.5px;line-height:1.3}
+.rs .rs-row .tx span{font-size:8.5px;line-height:1.3}
+.rs .rs-row .pill{padding:3px 6px;font-size:8.5px}
+.rs .rs-toast{font-size:9px;padding:6px 8px;line-height:1.35}
+.rs .rs-dlg .bd{font-size:9.5px;line-height:1.4}
+.rs .rs-panel .hd,.rs .rs-dlg .hd{font-size:9.5px}
+.rs .rs-btn{font-size:9px}
+.rs .rs-chip.lbl{font-size:8.5px}
 </style>
 </head><body>
 <div class="sheet">
@@ -297,11 +306,11 @@ body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto
 <div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">限时优惠</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">限时活动特惠 1</div>
      <div class="rs-row"><div class="ic"></div><div class="tx"><b>活动礼包</b><span>限时</span></div><span class="pill">USD 10.90</span></div></div><div class="rs-dim"></div>
 <div class="rs-dlg"><div class="hd">提示</div><div class="bd">商店中暂不可用。<span class="code">(errorCode: 9 - 100302)</span></div><div class="ft"><span class="rs-btn pri">确定</span></div></div><div class="rs-tag">复原图</div></div></div><figcaption><b>活动限时优惠 9-100302 支付失败。</b>&ldquo;商店中暂不可用。(errorCode: 9 - 100302)&rdquo; 覆盖在 Limited-Time Event Hot Deal 1 上，发生在一次 USD 10.90 的购买尝试中。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">会员</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">豪华会员 &middot; 30 天</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>豪华会员</b><span>30 天有效期</span></div><span class="pill">购买</span></div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>每日奖励箱</b><span>已包含</span></div><span class="pill ghost">&times;30</span></div></div><div class="rs-tag">复原图</div></div></div><figcaption><b>在豪华会员上引用的 9-100302。</b>商品页在购买按钮上带着其区域店面价格。<span class="evtext">复核说明：在这段 441 秒的片段中任何位置都没有出现 9-100302 弹窗 &mdash; 该引用未能成立。</span></figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">限时优惠</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">限时活动特惠 1</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>活动礼包</b><span>结算中</span></div><span class="pill">购买</span></div></div><div class="rs-dim"></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>豪华会员</b><span>30 天</span></div><span class="pill">购买</span></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>每日奖励箱</b><span>含</span></div><span class="pill ghost">&times;30</span></div></div><div class="rs-tag">复原图</div></div></div><figcaption><b>在豪华会员上引用的 9-100302。</b>商品页在购买按钮上带着其区域店面价格。<span class="evtext">复核说明：在这段 441 秒的片段中任何位置都没有出现 9-100302 弹窗 &mdash; 该引用未能成立。</span></figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">限时优惠</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">限时活动特惠 1</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>活动礼包</b><span>结算</span></div><span class="pill">购买</span></div></div><div class="rs-dim"></div>
 <div class="rs-dlg"><div class="hd">提示</div><div class="bd">供应商未初始化。<span class="code">(errorCode: 9 - 100204)</span></div><div class="ft"><span class="rs-btn pri">确定</span></div></div><div class="rs-tag">复原图</div></div></div><figcaption><b>供应商错误 9-100204。</b>同一个商品，另一种拒绝：商店从未完成初始化。错误在点击的瞬间弹出。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">快速狩猎</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">快速狩猎 &middot; 观看广告</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>立即通关奖励</b><span>看一条广告即可领取</span></div><span class="pill blue">观看广告</span></div></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>立即通关奖励</b><span>看广告领取</span></div><span class="pill blue">看广告</span></div></div>
    <div class="rs-toast yellow t2">广告加载失败。</div><div class="rs-tag">复原图</div></div></div><figcaption><b>激励广告购买被广告错误挡住。</b>Quick Hunt 奖励弹窗停在其 Watch Ad 标签页上；一条黄色的 &ldquo;广告加载失败&rdquo; 消息落在奖励上方。</figcaption></figure></div>
 </section>
 
@@ -318,7 +327,7 @@ body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto
 </ol>
 <div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">结算</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
 <div class="rs-dlg"><div class="hd">提示</div><div class="bd">存在待处理的付款。请在可用的步骤完成购买。物品将于之后发放。<span class="code">(errorCode: 9 - 100315)</span></div><div class="ft"><span class="rs-btn pri">确定</span></div></div><div class="rs-tag">复原图</div></div></div><figcaption><b>失败 100315 &mdash; 物品随后进入邮箱。</b>出现在一次区域店面的 Premium Gem &times;3,000 购买中。界面报告了失败，物品照样到了。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">结算</span><span class="rs-chip grow"></span></div><div class="rs-panel" style="top:34%"><div class="hd">武器限时优惠 &middot; T1</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>T1 武器礼包</b><span>结算进行中</span></div><span class="pill">购买</span></div></div><div class="rs-dim"></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>T1 武器礼包</b><span>结算中</span></div><span class="pill">购买</span></div></div><div class="rs-dim"></div>
 <div class="rs-dlg"><div class="hd">提示</div><div class="bd">付款未能完成。<span class="code">(errorCode: 9 - 100315)</span></div><div class="ft"><span class="rs-btn pri">确定</span></div></div><div class="rs-tag">复原图</div></div></div><figcaption><b>结算时的支付错误 9-100315。</b>提示落在结算途中的 T1 武器限时优惠上。此处画面文字为本地化后的复原；原文使用的是玩家自己的客户端语言。</figcaption></figure></div>
 </section>
 
@@ -335,15 +344,15 @@ body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto
 <li>一次尝试上的双重错误：&ldquo;由于跳过了广告，无法领取奖励&rdquo; 与 &ldquo;广告没有加载出来&rdquo; 同时出现；商业化视角还抓到一次流程中途的 &ldquo;由于跳过了广告，无法领取奖励&rdquo; 拒发奖励 &mdash; 玩家选择了重试而不是放弃。</li>
 </ol>
 <div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">购买信息</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">购买信息</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>活动代币 &times;500</b><span>看一条广告免费领</span></div><span class="pill blue">观看广告</span></div></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>活动代币 &times;500</b><span>看广告免费</span></div><span class="pill blue">看广告</span></div></div>
    <div class="rs-toast yellow t1">广告没有加载出来。</div><div class="rs-tag">复原图</div></div></div><figcaption><b>广告播完了，然后 &ldquo;广告没有加载出来&rdquo; 弹了出来。</b>这条横幅出现在广告已经明显播放结束之后。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">奖励</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
    <div class="rs-dlg"><div class="hd">已获得物品</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>活动代币 &times;500</b><span>已放入背包</span></div><span class="pill ok" style="background:#0a7d4a;color:#fff;padding:5px 9px;border-radius:5px">已领取</span></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>活动代币 &times;500</b><span>已入背包</span></div><span class="pill ok" style="background:#0a7d4a;color:#fff;padding:5px 9px;border-radius:5px">已领取</span></div>
      <div class="ft" style="padding-top:12px"><span class="rs-btn pri">确定</span></div></div>
    <div class="rs-toast yellow t1">广告没有加载出来。</div><div class="rs-tag">复原图</div></div></div><figcaption><b>错误浮层留在成功弹窗后面。</b>游戏一边发放奖励，一边同时声称广告失败了 &mdash; 同一块屏幕上的两个互相矛盾的状态。</figcaption></figure><figure class="ev pair"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">加成</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">每日广告加成</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>每日广告加成</b><span>今日已使用 1 / 3</span></div><span class="pill blue">观看广告</span></div></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>每日广告加成</b><span>今日 1/3</span></div><span class="pill blue">看广告</span></div></div>
    <div class="rs-toast red t1">由于跳过了广告，无法领取奖励。</div><div class="rs-tag">复原图</div></div><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">加成</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">每日广告加成</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>每日广告加成</b><span>同一次尝试</span></div><span class="pill blue">观看广告</span></div></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>每日广告加成</b><span>同一次</span></div><span class="pill blue">看广告</span></div></div>
    <div class="rs-toast yellow t1">广告没有加载出来。</div><div class="rs-tag">复原图</div></div></div><figcaption><b>一次尝试上的两个互相矛盾的广告错误。</b>同一行 Daily Ad Booster 在一次观看中先给出 &ldquo;由于跳过了广告，无法领取奖励&rdquo;（红），接着又给出 &ldquo;广告没有加载出来&rdquo;（黄）。</figcaption></figure></div>
 </section>
 
@@ -395,13 +404,13 @@ body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto
 <li>&ldquo;广告没有加载出来&rdquo; 失败连续出现 3–4 次，挡住了付费人群玩家那个零门槛的商业化触点。</li>
 </ol>
 <div class="evgrid"><figure class="ev pair"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">公会 &middot; 时间加速</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">公会时间加速</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>跳过 1 小时</b><span>观看广告</span></div><span class="pill blue">观看广告</span></div></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>跳过 1 小时</b><span>看广告</span></div><span class="pill blue">看广告</span></div></div>
    <div class="rs-toast red t1">由于跳过了广告，无法领取奖励。</div><div class="rs-tag">复原图</div></div><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">公会 &middot; 时间加速</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">公会时间加速</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>跳过 1 小时</b><span>冷却中</span></div><span class="pill ghost">4:00 后可看</span></div></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>跳过 1 小时</b><span>冷却中</span></div><span class="pill ghost">4:00 后</span></div></div>
    <div class="rs-toast red t1">现在还不能看广告。请在 4 分钟后再试。</div><div class="rs-tag">复原图</div></div></div><figcaption><b>跳过广告导致拒发奖励，随后是广告冷却封锁。</b>同一块公会时间加速界面先拒绝了奖励，接着又把重试挡在四分钟之外。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-ad"><div class="art"></div><div class="nm">某款竞品放置类 RPG</div><div class="sub">广告结束卡</div><div class="cta">安装</div></div>
    <div class="rs-sheet"><div class="bar"></div><div class="ttl">某款竞品放置类 RPG</div><div class="mt">平台商店 &middot; 安装</div>
-     <div class="rs-row" style="padding-left:0;padding-right:0"><div class="ic"></div><div class="tx"><b>免费</b><span>含应用内购买</span></div><span class="pill blue">安装</span></div></div><div class="rs-tag">复原图</div></div></div><figcaption><b>广告结束卡跳转到一款竞品。</b>结束卡上带着 Install 按钮；平台商店面板从游戏上方滑出。有四十多款竞品以这种方式被投放，而且正好在玩家最沮丧的时刻。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">购买信息</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">购买信息</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>活动代币 &times;500</b><span>观看广告选项</span></div><span class="pill blue">观看广告</span></div></div>
+     <div class="rs-row" style="padding-left:0;padding-right:0"><div class="ic"></div><div class="tx"><b>免费</b><span>含内购</span></div><span class="pill blue">安装</span></div></div><div class="rs-tag">复原图</div></div></div><figcaption><b>广告结束卡跳转到一款竞品。</b>结束卡上带着 Install 按钮；平台商店面板从游戏上方滑出。有四十多款竞品以这种方式被投放，而且正好在玩家最沮丧的时刻。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">购买信息</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">购买信息</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>活动代币 &times;500</b><span>广告选项</span></div><span class="pill blue">看广告</span></div></div>
    <div class="rs-toast yellow t1">广告没有加载出来。</div><div class="rs-tag">复原图</div></div></div><figcaption><b>&ldquo;广告没有加载出来&rdquo; 激励广告失败。</b>这个零门槛的商业化触点被挡住了 &mdash; 对某些玩家而言连续三到四次。</figcaption></figure></div>
 </section>
 
@@ -427,7 +436,7 @@ body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto
    <div class="rs-dlg"><div class="hd">确认</div><div class="bd">要提交这条咨询吗？</div>
      <div class="ft"><span class="rs-btn">取消</span><span class="rs-btn pri">确定</span></div></div><div class="rs-tag">复原图</div></div></div><figcaption><b>竞技场被挡住 &rarr; 会话中提交客服工单。</b>咨询表单已打开，提交确认弹窗也已弹出。这是本次试点中最清晰的玩家主动证据：一张在镜头前提交的客服工单。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">月度礼包</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
    <div class="rs-dlg"><div class="hd">购买详情</div>
-     <div class="rs-row" style="padding-left:12px;padding-right:12px"><div class="ic"></div><div class="tx"><b>月度金币礼包</b><span>金币 &times;1,000,000</span></div></div>
+     <div class="rs-row" style="padding-left:12px;padding-right:12px"><div class="ic"></div><div class="tx"><b>月度金币礼包</b><span>金币 &times;100 万</span></div></div>
      <div class="ft" style="padding-top:12px"><span class="rs-btn">3,000 宝石</span><span class="rs-btn ok">购买</span></div></div><div class="rs-tag">复原图</div></div></div><figcaption><b>月度礼包支付弹窗，随后被取消。</b>该弹窗在提供区域店面现金价格的同时，也给出 3,000 宝石的替代方案。玩家把它带到了支付步骤，然后退了出来。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">商店</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
    <div class="rs-dlg"><div class="hd">购买高级宝石</div>
      <div class="rs-row" style="padding-left:12px;padding-right:12px"><div class="ic"></div><div class="tx"><b>高级宝石 &times;9,000</b><span>确认购买</span></div></div>

@@ -82,10 +82,10 @@ tbody tr:last-child td{border-bottom:0}
    carousel shows it on click, so nothing is lost - it moves behind the tap. */
 .evgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(176px,1fr));gap:12px;
   margin:22px 0 0}
-figure.ev{border:0;background:transparent;border-radius:6px;overflow:hidden}
+figure.ev{border:0;background:transparent;border-radius:6px;overflow:visible}
 figure.ev.pair{grid-column:span 2}
-figure.ev .shots{padding:0;border-radius:6px;overflow:hidden}
-figure.ev .shots .rs{width:100%;max-width:200px;border-radius:0;border:0;cursor:pointer}
+figure.ev .shots{padding:0;gap:12px;background:transparent;align-items:start}
+figure.ev .shots .rs{flex:1 1 0;width:auto;max-width:none;border-radius:6px;border:0;cursor:pointer}
 figure.ev figcaption,figure.ev .vidid{display:none}
 figure.ev{margin:0;background:var(--white);border:1px solid var(--line);border-radius:8px;
   overflow:hidden;display:flex;flex-direction:column}
@@ -227,9 +227,18 @@ figure.lb-src{display:none}
 </style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap">
 <style>
-/* CJK face for the prose; reconstructions are Latin, so they keep Inter */
 body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",Meiryo,sans-serif}
-.rs,.rs *{font-family:"Inter",system-ui,-apple-system,sans-serif}
+.rs,.rs *{font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",Meiryo,sans-serif}
+.rs .rs-row{padding:7px 8px;gap:6px}
+.rs .rs-row .ic{width:18px;height:18px}
+.rs .rs-row .tx b{font-size:9.5px;line-height:1.3}
+.rs .rs-row .tx span{font-size:8.5px;line-height:1.3}
+.rs .rs-row .pill{padding:3px 6px;font-size:8.5px}
+.rs .rs-toast{font-size:9px;padding:6px 8px;line-height:1.35}
+.rs .rs-dlg .bd{font-size:9.5px;line-height:1.4}
+.rs .rs-panel .hd,.rs .rs-dlg .hd{font-size:9.5px}
+.rs .rs-btn{font-size:9px}
+.rs .rs-chip.lbl{font-size:8.5px}
 </style>
 </head><body>
 <div class="sheet">
@@ -295,13 +304,13 @@ body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto
 <li>クライアント定義のコホートでの裏付け：セグメント 469 のメンバーがリワード広告の購入を実行し、即座に <strong>&ldquo;購入できません&rdquo;</strong> エラーを受け取りました（同じ購入ブロック系統）。</li>
 </ol>
 <div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">ホットディール</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">期間限定イベントホットディール 1</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>イベントバンドル</b><span>期間限定</span></div><span class="pill">USD 10.90</span></div></div><div class="rs-dim"></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>イベント特典</b><span>期間限定</span></div><span class="pill">USD 10.90</span></div></div><div class="rs-dim"></div>
 <div class="rs-dlg"><div class="hd">お知らせ</div><div class="bd">ストアで利用できません。<span class="code">(errorCode: 9 - 100302)</span></div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">再構成</div></div></div><figcaption><b>イベントホットディールの 9-100302 決済失敗。</b>&ldquo;ストアで利用できません。(errorCode: 9 - 100302)&rdquo; が Limited-Time Event Hot Deal 1 の上に、USD 10.90 の購入試行中に表示されています。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">メンバーシップ</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">デラックスメンバーシップ &middot; 30 日</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>デラックスメンバーシップ</b><span>30 日間</span></div><span class="pill">購入</span></div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>デイリー報酬ボックス</b><span>付属</span></div><span class="pill ghost">&times;30</span></div></div><div class="rs-tag">再構成</div></div></div><figcaption><b>デラックスメンバーシップで引用された 9-100302。</b>アイテムページは購入ボタンに地域ストアフロントの価格を表示しています。<span class="evtext">検証注記：この 441 秒のクリップのどこにも 9-100302 のポップアップは現れません &mdash; この引用は成立しませんでした。</span></figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">ホットディール</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">期間限定イベントホットディール 1</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>イベントバンドル</b><span>決済中</span></div><span class="pill">購入</span></div></div><div class="rs-dim"></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>デラックス会員</b><span>30 日</span></div><span class="pill">購入</span></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>デイリー報酬</b><span>付属</span></div><span class="pill ghost">&times;30</span></div></div><div class="rs-tag">再構成</div></div></div><figcaption><b>デラックスメンバーシップで引用された 9-100302。</b>アイテムページは購入ボタンに地域ストアフロントの価格を表示しています。<span class="evtext">検証注記：この 441 秒のクリップのどこにも 9-100302 のポップアップは現れません &mdash; この引用は成立しませんでした。</span></figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">ホットディール</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">期間限定イベントホットディール 1</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>イベント特典</b><span>決済</span></div><span class="pill">購入</span></div></div><div class="rs-dim"></div>
 <div class="rs-dlg"><div class="hd">お知らせ</div><div class="bd">ベンダーが初期化されていません。<span class="code">(errorCode: 9 - 100204)</span></div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">再構成</div></div></div><figcaption><b>ベンダーエラー 9-100204。</b>同じオファー、別の拒否 &mdash; ストアがそもそも初期化されていません。エラーはタップした瞬間に出ます。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">クイックハント</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">クイックハント &middot; 広告を見る</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>即時クリア報酬</b><span>広告を 1 本見て受け取る</span></div><span class="pill blue">広告を見る</span></div></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>即時クリア報酬</b><span>広告で受取</span></div><span class="pill blue">視聴</span></div></div>
    <div class="rs-toast yellow t2">広告を読み込めませんでした。</div><div class="rs-tag">再構成</div></div></div><figcaption><b>広告エラーで塞がれたリワード広告購入。</b>Quick Hunt の報酬ポップアップが Watch Ad タブで開いており、黄色の &ldquo;広告を読み込めませんでした&rdquo; メッセージが報酬の上に重なっています。</figcaption></figure></div>
 </section>
 
@@ -318,7 +327,7 @@ body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto
 </ol>
 <div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">決済</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
 <div class="rs-dlg"><div class="hd">お知らせ</div><div class="bd">保留中の支払いがあります。利用可能な手順で購入を完了してください。アイテムはその後付与されます。<span class="code">(errorCode: 9 - 100315)</span></div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">再構成</div></div></div><figcaption><b>失敗 100315 &mdash; アイテムは後でメールボックスに届く。</b>地域ストアフロントでの Premium Gem &times;3,000 の購入中に表示。インターフェースは失敗を報告しましたが、アイテムは届いています。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">決済</span><span class="rs-chip grow"></span></div><div class="rs-panel" style="top:34%"><div class="hd">武器ホットディール &middot; T1</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>T1 武器バンドル</b><span>決済処理中</span></div><span class="pill">購入</span></div></div><div class="rs-dim"></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>T1 武器セット</b><span>決済中</span></div><span class="pill">購入</span></div></div><div class="rs-dim"></div>
 <div class="rs-dlg"><div class="hd">お知らせ</div><div class="bd">支払いを完了できませんでした。<span class="code">(errorCode: 9 - 100315)</span></div><div class="ft"><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">再構成</div></div></div><figcaption><b>チェックアウト時の決済エラー 9-100315。</b>通知は T1 武器ホットディールの決済途中に重なります。ここでの画面文言はローカライズした再構成で、原本はプレイヤー自身のクライアント言語でした。</figcaption></figure></div>
 </section>
 
@@ -335,15 +344,15 @@ body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto
 <li>1 回の試行での二重エラー：&ldquo;広告をスキップしたため報酬を受け取れません&rdquo; と &ldquo;広告が読み込まれませんでした&rdquo; が同時に出る。マネタイズの観点でも、フロー途中で &ldquo;広告をスキップしたため報酬を受け取れません&rdquo; による報酬拒否を捉えています &mdash; プレイヤーは離脱ではなく再試行を選びました。</li>
 </ol>
 <div class="evgrid"><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">購入情報</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">購入情報</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>イベントトークン &times;500</b><span>広告 1 本で無料</span></div><span class="pill blue">広告を見る</span></div></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>イベントT &times;500</b><span>広告で無料</span></div><span class="pill blue">視聴</span></div></div>
    <div class="rs-toast yellow t1">広告が読み込まれませんでした。</div><div class="rs-tag">再構成</div></div></div><figcaption><b>広告は最後まで再生され、そのあとで &ldquo;広告が読み込まれませんでした&rdquo; が出る。</b>このバナーは、広告が目に見えて再生し終わったあとに現れます。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">報酬</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
    <div class="rs-dlg"><div class="hd">アイテムを獲得</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>イベントトークン &times;500</b><span>バッグに追加されました</span></div><span class="pill ok" style="background:#0a7d4a;color:#fff;padding:5px 9px;border-radius:5px">受け取り済み</span></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>イベントT &times;500</b><span>取得済み</span></div><span class="pill ok" style="background:#0a7d4a;color:#fff;padding:5px 9px;border-radius:5px">受取済</span></div>
      <div class="ft" style="padding-top:12px"><span class="rs-btn pri">OK</span></div></div>
    <div class="rs-toast yellow t1">広告が読み込まれませんでした。</div><div class="rs-tag">再構成</div></div></div><figcaption><b>成功ポップアップの背後にエラーオーバーレイが残り続ける。</b>ゲームは報酬を支払いながら、同時に広告が失敗したと主張しています &mdash; 1 つの画面に矛盾する 2 つの状態です。</figcaption></figure><figure class="ev pair"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">ブースター</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">デイリー広告ブースター</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>デイリー広告ブースター</b><span>本日 1 / 3 使用</span></div><span class="pill blue">広告を見る</span></div></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>広告ブースター</b><span>本日 1/3</span></div><span class="pill blue">視聴</span></div></div>
    <div class="rs-toast red t1">広告をスキップしたため報酬を受け取れません。</div><div class="rs-tag">再構成</div></div><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">ブースター</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">デイリー広告ブースター</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>デイリー広告ブースター</b><span>同じ試行</span></div><span class="pill blue">広告を見る</span></div></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>広告ブースター</b><span>同じ試行</span></div><span class="pill blue">視聴</span></div></div>
    <div class="rs-toast yellow t1">広告が読み込まれませんでした。</div><div class="rs-tag">再構成</div></div></div><figcaption><b>1 回の試行に対する、矛盾する 2 つの広告エラー。</b>同じ Daily Ad Booster の行が、1 回の視聴に対して &ldquo;広告をスキップしたため報酬を受け取れません&rdquo;（赤）を出し、続いて &ldquo;広告が読み込まれませんでした&rdquo;（黄）を出しています。</figcaption></figure></div>
 </section>
 
@@ -395,13 +404,13 @@ body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto
 <li>&ldquo;広告が読み込まれませんでした&rdquo; の失敗が 3〜4 回連続し、課金コホートのプレイヤーにとって最もハードルの低いマネタイズ接点が塞がれています。</li>
 </ol>
 <div class="evgrid"><figure class="ev pair"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">ギルド &middot; 時間加速</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">ギルド時間加速</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>1 時間スキップ</b><span>広告を見る</span></div><span class="pill blue">広告を見る</span></div></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>1 時間短縮</b><span>広告視聴</span></div><span class="pill blue">視聴</span></div></div>
    <div class="rs-toast red t1">広告をスキップしたため報酬を受け取れません。</div><div class="rs-tag">再構成</div></div><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">ギルド &middot; 時間加速</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">ギルド時間加速</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>1 時間スキップ</b><span>クールダウン中</span></div><span class="pill ghost">4:00 後に視聴可</span></div></div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>1 時間短縮</b><span>待機中</span></div><span class="pill ghost">4:00 後</span></div></div>
    <div class="rs-toast red t1">まだ広告を見られません。4 分後にもう一度お試しください。</div><div class="rs-tag">再構成</div></div></div><figcaption><b>スキップ扱いによる報酬拒否、続いて広告クールダウンのブロック。</b>同じギルド時間加速の画面が報酬を拒否し、さらに 4 分間は再試行も拒否します。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-ad"><div class="art"></div><div class="nm">競合の放置型 RPG タイトル</div><div class="sub">広告エンドカード</div><div class="cta">インストール</div></div>
    <div class="rs-sheet"><div class="bar"></div><div class="ttl">競合の放置型 RPG タイトル</div><div class="mt">プラットフォームストア &middot; インストール</div>
-     <div class="rs-row" style="padding-left:0;padding-right:0"><div class="ic"></div><div class="tx"><b>無料</b><span>アプリ内課金あり</span></div><span class="pill blue">インストール</span></div></div><div class="rs-tag">再構成</div></div></div><figcaption><b>広告エンドカードから競合タイトルへの遷移。</b>エンドカードには Install ボタンがあり、プラットフォームのストアパネルがゲームの上にせり上がります。40 を超える競合タイトルが、プレイヤーが最も苛立っている瞬間にこの形で配信されていました。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">購入情報</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">購入情報</div>
-     <div class="rs-row"><div class="ic"></div><div class="tx"><b>イベントトークン &times;500</b><span>広告視聴オプション</span></div><span class="pill blue">広告を見る</span></div></div>
+     <div class="rs-row" style="padding-left:0;padding-right:0"><div class="ic"></div><div class="tx"><b>無料</b><span>課金あり</span></div><span class="pill blue">入手</span></div></div><div class="rs-tag">再構成</div></div></div><figcaption><b>広告エンドカードから競合タイトルへの遷移。</b>エンドカードには Install ボタンがあり、プラットフォームのストアパネルがゲームの上にせり上がります。40 を超える競合タイトルが、プレイヤーが最も苛立っている瞬間にこの形で配信されていました。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">購入情報</span><span class="rs-chip grow"></span></div><div class="rs-panel"><div class="hd">購入情報</div>
+     <div class="rs-row"><div class="ic"></div><div class="tx"><b>イベントT &times;500</b><span>広告で取得</span></div><span class="pill blue">視聴</span></div></div>
    <div class="rs-toast yellow t1">広告が読み込まれませんでした。</div><div class="rs-tag">再構成</div></div></div><figcaption><b>&ldquo;広告が読み込まれませんでした&rdquo; リワード広告の失敗。</b>最もハードルの低いマネタイズ接点が塞がれています &mdash; 一部のプレイヤーでは 3〜4 回連続で。</figcaption></figure></div>
 </section>
 
@@ -427,10 +436,10 @@ body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto
    <div class="rs-dlg"><div class="hd">確認</div><div class="bd">この問い合わせを送信しますか？</div>
      <div class="ft"><span class="rs-btn">キャンセル</span><span class="rs-btn pri">OK</span></div></div><div class="rs-tag">再構成</div></div></div><figcaption><b>アリーナがブロック &rarr; セッション中のサポートチケット。</b>問い合わせフォームが開き、送信確認が表示されています。このパイロットで最も明確なプレイヤー発の証拠 &mdash; カメラに映ったサポートチケットの送信です。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">月間パック</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
    <div class="rs-dlg"><div class="hd">購入内容</div>
-     <div class="rs-row" style="padding-left:12px;padding-right:12px"><div class="ic"></div><div class="tx"><b>月間コインギフトパック</b><span>コイン &times;1,000,000</span></div></div>
+     <div class="rs-row" style="padding-left:12px;padding-right:12px"><div class="ic"></div><div class="tx"><b>月間コインパック</b><span>コイン &times;100 万</span></div></div>
      <div class="ft" style="padding-top:12px"><span class="rs-btn">3,000 ジェム</span><span class="rs-btn ok">購入</span></div></div><div class="rs-tag">再構成</div></div></div><figcaption><b>月次パックの決済モーダル、そしてキャンセル。</b>このモーダルは地域ストアフロントの現金価格と、3,000 ジェムという代替手段を並べて提示しています。プレイヤーは決済ステップまで進み、そこで引き返しました。</figcaption></figure><figure class="ev"><div class="shots"><div class="rs"><div class="rs-hud"><span class="rs-chip lbl">ショップ</span><span class="rs-chip grow"></span></div><div class="rs-dim"></div>
    <div class="rs-dlg"><div class="hd">プレミアムジェムを購入</div>
-     <div class="rs-row" style="padding-left:12px;padding-right:12px"><div class="ic"></div><div class="tx"><b>プレミアムジェム &times;9,000</b><span>購入の確認</span></div></div>
+     <div class="rs-row" style="padding-left:12px;padding-right:12px"><div class="ic"></div><div class="tx"><b>ジェム &times;9,000</b><span>購入確認</span></div></div>
      <div class="ft" style="padding-top:12px"><span class="rs-btn">キャンセル</span><span class="rs-btn ok">購入</span></div></div><div class="rs-tag">再構成</div></div></div><figcaption><b>チェックアウト途中、決済モーダル上でセッションが終わる。</b>確認画面が出たままクリップが尽きています &mdash; このコホートではいくつものセッションがちょうどここで終わっています。</figcaption></figure></div>
 </section>
 

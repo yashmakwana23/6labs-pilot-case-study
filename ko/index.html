@@ -168,9 +168,18 @@ footer{padding:26px 46px 40px;color:var(--muted);font-size:13px;border-top:1px s
 </style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
-/* CJK face for the prose; reconstructions are Latin, so they keep Inter */
 body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
-.rs,.rs *{font-family:"Inter",system-ui,-apple-system,sans-serif}
+.rs,.rs *{font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+.rs .rs-row{padding:7px 8px;gap:6px}
+.rs .rs-row .ic{width:18px;height:18px}
+.rs .rs-row .tx b{font-size:9.5px;line-height:1.3}
+.rs .rs-row .tx span{font-size:8.5px;line-height:1.3}
+.rs .rs-row .pill{padding:3px 6px;font-size:8.5px}
+.rs .rs-toast{font-size:9px;padding:6px 8px;line-height:1.35}
+.rs .rs-dlg .bd{font-size:9.5px;line-height:1.4}
+.rs .rs-panel .hd,.rs .rs-dlg .hd{font-size:9.5px}
+.rs .rs-btn{font-size:9px}
+.rs .rs-chip.lbl{font-size:8.5px}
 </style>
 </head><body>
 <div class="sheet">
@@ -242,7 +251,7 @@ body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto
             <div class="rs"><div class="rs-hud"><span class="rs-chip lbl">상점</span><span class="rs-chip grow"></span><span class="rs-chip w2"></span></div>
               <div class="rs-panel"><div class="hd">추천 패스</div>
                 <div class="rs-row"><div class="ic"></div><div class="tx"><b>무기 소환 패스</b><span>기간 한정</span></div><span class="pill">SGD 46.98</span></div>
-                <div class="rs-row"><div class="ic"></div><div class="tx"><b>보너스 소환권</b><span>포함</span></div><span class="pill ghost">&times;10</span></div>
+                <div class="rs-row"><div class="ic"></div><div class="tx"><b>소환권</b><span>포함</span></div><span class="pill ghost">&times;10</span></div>
               </div>
               <div class="rs-dim"></div>
               <div class="rs-dlg"><div class="hd">알림</div>
@@ -287,7 +296,7 @@ body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto
           <figure class="evfig">
             <div class="rs"><div class="rs-hud"><span class="rs-chip lbl">가이드 퀘스트 25</span><span class="rs-chip grow"></span></div>
               <div class="rs-panel" style="top:42%"><div class="hd">닉네임 변경</div>
-                <div class="rs-row"><div class="tx"><b>새 닉네임</b><span>2자 입력됨</span></div><span class="pill ghost">중복 확인</span></div>
+                <div class="rs-row"><div class="tx"><b>새 닉네임</b><span>2자 입력</span></div><span class="pill ghost">확인</span></div>
                 <div class="rs-row"><span class="pill blue" style="flex:1;text-align:center">확인</span></div>
               </div>
               <div class="rs-dim"></div>
@@ -309,8 +318,8 @@ body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto
           <figure class="evfig">
             <div class="rs"><div class="rs-hud"><span class="rs-chip lbl">골드 214,700</span><span class="rs-chip grow"></span></div>
               <div class="rs-panel"><div class="hd">물약 강화 &middot; 9단계 중 9</div>
-                <div class="rs-row"><div class="ic"></div><div class="tx"><b>HP 회복</b><span>9단계 중 9</span></div><span class="pill gold">강화 &middot; 98,600</span></div>
-                <div class="rs-row"><div class="ic"></div><div class="tx"><b>MP 회복</b><span>9단계 중 9</span></div><span class="pill gold">강화 &middot; 97,500</span></div>
+                <div class="rs-row"><div class="ic"></div><div class="tx"><b>HP 회복</b><span>9 / 9</span></div><span class="pill gold">강화 &middot; 98,600</span></div>
+                <div class="rs-row"><div class="ic"></div><div class="tx"><b>MP 회복</b><span>9 / 9</span></div><span class="pill gold">강화 &middot; 97,500</span></div>
               </div><div class="rs-tag">재구성</div></div>
             <figcaption>물약 강화, 9단계 중 9단계. 두 행 모두 이미 최대치인데도 강화 버튼은 둘 다 켜진 채 가격이 붙어 있어, 아직 구매할 수 있는 것처럼 보입니다.</figcaption>
           </figure>

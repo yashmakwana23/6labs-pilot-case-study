@@ -168,9 +168,18 @@ footer{padding:26px 46px 40px;color:var(--muted);font-size:13px;border-top:1px s
 </style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap">
 <style>
-/* CJK face for the prose; reconstructions are Latin, so they keep Inter */
 body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",Meiryo,sans-serif}
-.rs,.rs *{font-family:"Inter",system-ui,-apple-system,sans-serif}
+.rs,.rs *{font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",Meiryo,sans-serif}
+.rs .rs-row{padding:7px 8px;gap:6px}
+.rs .rs-row .ic{width:18px;height:18px}
+.rs .rs-row .tx b{font-size:9.5px;line-height:1.3}
+.rs .rs-row .tx span{font-size:8.5px;line-height:1.3}
+.rs .rs-row .pill{padding:3px 6px;font-size:8.5px}
+.rs .rs-toast{font-size:9px;padding:6px 8px;line-height:1.35}
+.rs .rs-dlg .bd{font-size:9.5px;line-height:1.4}
+.rs .rs-panel .hd,.rs .rs-dlg .hd{font-size:9.5px}
+.rs .rs-btn{font-size:9px}
+.rs .rs-chip.lbl{font-size:8.5px}
 </style>
 </head><body>
 <div class="sheet">
@@ -242,7 +251,7 @@ body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto
             <div class="rs"><div class="rs-hud"><span class="rs-chip lbl">ショップ</span><span class="rs-chip grow"></span><span class="rs-chip w2"></span></div>
               <div class="rs-panel"><div class="hd">おすすめパス</div>
                 <div class="rs-row"><div class="ic"></div><div class="tx"><b>武器召喚パス</b><span>期間限定</span></div><span class="pill">SGD 46.98</span></div>
-                <div class="rs-row"><div class="ic"></div><div class="tx"><b>ボーナス召喚チケット</b><span>付属</span></div><span class="pill ghost">&times;10</span></div>
+                <div class="rs-row"><div class="ic"></div><div class="tx"><b>召喚チケット</b><span>付属</span></div><span class="pill ghost">&times;10</span></div>
               </div>
               <div class="rs-dim"></div>
               <div class="rs-dlg"><div class="hd">お知らせ</div>
@@ -287,7 +296,7 @@ body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto
           <figure class="evfig">
             <div class="rs"><div class="rs-hud"><span class="rs-chip lbl">ガイドクエスト 25</span><span class="rs-chip grow"></span></div>
               <div class="rs-panel" style="top:42%"><div class="hd">ニックネーム変更</div>
-                <div class="rs-row"><div class="tx"><b>新しいニックネーム</b><span>2 文字入力済み</span></div><span class="pill ghost">確認</span></div>
+                <div class="rs-row"><div class="tx"><b>新しい名前</b><span>2 文字入力</span></div><span class="pill ghost">確認</span></div>
                 <div class="rs-row"><span class="pill blue" style="flex:1;text-align:center">決定</span></div>
               </div>
               <div class="rs-dim"></div>
@@ -309,8 +318,8 @@ body,h1,h2,h3,h4,h5,.eyebrow,.kick,.vsnum,.n,.big,.stage,th,td{font-family:"Noto
           <figure class="evfig">
             <div class="rs"><div class="rs-hud"><span class="rs-chip lbl">ゴールド 214,700</span><span class="rs-chip grow"></span></div>
               <div class="rs-panel"><div class="hd">ポーション強化 &middot; 9 段階中 9</div>
-                <div class="rs-row"><div class="ic"></div><div class="tx"><b>HP 回復</b><span>9 段階中 9</span></div><span class="pill gold">強化 &middot; 98,600</span></div>
-                <div class="rs-row"><div class="ic"></div><div class="tx"><b>MP 回復</b><span>9 段階中 9</span></div><span class="pill gold">強化 &middot; 97,500</span></div>
+                <div class="rs-row"><div class="ic"></div><div class="tx"><b>HP 回復</b><span>9 / 9</span></div><span class="pill gold">強化 &middot; 98,600</span></div>
+                <div class="rs-row"><div class="ic"></div><div class="tx"><b>MP 回復</b><span>9 / 9</span></div><span class="pill gold">強化 &middot; 97,500</span></div>
               </div><div class="rs-tag">再構成</div></div>
             <figcaption>ポーション強化、9 段階中 9。どちらの行もすでに上限ですが、強化ボタンは両方とも光ったまま価格が付いており、まだ買えるかのように見えます。</figcaption>
           </figure>
