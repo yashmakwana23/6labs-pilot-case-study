@@ -22,11 +22,11 @@ Chinese, Japanese and Korean, and each one carries a switcher in the header.
 /zh/         中文          /ko/    한국어
 ```
 
-The **reconstruction screens stay in English in every language**, and so do the
-in-game messages quoted in the prose. Rendering those strings back into the
-client's own languages would reproduce the real in-game copy closely enough to be
-searchable, which is exactly what the anonymisation is for. Each translated page
-says so in its own language.
+The reconstruction screens are **localised too** — UI, dialogs, buttons and system
+messages — and the in-game strings quoted in the prose are localised to match them.
+Player-typed chat quoted as evidence stays as typed, since the exact characters are
+the finding. Each translated page says so in its own language.
+
 
 ## Anonymisation
 
