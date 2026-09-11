@@ -1,4 +1,4 @@
-# Oracle pilot case study
+# Oracle pilot case study — Game-01
 
 A two-week paid pilot of **Oracle** by [6labs.ai](https://6labs.ai) on a live mobile
 idle RPG: full-population analysis on the client's own data warehouse, with every
@@ -14,9 +14,9 @@ answer confirmed against recorded gameplay sessions.
 
 ## Anonymisation
 
-The subject is a live mobile idle RPG from a mobile game publisher. We are not naming
-the game, the publisher, their region or their vendors — there is no stand-in title
-either, because a plausible fake name invites the wrong guess.
+**Game-01** is a live mobile idle RPG from a mobile game publisher. The name is a
+stand-in — the real title, its publisher, their region and their vendors are kept
+confidential.
 
 Every metric, denominator, percentage, error code and currency amount is the real one,
 unchanged.
